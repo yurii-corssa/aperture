@@ -1,11 +1,11 @@
 {
-  "name": "vite-vanilla-template",
+  "name": "aperture",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/vite-vanilla-template/",
+    "build": "vite build --base=/aperture/",
     "preview": "vite preview",
     "watch": "npx vite build --watch"
   },
@@ -22,6 +22,7 @@
     "sharp": "^0.32.6",
     "svgo": "^3.0.2",
     "vite": "^4.4.5",
+    "vite-plugin-html-inject": "^1.1.2",
     "vite-plugin-image-optimizer": "^1.1.7",
     "vite-tsconfig-paths": "^5.0.1"
   }
