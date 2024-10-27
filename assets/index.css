@@ -1,4 +1,5 @@
-@charset "UTF-8";
+@charset "UTF-8";@import url("https://fonts.googleapis.com/css?family=Poppins:regular&display=swap");
+
 /***
     The new CSS reset - version 1.11 (last updated 20.9.2023)
     GitHub page: https://github.com/elad2412/the-new-css-reset
@@ -25,12 +26,14 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Reapply the pointer cursor for anchor tags */
 a,
 button {
-  cursor: revert;
+  cursor: pointer;
 }
 
 /* Remove list styles (bullets/numbers) */
@@ -110,4 +113,30 @@ meter {
 :where(dialog:modal) {
   all: revert;
   box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.42857;
+  color: #c0c0c0;
+  background: #000;
+}
+
+@media (min-width: 20em) and (max-width: 90em){
+  .container {
+    padding-left: clamp( 0.9375rem , 0.1339285714rem  +  4.0178571429vw , 3.75rem );
+  }
+  .container {
+    padding-right: clamp( 0.9375rem , 0.1339285714rem  +  4.0178571429vw , 3.75rem );
+  }
+}
+
+@media (min-width: 90em){
+  .container {
+    padding-left: 3.75rem;
+  }
+  .container {
+    padding-right: 3.75rem;
+  }
 }
