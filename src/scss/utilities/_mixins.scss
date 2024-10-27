@@ -1,0 +1,36 @@
+@use "sass:math";
+@use "variables" as *;
+@use "functions" as *;
+
+@mixin adaptiveValue(
+  $property,
+  $maxSize: 0.000001,
+  $minSize: 0.000001,
+  $widthFrom: $max-width-page,
+  $widthTo: $min-width-page
+) {
+  $addSize: toRem($maxSize - $minSize);
+
+  $slope: math.div(($maxSize - $minSize), ($widthFrom - $widthTo));
+  $yIntersection: -$widthTo * $slope + $minSize;
+
+  @if ($yIntersection == 0) {
+    $yIntersection: 0.000001;
+  }
+
+  $flyValue: #{toRem($yIntersection)} " + " #{$slope * 100}vw;
+
+  $propertyValue: #{"clamp(" #{toRem($minSize)} "," $flyValue "," #{toRem($maxSize)} ")"};
+
+  @if ($minSize > $maxSize) {
+    $propertyValue: #{"clamp(" #{toRem($maxSize)} "," $flyValue "," #{toRem($minSize)} ")"};
+  }
+
+  @media (min-width: toEm($widthFrom)) {
+    #{$property}: toRem($maxSize);
+  }
+
+  @media (min-width: toEm($widthTo)) and (max-width: toEm($widthFrom)) {
+    #{$property}: $propertyValue;
+  }
+}

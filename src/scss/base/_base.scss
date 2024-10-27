@@ -1,0 +1,22 @@
+@use "sass:map";
+@use "../utilities/variables" as *;
+@use "../utilities/mixins" as *;
+@use "../utilities/functions" as *;
+@use "../utilities/placeholders" as *;
+
+@import url("https://fonts.googleapis.com/css?family=Poppins:regular&display=swap");
+
+body {
+  font-family: $main-font;
+  font-size: 0.88rem;
+  line-height: 1.42857;
+  color: $text-primary-color;
+  background: $background-page-color;
+}
+
+.container {
+  // max-width: toRem($max-width-page);
+  // margin: 0 auto;
+  @include adaptiveValue("padding-left", 60, 15);
+  @include adaptiveValue("padding-right", 60, 15);
+}
