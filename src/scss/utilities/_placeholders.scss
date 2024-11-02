@@ -1,4 +1,5 @@
 @use "./variables" as *;
+@use "./mixins" as *;
 
 %title-label {
   font-size: 0.88rem;
@@ -32,6 +33,7 @@
 }
 
 %cta-btn {
+  display: inline-block;
   font-size: 1rem;
   line-height: 1.25;
   letter-spacing: 0.03em;
@@ -39,22 +41,7 @@
   border-radius: 0.88rem;
   color: $text-light-bg-color;
   background-color: $btn-color;
-  transition: all 250ms ease;
+  transition: 250ms ease;
 
-  @media (hover: hover) {
-    &:hover,
-    &:focus {
-      background-color: $accent-color;
-    }
-
-    &:active {
-      background-color: lighten($accent-color, 20);
-    }
-  }
-
-  @media (hover: none) {
-    &:active {
-      background-color: $accent-color;
-    }
-  }
+  @include hover("background-color", $accent-color);
 }

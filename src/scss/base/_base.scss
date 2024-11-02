@@ -1,4 +1,3 @@
-@use "sass:map";
 @use "../utilities/variables" as *;
 @use "../utilities/mixins" as *;
 @use "../utilities/functions" as *;
@@ -15,8 +14,11 @@ body {
 }
 
 .container {
-  // max-width: toRem($max-width-page);
-  // margin: 0 auto;
-  @include adaptiveValue("padding-left", 60, 15);
-  @include adaptiveValue("padding-right", 60, 15);
+  @include adaptiveValue("padding-left", $container-padding-l, calc($container-padding-l / 4));
+  @include adaptiveValue("padding-right", $container-padding-l, calc($container-padding-l / 4));
+
+  &--wide {
+    @include adaptiveValue("padding-left", $container-padding-s, calc($container-padding-s / 4));
+    @include adaptiveValue("padding-right", $container-padding-s, calc($container-padding-s / 4));
+  }
 }

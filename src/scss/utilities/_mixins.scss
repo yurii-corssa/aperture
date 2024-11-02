@@ -34,3 +34,22 @@
     #{$property}: $propertyValue;
   }
 }
+
+@mixin hover($property, $value) {
+  @media (hover: hover) {
+    &:hover,
+    &:focus {
+      #{$property}: $value;
+    }
+
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      #{$property}: $value;
+    }
+  }
+}
