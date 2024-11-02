@@ -1,0 +1,150 @@
+@use "./utilities/variables" as *;
+@use "./utilities/functions" as *;
+@use "./utilities/placeholders" as *;
+@use "./utilities/mixins" as *;
+
+.header {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: toRem(42);
+  align-items: center;
+  @include adaptiveValue("column-gap", 32, 16, 1024, 768);
+  padding-top: toRem(24);
+  padding-bottom: toRem(24);
+  color: $text-heading-color;
+  transition: 550ms ease;
+
+  @media (width >= 768px) {
+    justify-items: end;
+    row-gap: toRem(8);
+  }
+
+  @media (width >= 1024px) {
+    grid-template-columns: min-content 1fr max-content;
+  }
+
+  &__logo {
+    display: inline-flex;
+    color: $text-heading-color;
+    transition: 250ms ease;
+
+    svg {
+      fill: currentColor;
+    }
+
+    @include hover("color", $accent-color);
+  }
+
+  &__menu {
+    overflow: hidden;
+    transition: max-height 550ms ease, padding 250ms ease;
+
+    @media (width < 768px) {
+      grid-column: 1 / 3;
+      padding: 0 1rem;
+      max-height: 0;
+
+      &.is-open {
+        padding: 1rem 1rem 0 1rem;
+        max-height: toRem(300);
+      }
+    }
+
+    @media (width >= 768px) {
+      display: contents;
+    }
+  }
+
+  &__nav {
+    @media (width < 768px) {
+      margin-bottom: toRem(8);
+    }
+  }
+
+  &__list {
+    @media (width >= 768px) {
+      display: flex;
+      @include adaptiveValue("column-gap", 32, 16, 1024, 768);
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    font-size: 1.44rem;
+    line-height: 1.30435;
+    color: #fff;
+    padding: toRem(8) 0;
+    transition: 250ms ease;
+
+    @media (width >= 768px) {
+      font-size: 0.94rem;
+      line-height: 1.33333;
+      padding: toRem(4) 0;
+    }
+
+    @include hover("color", $accent-color);
+  }
+
+  &__button {
+    @extend %cta-btn;
+
+    @media (width >= 768px) and (width < 1024px) {
+      grid-column: 2 / 3;
+    }
+  }
+
+  &__burger-btn {
+    display: none;
+
+    @media (width < 768px) {
+      display: block;
+      position: relative;
+      justify-self: end;
+      width: toRem(24);
+      height: toRem(24);
+
+      span,
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        width: 100%;
+        height: toRem(3);
+        background-color: currentColor;
+        border-radius: 0.625rem;
+        transition: 250ms ease;
+      }
+
+      &::before {
+        top: toRem(5);
+      }
+
+      &::after {
+        bottom: toRem(4);
+      }
+
+      span {
+        top: calc(50% - toRem(1));
+      }
+
+      :has(.header__menu.is-open) & {
+        span {
+          width: 0;
+        }
+
+        &::before {
+          top: calc(50% - toRem(1));
+          transform: rotate(-45deg);
+        }
+
+        &::after {
+          bottom: calc(50% - toRem(2));
+          transform: rotate(45deg);
+        }
+      }
+    }
+
+    @include hover("color", $accent-color);
+  }
+}
