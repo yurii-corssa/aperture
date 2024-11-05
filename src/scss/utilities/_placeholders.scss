@@ -42,6 +42,7 @@
   color: $text-light-bg-color;
   background-color: $btn-color;
   transition: 250ms ease;
+  transition-property: color, background-color, opacity;
 
   @include hover("background-color", $accent-color);
 }
