@@ -84,7 +84,7 @@ meter {
 
 /* remove default dot (•) sign */
 ::marker {
-  content: initial;
+  content: none;
 }
 
 /* fix the feature of 'hidden' attribute.
@@ -125,6 +125,7 @@ meter {
   color: #000;
   background-color: #fff;
   transition: 250ms ease;
+  transition-property: color, background-color, opacity;
 }
 
 body {
@@ -135,7 +136,17 @@ body {
   background: #000;
 }
 
+@keyframes liftCurtain {
+  from {
+    transform: skewY(5deg) translateY(-30px);
+  }
+  to {
+    transform: skewY(5deg) translateY(-170px);
+    visibility: hidden;
+  }
+}
 .header {
+  position: relative;
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-template-rows: 2.625rem;
@@ -143,7 +154,10 @@ body {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   color: #fff;
+  overflow: hidden;
+  background-color: #181818;
   transition: 550ms ease;
+  transition-property: padding-left, padding-right;
 }
 .header__logo {
   display: inline-flex;
@@ -167,6 +181,71 @@ body {
 }
 .header__burger-btn {
   display: none;
+}
+
+.fluid-text__words, .fluid-text__word, .fluid-text__char, .fluid-text__char::before, .fluid-text__char::after {
+  transform-style: preserve-3d;
+  display: inline-block;
+}
+.fluid-text__words:nth-of-type(1) {
+  --idx: 0;
+}
+.fluid-text__words:nth-of-type(2) {
+  --idx: 1;
+}
+.fluid-text__words:nth-of-type(3) {
+  --idx: 2;
+}
+.fluid-text__words:nth-of-type(4) {
+  --idx: 3;
+}
+.fluid-text__words .fluid-text__char {
+  --duration: 2.2s;
+  --delay: calc(
+    (sin((var(--char-index) / var(--char-total)) * 90deg) * (var(--duration) * 0.25)) -
+      (var(--idx) * -0.25s)
+  );
+  display: inline-block;
+  animation: flip var(--duration) var(--delay) forwards ease;
+}
+.fluid-text__char {
+  color: transparent;
+  position: relative;
+  height: 0.9lh;
+  line-height: 1;
+  vertical-align: middle;
+}
+.fluid-text__char::after, .fluid-text__char::before {
+  color: #fff;
+  content: attr(data-fluid-char);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 1lh;
+  width: 100%;
+  animation: fade var(--duration) var(--delay) forwards ease;
+}
+.fluid-text__char::before {
+  transform-origin: 50% 50%;
+  translate: -50% -50%;
+  transform: rotateX(-90deg) translate3d(0, 0, 0.45lh);
+  opacity: 0;
+  --opacity: 1;
+}
+.fluid-text__char::after {
+  translate: -50% -50%;
+  transform: translate3d(0, 0, 0.45lh);
+}
+
+@keyframes flip {
+  25%, 100% {
+    transform: rotateX(90deg);
+  }
+}
+@keyframes fade {
+  30%, 100% {
+    opacity: var(--opacity, 0);
+  }
 }
 @media (min-width: 20em) and (max-width: 90em){
   .container {
