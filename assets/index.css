@@ -137,11 +137,11 @@ body {
 }
 
 @keyframes liftCurtain {
-  from {
+  0% {
     transform: skewY(5deg) translateY(-30px);
   }
-  to {
-    transform: skewY(5deg) translateY(-170px);
+  100% {
+    transform: skewY(5deg) translateY(-175px);
     visibility: hidden;
   }
 }
@@ -158,6 +158,18 @@ body {
   background-color: #181818;
   transition: 550ms ease;
   transition-property: padding-left, padding-right;
+}
+.header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background-color: #181818;
+  transform: skewY(5deg) translateY(-30px);
+  filter: blur(5px);
+  animation: liftCurtain 1.4s forwards;
 }
 .header__logo {
   display: inline-flex;
