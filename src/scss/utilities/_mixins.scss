@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:list";
 @use "variables" as *;
 @use "functions" as *;
 
@@ -26,20 +27,35 @@
     $propertyValue: #{"clamp(" #{toRem($maxSize)} "," $flyValue "," #{toRem($minSize)} ")"};
   }
 
-  @media (min-width: toEm($widthFrom)) {
+  @media (width >= #{$widthFrom}px) {
     #{$property}: toRem($maxSize);
   }
 
-  @media (min-width: toEm($widthTo)) and (max-width: toEm($widthFrom)) {
+  @media (width >= #{$widthTo}px) and (width < #{$widthFrom}px) {
     #{$property}: $propertyValue;
   }
 }
 
-@mixin hover($property, $value) {
+@mixin hover($properties, $values, $duration: 250ms, $timing-function: ease, $delay: 0s) {
+  $property-string: "opacity";
+
+  @each $property in $properties {
+    $property-string: #{$property-string} + ", " + #{$property};
+  }
+
+  & {
+    transition: $duration $timing-function $delay;
+    transition-property: $property-string;
+
+    @content;
+  }
+
   @media (hover: hover) {
     &:hover,
     &:focus {
-      #{$property}: $value;
+      @for $i from 1 through list.length($properties) {
+        #{list.nth($properties, $i)}: list.nth($values, $i);
+      }
     }
 
     &:active {
@@ -49,7 +65,9 @@
 
   @media (hover: none) {
     &:active {
-      #{$property}: $value;
+      @for $i from 1 through list.length($properties) {
+        #{list.nth($properties, $i)}: list.nth($values, $i);
+      }
     }
   }
 }
