@@ -115,6 +115,14 @@ meter {
   box-sizing: border-box;
 }
 
+.footer__list-title, .newsletter__title {
+  font-size: 0.88rem;
+  line-height: 1.42857;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: currentColor;
+}
+
 .header__button {
   display: inline-block;
   font-size: 1rem;
@@ -124,8 +132,23 @@ meter {
   border-radius: 0.88rem;
   color: #000;
   background-color: #fff;
-  transition: 250ms ease;
-  transition-property: color, background-color, opacity;
+}
+.header__button {
+  transition: 250ms ease 0s;
+  transition-property: opacity, background-color;
+}
+
+.footer__title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }
 
 body {
@@ -134,6 +157,23 @@ body {
   line-height: 1.42857;
   color: #c0c0c0;
   background: #000;
+}
+
+.container {
+  padding-top: 7.5rem;
+  padding-bottom: 6.25rem;
+}
+
+.logo {
+  display: inline-flex;
+  color: #fff;
+}
+.logo svg {
+  fill: currentColor;
+}
+.logo {
+  transition: 250ms ease 0s;
+  transition-property: opacity, color;
 }
 
 @keyframes liftCurtain {
@@ -171,14 +211,6 @@ body {
   filter: blur(5px);
   animation: liftCurtain 1.4s forwards;
 }
-.header__logo {
-  display: inline-flex;
-  color: #fff;
-  transition: 250ms ease;
-}
-.header__logo svg {
-  fill: currentColor;
-}
 .header__menu {
   overflow: hidden;
   transition: max-height 550ms ease, padding 250ms ease;
@@ -189,10 +221,126 @@ body {
   line-height: 1.30435;
   color: #fff;
   padding: 0.5rem 0;
-  transition: 250ms ease;
+}
+.header__link {
+  transition: 250ms ease 0s;
+  transition-property: opacity, color;
 }
 .header__burger-btn {
   display: none;
+}
+.header__burger-btn {
+  transition: 250ms ease 0s;
+  transition-property: opacity, color;
+}
+
+.footer {
+  gap: 2.25rem 1.25rem;
+  padding-top: 6.25rem;
+  transition: 550ms ease;
+  transition-property: padding-left, padding-right;
+}
+.footer__navigation {
+  display: contents;
+}
+.footer__navigation::after {
+  content: "";
+  display: block;
+  grid-area: fl;
+  width: 100%;
+  height: 0.12rem;
+  background-color: #fff;
+}
+.footer__logo {
+  margin-bottom: 1.25rem;
+}
+.footer__tagline {
+  font-size: 0.81rem;
+  line-height: 1.53846;
+}
+.footer__list-title {
+  margin-bottom: 0.625rem;
+}
+.footer__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.footer__link {
+  color: #fff;
+}
+.footer__link {
+  transition: 250ms ease 0s;
+  transition-property: opacity, color, text-decoration;
+}
+.footer__newsletter {
+  display: contents;
+}
+.footer__newsletter::after {
+  content: "";
+  display: block;
+  grid-area: sl;
+  width: 100%;
+  height: 0.12rem;
+  background-color: #fff;
+}
+.footer__bottom {
+  display: contents;
+}
+.footer__social {
+  display: flex;
+  gap: 1.25rem;
+}
+.footer__socials-item {
+  display: inline-flex;
+}
+.footer__socials-link {
+  display: inline-flex;
+  color: #c0c0c0;
+}
+.footer__socials-link svg {
+  fill: currentColor;
+}
+.footer__socials-link {
+  transition: 250ms ease 0s;
+  transition-property: opacity, color;
+}
+.newsletter__title {
+  color: #fff;
+  margin-bottom: 1.25rem;
+}
+.newsletter__text {
+  font-size: 0.81rem;
+  line-height: 1.53846;
+}
+.newsletter__form {
+  grid-area: nf;
+  position: relative;
+  height: min-content;
+}
+.newsletter__input {
+  width: 100%;
+  padding: 0.9375rem;
+  padding-right: 6.625rem;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+}
+.newsletter__button {
+  position: absolute;
+  top: 50%;
+  right: 0.375rem;
+  transform: translateY(-50%);
+  font-size: 0.81rem;
+  line-height: 1.53846;
+  padding: 0.3125rem 0.9375rem;
+  background-color: #000;
+  border-radius: 0.69rem;
+}
+.newsletter__button {
+  transition: 250ms ease 0s;
+  transition-property: opacity, color;
 }
 
 .fluid-text__words, .fluid-text__word, .fluid-text__char, .fluid-text__char::before, .fluid-text__char::after {
@@ -259,12 +407,12 @@ body {
     opacity: var(--opacity, 0);
   }
 }
-@media (min-width: 20em) and (max-width: 90em){
+@media (width >= 320px) and (width < 1440px){
   .container {
-    padding-left: clamp( 2.125rem , 0.3035714286rem  +  9.1071428571vw , 8.5rem );
+    padding-left: clamp( 0.9375rem , -1.2232142857rem  +  10.8035714286vw , 8.5rem );
   }
   .container {
-    padding-right: clamp( 2.125rem , 0.3035714286rem  +  9.1071428571vw , 8.5rem );
+    padding-right: clamp( 0.9375rem , -1.2232142857rem  +  10.8035714286vw , 8.5rem );
   }
   .container--wide {
     padding-left: clamp( 0.9375rem , 0.1339285714rem  +  4.0178571429vw , 3.75rem );
@@ -273,9 +421,34 @@ body {
     padding-right: clamp( 0.9375rem , 0.1339285714rem  +  4.0178571429vw , 3.75rem );
   }
 }
-@media (min-width: 48em) and (max-width: 64em){
-  .header {
-    column-gap: clamp( 1rem , -2rem  +  6.25vw , 2rem );
+@media (width >= 480px){
+  .footer {
+    display: grid;
+  }
+  .footer__branding {
+    grid-area: br;
+  }
+  .footer__business-areas {
+    grid-area: bu;
+  }
+  .footer__pages {
+    grid-area: pg;
+  }
+  .footer__copyright {
+    grid-area: cp;
+  }
+  .footer__social {
+    grid-area: so;
+    justify-self: end;
+  }
+  .newsletter__content {
+    grid-area: nc;
+  }
+}
+@media (width >= 480px) and (width < 768px){
+  .footer {
+    grid-template-areas: "br br" "pg bu" "fl fl" "nc nc" "nf nf" "sl sl" "cp so";
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (width >= 768px){
@@ -295,32 +468,37 @@ body {
     padding: 0.25rem 0;
   }
 }
-@media (width >= 768px) and (min-width: 48em) and (max-width: 64em){
+@media (width >= 768px) and (width < 1024px){
+  .header {
+    column-gap: clamp( 1rem , -2rem  +  6.25vw , 2rem );
+  }
   .header__list {
     column-gap: clamp( 1rem , -2rem  +  6.25vw , 2rem );
   }
-}
-@media (width >= 768px) and (min-width: 64em){
-  .header__list {
-    column-gap: 2rem;
-  }
-}
-@media (width >= 768px) and (width < 1024px){
   .header__button {
     grid-column: 2/3;
   }
-}
-@media (min-width: 64em){
-  .header {
-    column-gap: 2rem;
+  .footer {
+    grid-template-areas: "br br" "pg bu" "fl fl" "nc nf" "sl sl" "cp so";
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (width >= 1024px){
   .header {
+    column-gap: 2rem;
+  }
+  .header {
     grid-template-columns: min-content 1fr max-content;
   }
+  .header__list {
+    column-gap: 2rem;
+  }
+  .footer {
+    grid-template-areas: "br bu pg" "fl fl fl" "nc nf nf" "sl sl sl" "cp .  so";
+    grid-template-columns: 1fr repeat(2, minmax(13.75rem, max-content));
+  }
 }
-@media (min-width: 90em){
+@media (width >= 1440px){
   .container {
     padding-left: 8.5rem;
   }
@@ -362,7 +540,6 @@ body {
     height: 0.1875rem;
     background-color: currentColor;
     border-radius: 0.625rem;
-    transition: 250ms ease;
   }
   .header__burger-btn::before {
     top: 0.3125rem;
@@ -385,6 +562,12 @@ body {
     transform: rotate(45deg);
   }
 }
+@media (width < 480px){
+  .footer {
+    display: flex;
+    flex-direction: column;
+  }
+}
 @media (hover: hover){
   .header__button:hover, .header__button:focus {
     background-color: #ff5722;
@@ -392,10 +575,10 @@ body {
   .header__button:active {
     opacity: 0.8;
   }
-  .header__logo:hover, .header__logo:focus {
+  .logo:hover, .logo:focus {
     color: #ff5722;
   }
-  .header__logo:active {
+  .logo:active {
     opacity: 0.8;
   }
   .header__link:hover, .header__link:focus {
@@ -410,18 +593,47 @@ body {
   .header__burger-btn:active {
     opacity: 0.8;
   }
+  .footer__link:hover, .footer__link:focus {
+    color: #ff5722;
+    text-decoration: underline;
+  }
+  .footer__link:active {
+    opacity: 0.8;
+  }
+  .footer__socials-link:hover, .footer__socials-link:focus {
+    color: #ff5722;
+  }
+  .footer__socials-link:active {
+    opacity: 0.8;
+  }
+  .newsletter__button:hover, .newsletter__button:focus {
+    color: #ff5722;
+  }
+  .newsletter__button:active {
+    opacity: 0.8;
+  }
 }
 @media (hover: none){
   .header__button:active {
     background-color: #ff5722;
   }
-  .header__logo:active {
+  .logo:active {
     color: #ff5722;
   }
   .header__link:active {
     color: #ff5722;
   }
   .header__burger-btn:active {
+    color: #ff5722;
+  }
+  .footer__link:active {
+    color: #ff5722;
+    text-decoration: underline;
+  }
+  .footer__socials-link:active {
+    color: #ff5722;
+  }
+  .newsletter__button:active {
     color: #ff5722;
   }
 }
