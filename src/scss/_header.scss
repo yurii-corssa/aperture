@@ -18,18 +18,30 @@
   @include adaptiveValue("column-gap", 32, 16, $bp-desktop-md, $bp-tablet);
 
   & {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-template-rows: toRem(42);
     align-items: center;
-    padding-top: toRem(24);
-    padding-bottom: toRem(24);
+    padding-top: clamp(
+      toRem(10),
+      calc(toRem(24) - calc(var(--scroll-position) * 1px) / 24),
+      toRem(24)
+    );
+    padding-bottom: clamp(
+      toRem(10),
+      calc(toRem(24) - calc(var(--scroll-position) * 1px) / 24),
+      toRem(24)
+    );
     color: $text-heading-color;
     overflow: hidden;
     background-color: $background-header-color;
     transition: 550ms ease;
     transition-property: padding-left, padding-right;
+    z-index: 2;
   }
 
   &::after {

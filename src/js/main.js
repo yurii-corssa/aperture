@@ -1,3 +1,7 @@
 import "../scss/main.scss";
 import "./mobileMenu";
-import "./fluidText";
+import utils from "./utils/index";
+
+// utils.fluidText()
+
+utils.trackScrollPosition();

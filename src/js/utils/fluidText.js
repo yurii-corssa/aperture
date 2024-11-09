@@ -1,7 +1,3 @@
-// import Splitting from "https://cdn.skypack.dev/splitting";
-
-// Splitting();
-
 const splitToChars = (wordText, startIndex = 0) => {
   let charsCount = startIndex;
 
@@ -70,7 +66,7 @@ const processNode = (node) => {
   }
 };
 
-const fluidTextInit = () => {
+export const fluidText = () => {
   const textBlocks = document.querySelectorAll("[data-fluid-text]");
 
   textBlocks.forEach((textBlock) => {
@@ -81,43 +77,5 @@ const fluidTextInit = () => {
     });
 
     textBlock.classList.add("fluid-text");
-    // textBlock.innerHTML = "";
-    // textBlock.append(...newTextArr);
   });
 };
-
-// const fluidTextInit = () => {
-//   const textBlocks = document.querySelectorAll("[data-fluid-text]");
-
-//   textBlocks.forEach((textBlock) => {
-//     const innerTextElements = [...textBlock.children];
-
-//     innerTextElements.forEach((textElement) => {
-//       const text = textElement.textContent;
-//       const tagName = textElement.tagName.toLowerCase();
-
-//       const { newWordsArr, wordTotal, charTotal } = splitToWords(text);
-
-//       const newTextElement = document.createElement(tagName);
-
-//       for (const attr of textElement.attributes) {
-//         newTextElement.setAttribute(attr.name, attr.value);
-//       }
-
-//       newTextElement.classList.add("fluid-text__words");
-//       newTextElement.style.setProperty("--word-total", wordTotal);
-//       newTextElement.style.setProperty("--char-total", charTotal);
-//       newTextElement.append(...newWordsArr);
-
-//       console.log("new", textElement);
-
-//       textElement.parentNode.replaceChild(newTextElement, textElement);
-//     });
-
-//     textBlock.classList.add("fluid-text");
-//     // textBlock.innerHTML = "";
-//     // textBlock.append(...newTextArr);
-//   });
-// };
-
-fluidTextInit();
