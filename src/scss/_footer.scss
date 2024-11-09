@@ -8,6 +8,7 @@
   padding-top: toRem(100);
   transition: 550ms ease;
   transition-property: padding-left, padding-right;
+  background-color: $background-page-color;
 
   @media (width < #{$bp-mobile-lg}px) {
     display: flex;

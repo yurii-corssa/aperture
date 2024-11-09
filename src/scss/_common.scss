@@ -1,0 +1,54 @@
+@use "./utilities/variables" as *;
+@use "./utilities/functions" as *;
+@use "./utilities/placeholders" as *;
+@use "./utilities/mixins" as *;
+
+.container {
+  padding-top: toRem(120);
+  padding-bottom: toRem(100);
+  @include adaptiveValue("padding-left", $container-padding-l, 15);
+  @include adaptiveValue("padding-right", $container-padding-l, 15);
+
+  &--wide {
+    @include adaptiveValue("padding-left", $container-padding-s, 15);
+    @include adaptiveValue("padding-right", $container-padding-s, 15);
+  }
+}
+
+.logo {
+  display: inline-flex;
+  color: $text-heading-color;
+
+  @include hover(color, $accent-color);
+}
+
+.image-details {
+  & {
+    position: absolute;
+    bottom: toRem(40);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: toRem(16);
+
+    @include adaptiveValue("padding-right", 40, 15);
+    @include adaptiveValue("padding-left", 40, 15);
+  }
+
+  // .image-details__item
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: toRem(6);
+    color: $text-heading-color;
+  }
+  // .image-details__icon
+  &__icon {
+  }
+  // .image-details__text
+  &__text {
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+}
