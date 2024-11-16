@@ -1,5 +1,5 @@
-import imagemin from "imagemin";
-import imageminWebp from "imagemin-webp";
+// import imagemin from "imagemin";
+// import imageminWebp from "imagemin-webp";
 import path from "path";
 import { defineConfig } from "vite";
 import glob from "fast-glob";
@@ -8,28 +8,29 @@ import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
 import injectHTML from "vite-plugin-html-inject";
 
+// "imagemin-webp": "^8.0.0",
+// "imagemin": "^8.0.1",
+
 export default defineConfig({
   plugins: [
     tsconfigPaths(),
     injectHTML(),
     ViteImageOptimizer({
-      png: {
-        quality: 86,
-      },
-      jpeg: {
-        quality: 86,
-      },
-      jpg: {
-        quality: 86,
+      png: { quality: 60 },
+      jpeg: { quality: 55 },
+      webp: { quality: 60 },
+      avif: { quality: 50 },
+      svg: {
+        plugins: [{ name: "removeViewBox", active: false }, { name: "sortAttrs" }],
       },
     }),
-    {
-      ...imagemin(["./src/img/**/*.{jpg,png,jpeg}"], {
-        destination: "./src/img/webp/",
-        plugins: [imageminWebp({ quality: 86 })],
-      }),
-      apply: "serve",
-    },
+    // {
+    //   ...imagemin(["./src/img/**/*.{jpg,png,jpeg}"], {
+    //     destination: "./src/img/webp/",
+    //     // plugins: [imageminWebp({ quality: 36 })],
+    //   }),
+    //   apply: "serve",
+    // },
   ],
   base: "/aperture/",
   build: {
