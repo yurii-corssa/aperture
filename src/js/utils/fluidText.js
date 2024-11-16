@@ -20,26 +20,29 @@ const splitToWords = (text, startIndexWord = 0, startIndexChar = 0) => {
   let wordTotal = startIndexWord;
   let charTotal = startIndexChar;
 
-  const newWordsArr = text.split(" ").flatMap((word, indexWord, wordsArr) => {
-    const { newCharsArr, charsCount } = splitToChars(word, charTotal);
+  const newWordsArr = text
+    .split(" ")
+    .filter((word) => word.length)
+    .flatMap((word, indexWord, wordsArr) => {
+      const { newCharsArr, charsCount } = splitToChars(word, charTotal);
 
-    charTotal += charsCount;
+      charTotal += charsCount;
 
-    const newWordElement = document.createElement("span");
-    newWordElement.classList.add("fluid-text__word");
-    newWordElement.dataset.fluidWord = word;
-    newWordElement.style.setProperty("--word-index", wordTotal);
-    newWordElement.append(...newCharsArr);
+      const newWordElement = document.createElement("span");
+      newWordElement.classList.add("fluid-text__word");
+      newWordElement.dataset.fluidWord = word;
+      newWordElement.style.setProperty("--word-index", wordTotal);
+      newWordElement.append(...newCharsArr);
 
-    const newSpaceElement = document.createElement("span");
-    newSpaceElement.classList.add("fluid-text__whitespace");
-    newSpaceElement.textContent = " ";
+      const newSpaceElement = document.createElement("span");
+      newSpaceElement.classList.add("fluid-text__whitespace");
+      newSpaceElement.textContent = " ";
 
-    wordTotal += 1;
+      wordTotal += 1;
 
-    if (indexWord === wordsArr.length - 1) return newWordElement;
-    else return [newWordElement, newSpaceElement];
-  });
+      if (indexWord === wordsArr.length - 1) return newWordElement;
+      else return [newWordElement, newSpaceElement];
+    });
 
   return { newWordsArr, wordTotal, charTotal };
 };
