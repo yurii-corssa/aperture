@@ -230,18 +230,6 @@ svg {
   transition-property: padding-left, padding-right;
   z-index: 2;
 }
-.header::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 150px;
-  background-color: #181818;
-  transform: skewY(5deg) translateY(-30px);
-  filter: blur(5px);
-  animation: liftCurtain 1.4s forwards;
-}
 .header__menu {
   overflow: hidden;
   transition: max-height 550ms ease, padding 250ms ease;
@@ -273,11 +261,17 @@ svg {
   justify-content: end;
   align-items: center;
   overflow: hidden;
-  background: linear-gradient(360deg, #000 0%, rgba(0, 0, 0, 0) 100%);
 }
 .hero__content {
   text-align: center;
   max-width: 37.5rem;
+}
+.hero__content:not(.visible) {
+  opacity: 0;
+}
+.hero__content.visible {
+  transition: 1000ms ease;
+  opacity: 1;
 }
 .hero__title {
   color: #fff;
@@ -287,14 +281,24 @@ svg {
   font-size: 0.88rem;
   line-height: 1.42857;
 }
+.hero__thumb {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.hero__thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(360deg, #000000 0%, rgba(255, 255, 255, 0) 100%);
+  mix-blend-mode: darken;
+}
 .hero__video {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
 }
 
 .footer {
@@ -415,13 +419,22 @@ svg {
   --idx: 0;
 }
 .fluid-text__words:nth-of-type(2) {
-  --idx: 1;
+  --idx: 5;
 }
 .fluid-text__words:nth-of-type(3) {
-  --idx: 2;
+  --idx: 10;
 }
 .fluid-text__words:nth-of-type(4) {
-  --idx: 3;
+  --idx: 15;
+}
+.fluid-text .fluid-text__words .fluid-text__char, .fluid-text .fluid-text__char::after, .fluid-text .fluid-text__char::before {
+  animation: none;
+}
+.fluid-text.animate .fluid-text__words .fluid-text__char {
+  animation: flip var(--duration) var(--delay) forwards ease;
+}
+.fluid-text.animate .fluid-text__char::after, .fluid-text.animate .fluid-text__char::before {
+  animation: fade var(--duration) var(--delay) forwards ease;
 }
 .fluid-text__words .fluid-text__char {
   --duration: 2.2s;
@@ -430,7 +443,7 @@ svg {
       (var(--idx) * -0.25s)
   );
   display: inline-block;
-  animation: flip var(--duration) var(--delay) forwards ease;
+  transform: rotateX(90deg);
 }
 .fluid-text__char {
   color: transparent;
@@ -447,14 +460,13 @@ svg {
   left: 50%;
   height: 1lh;
   width: 100%;
-  animation: fade var(--duration) var(--delay) forwards ease;
 }
 .fluid-text__char::before {
   transform-origin: 50% 50%;
   translate: -50% -50%;
   transform: rotateX(-90deg) translate3d(0, 0, 0.45lh);
-  opacity: 0;
-  --opacity: 1;
+  opacity: 1;
+  --opacity: 0;
 }
 .fluid-text__char::after {
   translate: -50% -50%;
@@ -463,12 +475,12 @@ svg {
 
 @keyframes flip {
   25%, 100% {
-    transform: rotateX(90deg);
+    transform: rotateX(0deg);
   }
 }
 @keyframes fade {
   30%, 100% {
-    opacity: var(--opacity, 0);
+    opacity: var(--opacity, 1);
   }
 }
 @media (width >= 320px) and (width < 1440px){
