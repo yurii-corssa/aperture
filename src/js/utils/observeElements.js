@@ -12,7 +12,7 @@ export const observeElements = () => {
       });
     },
     {
-      rootMargin: "-50% 0px -25% 0px",
+      // rootMargin: "-20% 0px -20% 0px",
     }
   );
 

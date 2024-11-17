@@ -40,8 +40,9 @@ export const parallax = () => {
 
         animationID = window.requestAnimationFrame(animationFrame);
 
-        elements.forEach((element) => {
+        elements.forEach((element, index) => {
           const coefficient = element.dataset.coefficient ? Number(element.dataset.coefficient) : 5;
+          element.style.transition = `all 0.1s ${((elements.length + index) * 10) / coefficient}ms`;
           element.style.transform = `translate3D(0, ${-1 * (value / coefficient).toFixed(2)}px,0)`;
         });
       };

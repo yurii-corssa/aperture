@@ -1,8 +1,16 @@
 <section class="hero container">
-  <div class="hero__content">
-    <h2 class="hero__subtitle">Photographer & Filmmaker</h2>
-    <h1 class="hero__title">Aperture Studios</h1>
-    <p class="hero__description">
+  <div
+    class="hero__content"
+    data-watch
+    data-prlx-parent
+    data-prlx-smooth="15"
+    data-prlx-center="bottom"
+  >
+    <h2 data-prlx class="hero__subtitle">Photographer & Filmmaker</h2>
+    <div data-fluid-text>
+      <h1 data-prlx class="hero__title">Aperture Studios</h1>
+    </div>
+    <p data-prlx class="hero__description">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros
       elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
       commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem
@@ -37,20 +45,22 @@
     </li>
   </ul>
 
-  <video class="hero__video" autoplay muted loop playsinline>
-    <source src="./src/video/hero-bg-video-720.webm" type="video/webm" media="(width < 1280px)" />
-    <source
-      src="./src/video/hero-bg-video-1080.webm"
-      type="video/webm"
-      media="(width >= 1280px) and (width < 2560px)"
-    />
-    <source src="./src/video/hero-bg-video-4k.webm" type="video/webm" media="(width > 2560px)" />
-    <source src="./src/video/hero-bg-video-720.mp4" type="video/mp4" media="(width < 1280px)" />
-    <source
-      src="./src/video/hero-bg-video-1080.mp4"
-      type="video/mp4"
-      media="(width >= 1280px) and (width < 2560px)"
-    />
-    <source src="./src/video/hero-bg-video-4k.mp4" type="video/mp4" media="(width > 2560px)" />
-  </video>
+  <div class="hero__thumb">
+    <video data-prlx data-coefficient="10" class="hero__video" autoplay muted loop playsinline>
+      <source src="./src/video/hero-bg-video-720.webm" type="video/webm" media="(width < 1280px)" />
+      <source
+        src="./src/video/hero-bg-video-1080.webm"
+        type="video/webm"
+        media="(width >= 1280px) and (width < 2560px)"
+      />
+      <source src="./src/video/hero-bg-video-4k.webm" type="video/webm" media="(width > 2560px)" />
+      <source src="./src/video/hero-bg-video-720.mp4" type="video/mp4" media="(width < 1280px)" />
+      <source
+        src="./src/video/hero-bg-video-1080.mp4"
+        type="video/mp4"
+        media="(width >= 1280px) and (width < 2560px)"
+      />
+      <source src="./src/video/hero-bg-video-4k.mp4" type="video/mp4" media="(width > 2560px)" />
+    </video>
+  </div>
 </section>
