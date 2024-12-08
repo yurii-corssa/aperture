@@ -1,11 +1,11 @@
 import "../scss/main.scss";
+import effects from "./effects";
 import "./mobileMenu";
-import utils from "./utils/index";
 
-utils.fluidText();
+// effects.fluidText();
 
-utils.trackScrollPosition();
+effects.trackScrollPosition();
 
-utils.observeElements();
+// effects.parallax();
 
-utils.parallax();
+effects.splitTextAnimator({ selector: "blur-out-text" });

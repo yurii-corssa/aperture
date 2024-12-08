@@ -1,4 +1,4 @@
-import { debounce } from "./helpers/debounce";
+import { debounce } from "./helpers";
 
 const burgerBtn = document.querySelector(".burger-btn-js");
 const menu = document.querySelector(".menu-js");

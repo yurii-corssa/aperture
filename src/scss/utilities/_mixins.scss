@@ -36,14 +36,21 @@
   }
 }
 
-@mixin hover($properties, $values, $duration: 250ms, $timing-function: ease, $delay: 0s) {
+@mixin hover(
+  $properties,
+  $values,
+  $duration: 250ms,
+  $timing-function: ease,
+  $delay: 0s,
+  $nested-selector: "&"
+) {
   $property-string: "opacity";
 
   @each $property in $properties {
     $property-string: #{$property-string} + ", " + #{$property};
   }
 
-  & {
+  #{$nested-selector} {
     transition: $duration $timing-function $delay;
     transition-property: $property-string;
 
@@ -53,8 +60,10 @@
   @media (hover: hover) {
     &:hover,
     &:focus {
-      @for $i from 1 through list.length($properties) {
-        #{list.nth($properties, $i)}: list.nth($values, $i);
+      #{$nested-selector} {
+        @for $i from 1 through list.length($properties) {
+          #{list.nth($properties, $i)}: list.nth($values, $i);
+        }
       }
     }
 
@@ -65,8 +74,10 @@
 
   @media (hover: none) {
     &:active {
-      @for $i from 1 through list.length($properties) {
-        #{list.nth($properties, $i)}: list.nth($values, $i);
+      #{$nested-selector} {
+        @for $i from 1 through list.length($properties) {
+          #{list.nth($properties, $i)}: list.nth($values, $i);
+        }
       }
     }
   }
