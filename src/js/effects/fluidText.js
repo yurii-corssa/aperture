@@ -1,3 +1,15 @@
+import { createObserver, traverseTextNodes } from "js/utils";
+
+const onEnter = (element) => {
+  element.classList.add("animate");
+};
+
+const onLeave = (element) => {
+  element.classList.remove("animate");
+};
+
+const observer = createObserver(onEnter, onLeave, { rootMargin: "-10% 0%", threshold: 0.9 });
+
 const splitToChars = (wordText, startIndex = 0) => {
   let charsCount = startIndex;
 
@@ -47,25 +59,20 @@ const splitToWords = (text, startIndexWord = 0, startIndexChar = 0) => {
   return { newWordsArr, wordTotal, charTotal };
 };
 
-const processNode = (node) => {
-  if (node.nodeType === Node.TEXT_NODE) {
-    const text = node.textContent.trim();
+const processText = (textEl) => {
+  const text = textEl.textContent.trim();
 
-    if (text.length > 0) {
-      const { newWordsArr, wordTotal, charTotal } = splitToWords(text);
+  if (text.length) {
+    const { newWordsArr, wordTotal, charTotal } = splitToWords(text);
 
-      const newTextElement = document.createElement("span");
+    const newTextElement = document.createElement("span");
 
-      newTextElement.classList.add("fluid-text__words");
-      newTextElement.style.setProperty("--word-total", wordTotal);
-      newTextElement.style.setProperty("--char-total", charTotal);
-      newTextElement.append(...newWordsArr);
+    newTextElement.classList.add("fluid-text__words");
+    newTextElement.style.setProperty("--word-total", wordTotal);
+    newTextElement.style.setProperty("--char-total", charTotal);
+    newTextElement.append(...newWordsArr);
 
-      node.parentNode.replaceChild(newTextElement, node);
-    }
-  } else if (node.nodeType === Node.ELEMENT_NODE) {
-    const childNodes = [...node.childNodes];
-    childNodes.forEach((childNode) => processNode(childNode));
+    textEl.parentNode.replaceChild(newTextElement, textEl);
   }
 };
 
@@ -76,25 +83,10 @@ export const fluidText = () => {
     const innerTextElements = [...textBlock.children];
 
     innerTextElements.forEach((textElement) => {
-      processNode(textElement);
+      traverseTextNodes(textElement, processText);
     });
 
     textBlock.classList.add("fluid-text");
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(
-        (entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate");
-          } else {
-            entry.target.classList.remove("animate");
-          }
-        },
-        {
-          threshold: 0.9,
-        }
-      );
-    });
 
     observer.observe(textBlock);
   });

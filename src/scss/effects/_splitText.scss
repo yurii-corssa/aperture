@@ -1,0 +1,19 @@
+.blur-out-text {
+  &__item {
+    display: inline-block;
+    opacity: 0;
+    scale: 0.8;
+    filter: blur(4px);
+
+    transition-duration: var(--blur-out-text-duration);
+    transition-delay: var(--blur-out-text-delay);
+    transition-timing-function: var(--blur-out-text-timing-func);
+    transition-property: opacity, scale, filter;
+  }
+
+  &__item.visible {
+    opacity: 1;
+    scale: 1;
+    filter: blur(0);
+  }
+}
