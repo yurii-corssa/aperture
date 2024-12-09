@@ -19,25 +19,19 @@
     max-width: 37.5rem;
   }
 
-  &__content:not(.visible) {
-    opacity: 0;
-  }
-
-  &__content.visible {
-    transition: 1000ms ease;
-    opacity: 1;
-  }
-
   // .hero__subtitle
   &__subtitle {
     @extend %title-label;
+  }
+  // hero__title-wrapper
+  &__title-wrapper {
+    margin-bottom: toRem(18);
   }
   // .hero__title
   &__title {
     @extend %main-title;
 
     color: $text-heading-color;
-    margin-bottom: toRem(18);
   }
   // .hero__description
   &__description {

@@ -3,17 +3,6 @@
 @use "./utilities/placeholders" as *;
 @use "./utilities/mixins" as *;
 
-@keyframes liftCurtain {
-  0% {
-    transform: skewY(5deg) translateY(-30px);
-  }
-
-  100% {
-    transform: skewY(5deg) translateY(-175px);
-    visibility: hidden;
-  }
-}
-
 .header {
   @include adaptiveValue("column-gap", 32, 16, $bp-desktop-md, $bp-tablet);
 
@@ -26,36 +15,18 @@
     grid-template-columns: min-content 1fr;
     grid-template-rows: toRem(42);
     align-items: center;
-    padding-top: clamp(
-      toRem(10),
-      calc(toRem(24) - calc(var(--scroll-position) * 1px) / 24),
-      toRem(24)
-    );
-    padding-bottom: clamp(
-      toRem(10),
-      calc(toRem(24) - calc(var(--scroll-position) * 1px) / 24),
-      toRem(24)
-    );
+    padding-top: toRem(24);
+    padding-bottom: toRem(24);
     color: $text-heading-color;
     overflow: hidden;
     background-color: $background-header-color;
-    transition: 550ms ease;
-    transition-property: padding-left, padding-right;
+    transition: translate 550ms ease;
     z-index: 2;
   }
 
-  // &::after {
-  //   content: "";
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   width: 100%;
-  //   height: 150px;
-  //   background-color: $background-header-color;
-  //   transform: skewY(5deg) translateY(-30px);
-  //   filter: blur(5px);
-  //   animation: liftCurtain 1.4s forwards;
-  // }
+  &.hidden {
+    translate: 0 -100%;
+  }
 
   @media (width >= #{$bp-tablet}px) {
     justify-items: end;
@@ -128,8 +99,6 @@
   &__burger-btn {
     display: none;
 
-    @include hover(color, $accent-color);
-
     @media (width < #{$bp-tablet}px) {
       display: block;
       position: relative;
@@ -147,6 +116,8 @@
         height: toRem(3);
         background-color: currentColor;
         border-radius: 0.625rem;
+        transition-duration: 250ms;
+        transition-property: transform width;
       }
 
       &::before {
@@ -177,5 +148,7 @@
         }
       }
     }
+
+    @include hover(color, $accent-color);
   }
 }
