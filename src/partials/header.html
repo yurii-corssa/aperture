@@ -5,11 +5,16 @@
     </svg>
   </a>
 
-  <button type="button" class="header__burger-btn burger-btn-js" aria-controls="header-menu">
+  <button
+    type="button"
+    class="header__burger-btn burger-btn-js"
+    aria-expanded="false"
+    aria-controls="header-menu"
+  >
     <span></span>
   </button>
 
-  <div class="header__menu menu-js" id="header-menu">
+  <div id="header-menu" class="header__menu menu-js" aria-hidden="true">
     <nav class="header__nav">
       <ul class="header__list">
         <li class="header__item"><a href="#" class="header__link">Business areas</a></li>

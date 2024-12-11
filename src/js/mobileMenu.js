@@ -3,42 +3,47 @@ import { debounce } from "./helpers";
 const burgerBtn = document.querySelector(".burger-btn-js");
 const menu = document.querySelector(".menu-js");
 
-const toggleMenu = () => {
-  if (!burgerBtn && !menu) return;
+export const closeMenu = () => {
+  menu.classList.remove("is-open");
+  burgerBtn.setAttribute("aria-expanded", "false");
+  menu.setAttribute("aria-hidden", "true");
 
-  const isOpen = menu.classList.toggle("is-open");
-  burgerBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  menu.setAttribute("aria-hidden", isOpen ? "false" : "true");
+  window.removeEventListener("click", handleClickOutside);
 };
 
-const closeMenu = (e) => {
-  if (!burgerBtn && !menu) return;
+const openMenu = () => {
+  menu.classList.add("is-open");
+  burgerBtn.setAttribute("aria-expanded", "true");
+  menu.setAttribute("aria-hidden", "false");
 
-  if (!menu.contains(e.target) && !burgerBtn.contains(e.target)) {
-    menu.classList.remove("is-open");
-    burgerBtn.setAttribute("aria-expanded", "false");
-    menu.setAttribute("aria-hidden", "true");
-  }
+  window.addEventListener("click", handleClickOutside);
 };
 
 const handleMenu = () => {
-  if (!burgerBtn && !menu) return;
+  const isOpen = menu.classList.contains("is-open");
 
-  burgerBtn.removeEventListener("click", toggleMenu);
-  document.removeEventListener("click", closeMenu);
+  if (isOpen) closeMenu();
+  else openMenu();
+};
 
-  if (window.matchMedia("(width < 768px)").matches) {
-    burgerBtn.setAttribute("aria-expanded", "false");
-    menu.setAttribute("aria-hidden", "true");
-
-    burgerBtn.addEventListener("click", toggleMenu);
-    document.addEventListener("click", closeMenu);
-  } else {
-    menu.classList.remove("is-open");
-    burgerBtn.setAttribute("aria-expanded", "false");
-    menu.setAttribute("aria-hidden", "false");
+const handleClickOutside = (e) => {
+  if (!menu.contains(e.target) && !burgerBtn.contains(e.target)) {
+    closeMenu();
   }
 };
 
-handleMenu();
-window.addEventListener("resize", debounce(handleMenu, 200));
+const menuInit = () => {
+  if (!burgerBtn && !menu) return;
+
+  if (!window.matchMedia("(width < 768px)").matches) {
+    burgerBtn.removeEventListener("click", handleMenu);
+    window.removeEventListener("click", handleClickOutside);
+    closeMenu();
+    return;
+  }
+
+  burgerBtn.addEventListener("click", handleMenu);
+};
+
+menuInit();
+window.addEventListener("resize", debounce(menuInit, 200));

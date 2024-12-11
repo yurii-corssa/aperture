@@ -1,10 +1,14 @@
 import "../scss/main.scss";
 import effects from "./effects";
+
 import "./mobileMenu";
+import "./header";
 
 // effects.fluidText();
 
-effects.trackScrollPosition();
+// effects.trackScrollPosition();
+
+// effects.watcher();
 
 // effects.parallax();
 
