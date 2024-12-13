@@ -1,5 +1,6 @@
 import { toKebabCase } from "js/helpers";
 import { createObserver, traverseTextNodes } from "js/utils";
+import { onEnter, onLeave } from "./watcher";
 
 const defaultSettings = {
   selector: "split-text",
@@ -7,14 +8,6 @@ const defaultSettings = {
   delay: 500,
   duration: 600,
   transitionTimingFunction: "ease-out",
-};
-
-const onEnter = (element) => {
-  element.classList.add("visible");
-};
-
-const onLeave = (element) => {
-  element.classList.remove("visible");
 };
 
 const observer = createObserver(onEnter, onLeave, { rootMargin: "-20% 0% -10% 0%" });

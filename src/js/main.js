@@ -8,8 +8,8 @@ import "./header";
 
 // effects.trackScrollPosition();
 
-// effects.watcher();
-
 // effects.parallax();
+
+effects.watcher({ rootMargin: "-10% 0%" });
 
 effects.splitTextAnimator({ selector: "blur-out-text" });
