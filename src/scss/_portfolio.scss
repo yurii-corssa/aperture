@@ -4,6 +4,11 @@
 @use "./utilities/mixins" as *;
 
 .portfolio {
+  $portfolio-list-gap: 1rem;
+  $card-height: toRem(600);
+  $card-min-width: toRem(404);
+  $card-max-width: toRem(576);
+
   & {
     display: flex;
     flex-direction: column;
@@ -27,33 +32,26 @@
   // .portfolio__card-list
   &__card-list {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
+    gap: $portfolio-list-gap;
+    max-width: calc($card-max-width * 2 + $portfolio-list-gap);
     justify-content: center;
-    gap: toRem(16);
   }
   // .portfolio__card
   &__card {
     position: relative;
     display: flex;
     align-items: end;
-    max-width: toRem(576);
-    min-height: toRem(600);
+    flex: 1 1 $card-min-width;
+    max-width: $card-max-width;
+    height: $card-height;
     padding: toRem(30);
-    overflow: hidden;
 
     &::after {
       content: "";
       position: absolute;
       inset: 0;
       background: linear-gradient(360deg, #000000bb 0%, #ffffff00 60%);
-    }
-
-    @media (width < #{$bp-tablet}px) {
-      width: 100%;
-    }
-    @media (width >= #{$bp-tablet}px) {
-      width: calc((100% - toRem(16)) / 2);
     }
   }
   // .portfolio__card-image
@@ -62,10 +60,8 @@
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-    scale: 1.01;
     width: 100%;
     height: 100%;
-    scale: 1.5;
     object-fit: cover;
   }
   // .portfolio__card-content
@@ -92,5 +88,27 @@
   &__card-button {
     flex-shrink: 0;
     @extend %cta-btn;
+  }
+  // .portfolio__card-title,
+  // .portfolio__card-description
+  &__card-title,
+  &__card-description {
+    opacity: 0;
+    translate: 0 2rem;
+    filter: blur(4px);
+    transition: 600ms ease-out;
+    transition-property: opacity, translate, filter;
+  }
+  // .portfolio__card-title.visible,
+  // .portfolio__card-description.visible
+  &__card-title.visible,
+  &__card-description.visible {
+    opacity: 1;
+    translate: 0 0;
+    filter: blur(0);
+  }
+  // .portfolio__card-description.visible
+  &__card-description.visible {
+    transition-delay: 250ms;
   }
 }

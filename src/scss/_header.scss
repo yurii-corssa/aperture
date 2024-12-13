@@ -117,7 +117,7 @@
         background-color: currentColor;
         border-radius: 0.625rem;
         transition-duration: 250ms;
-        transition-property: transform width;
+        transition-property: transform, width;
       }
 
       &::before {
