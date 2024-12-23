@@ -142,23 +142,16 @@ const calculateOffset = (element, config) => {
   const topToWindow = element.getBoundingClientRect().top;
   const heightElement = element.offsetHeight;
   const heightWindow = window.innerHeight;
-  const elementPosition = {
-    top: topToWindow - heightWindow,
-    bottom: topToWindow + heightElement
-  };
-  if (elementPosition.top < 30 && elementPosition.bottom > -30) {
-    switch (config.position) {
-      case "top":
-        return -1 * topToWindow;
-      case "center":
-        return heightWindow / 2 - (topToWindow + heightElement / 2);
-      case "bottom":
-        return heightWindow - (topToWindow + heightElement);
-      default:
-        return 0;
-    }
+  switch (config.position) {
+    case "top":
+      return -1 * topToWindow;
+    case "center":
+      return heightWindow / 2 - (topToWindow + heightElement / 2);
+    case "bottom":
+      return heightWindow - (topToWindow + heightElement);
+    default:
+      return 0;
   }
-  return 0;
 };
 const calculateValue = (element, currentValue, config) => {
   const offset = calculateOffset(element, config);
@@ -199,20 +192,22 @@ const parallax = (initialSettings = {}) => {
     elements.forEach((parent) => {
       const parentConfig = getDataConfig$1(parent, config);
       const elements2 = parent.querySelectorAll(`[data-${config.selector}]`);
-      let animationID;
+      let animationID = null;
       let value = 0;
+      value = calculateValue(parent, value, parentConfig);
+      applyParallax(elements2, value, parentConfig);
       const animationFrame = () => {
         value = calculateValue(parent, value, parentConfig);
         applyParallax(elements2, value, parentConfig);
         animationID = window.requestAnimationFrame(animationFrame);
       };
-      const onEnter2 = (el) => {
-        animationID = window.requestAnimationFrame(animationFrame);
+      const onEnter2 = () => {
+        animationFrame();
       };
-      const onLeave2 = (el) => {
+      const onLeave2 = () => {
         window.cancelAnimationFrame(animationID);
       };
-      const observer2 = createObserver(onEnter2, onLeave2);
+      const observer2 = createObserver(onEnter2, onLeave2, { rootMargin: "20% 0%" });
       observer2.observe(parent);
     });
   }
@@ -254,7 +249,7 @@ const defaultSettings = {
   duration: 600,
   transitionTimingFunction: "ease-out"
 };
-const observer = createObserver(onEnter, onLeave, { rootMargin: "-20% 0% -10% 0%" });
+const observer = createObserver(onEnter, onLeave, { rootMargin: "-10% 0%" });
 const processText = (textEl, config) => {
   const text = textEl.textContent.trim();
   const separator = config.splitType === "letter" ? "" : " ";
@@ -390,5 +385,6 @@ const handleScroll = () => {
 };
 setHeaderVisibility(true);
 window.addEventListener("scroll", handleScroll);
+effects.parallax();
 effects.watcher({ rootMargin: "-10% 0%" });
 effects.splitTextAnimator({ selector: "blur-out-text" });

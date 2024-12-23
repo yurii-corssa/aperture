@@ -115,7 +115,7 @@ meter {
   box-sizing: border-box;
 }
 
-.footer__list-title, .newsletter__title, .portfolio__card-title, .hero__subtitle {
+.footer__list-title, .newsletter__title, .photo-highlight__title, .portfolio__card-title, .hero__subtitle {
   font-size: 0.88rem;
   line-height: 1.42857;
   letter-spacing: 0.14em;
@@ -203,6 +203,7 @@ svg {
 .image-details {
   position: absolute;
   bottom: 2.5rem;
+  right: 0;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -438,6 +439,45 @@ svg {
 }
 .portfolio__card-description.visible {
   transition-delay: 250ms;
+}
+
+.photo-highlight {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 1440/600;
+  min-height: 37.5rem;
+}
+.photo-highlight__image-thumb {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.photo-highlight__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-highlight__caption {
+  max-width: 18.75rem;
+}
+.photo-highlight__caption.visible {
+  max-width: 18.75rem;
+}
+.photo-highlight__title {
+  color: #fff;
+}
+.photo-highlight__title, .photo-highlight__description {
+  opacity: 0;
+  filter: blur(4px);
+  transition: 400ms ease-out;
+  transition-property: opacity, filter;
+}
+.photo-highlight__title.visible, .photo-highlight__description.visible {
+  opacity: 1;
+  filter: blur(0);
 }
 
 .footer {
