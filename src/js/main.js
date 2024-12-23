@@ -1,14 +1,14 @@
 import "../scss/main.scss";
 import effects from "./effects";
 
-import "./mobileMenu";
+import "./mobile-menu";
 import "./header";
 
 // effects.fluidText();
 
 // effects.trackScrollPosition();
 
-// effects.parallax();
+effects.parallax();
 
 effects.watcher({ rootMargin: "-10% 0%" });
 

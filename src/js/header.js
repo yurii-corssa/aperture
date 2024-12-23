@@ -1,5 +1,5 @@
 import { throttle } from "./helpers";
-import { closeMenu } from "./mobileMenu";
+import { closeMenu } from "./mobile-menu";
 
 const visibilityThreshold = 100;
 

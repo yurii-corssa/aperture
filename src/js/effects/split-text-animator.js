@@ -10,7 +10,7 @@ const defaultSettings = {
   transitionTimingFunction: "ease-out",
 };
 
-const observer = createObserver(onEnter, onLeave, { rootMargin: "-20% 0% -10% 0%" });
+const observer = createObserver(onEnter, onLeave, { rootMargin: "-10% 0%" });
 
 const processText = (textEl, config) => {
   const text = textEl.textContent.trim();
