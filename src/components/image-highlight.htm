@@ -1,0 +1,16 @@
+<figure>
+  <picture class="{=$block}__image-thumb">
+    <source srcset="{=$imageSrc} 1x, {=$imageSrc2x} 2x, {=$imageSrc3x} 3x" type="{=$imageType}" />
+    <img src="{=$imageSrc}" alt="{=$title}" class="{=$block}__bg-image" loading="lazy" />
+  </picture>
+
+  <figcaption
+    class="{=$block}__caption"
+    data-prlx-parent
+    data-prlx-coefficient="5"
+    data-prlx-smooth="10"
+  >
+    <h3 class="{=$block}__title" data-prlx data-watch>{=$title}</h3>
+    <p class="{=$block}__description" data-prlx data-watch>{=$description}</p>
+  </figcaption>
+</figure>
