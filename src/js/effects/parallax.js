@@ -13,24 +13,16 @@ const calculateOffset = (element, config) => {
   const heightElement = element.offsetHeight;
   const heightWindow = window.innerHeight;
 
-  const elementPosition = {
-    top: topToWindow - heightWindow,
-    bottom: topToWindow + heightElement,
-  };
-
-  if (elementPosition.top < 30 && elementPosition.bottom > -30) {
-    switch (config.position) {
-      case "top":
-        return -1 * topToWindow;
-      case "center":
-        return heightWindow / 2 - (topToWindow + heightElement / 2);
-      case "bottom":
-        return heightWindow - (topToWindow + heightElement);
-      default:
-        return 0;
-    }
+  switch (config.position) {
+    case "top":
+      return -1 * topToWindow;
+    case "center":
+      return heightWindow / 2 - (topToWindow + heightElement / 2);
+    case "bottom":
+      return heightWindow - (topToWindow + heightElement);
+    default:
+      return 0;
   }
-  return 0;
 };
 
 const calculateValue = (element, currentValue, config) => {
@@ -88,8 +80,11 @@ export const parallax = (initialSettings = {}) => {
 
       const elements = parent.querySelectorAll(`[data-${config.selector}]`);
 
-      let animationID;
+      let animationID = null;
       let value = 0;
+
+      value = calculateValue(parent, value, parentConfig);
+      applyParallax(elements, value, parentConfig);
 
       const animationFrame = () => {
         value = calculateValue(parent, value, parentConfig);
@@ -98,15 +93,15 @@ export const parallax = (initialSettings = {}) => {
         animationID = window.requestAnimationFrame(animationFrame);
       };
 
-      const onEnter = (el) => {
-        animationID = window.requestAnimationFrame(animationFrame);
+      const onEnter = () => {
+        animationFrame();
       };
 
-      const onLeave = (el) => {
+      const onLeave = () => {
         window.cancelAnimationFrame(animationID);
       };
 
-      const observer = createObserver(onEnter, onLeave);
+      const observer = createObserver(onEnter, onLeave, { rootMargin: "20% 0%" });
       observer.observe(parent);
     });
   }
