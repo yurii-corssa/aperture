@@ -24,17 +24,31 @@
 
 .image-details {
   & {
+    @include adaptiveValue("padding-right", 40, 15);
+    @include adaptiveValue("padding-left", 40, 15);
+
     position: absolute;
     bottom: toRem(40);
     right: 0;
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: end;
     gap: toRem(16);
 
-    @include adaptiveValue("padding-right", 40, 15);
-    @include adaptiveValue("padding-left", 40, 15);
+    &::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      width: 100%;
+      height: 150%;
+      background: $background-page-color;
+      filter: blur(40px);
+      border-radius: 10px;
+      opacity: 0.4;
+    }
   }
 
   // .image-details__item
@@ -43,9 +57,6 @@
     align-items: center;
     gap: toRem(6);
     color: $text-heading-color;
-  }
-  // .image-details__icon
-  &__icon {
   }
   // .image-details__text
   &__text {
