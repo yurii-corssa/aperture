@@ -129,18 +129,18 @@ meter {
   color: currentColor;
 }
 
-.portfolio__title {
+.contact__title, .portfolio__title {
   font-size: 2.5rem;
   line-height: 1.05;
   color: currentColor;
 }
 
-.portfolio__subtitle {
+.contact__subtitle, .portfolio__subtitle {
   font-size: 1.5rem;
   line-height: 1.25;
 }
 
-.portfolio__card-button, .header__button {
+.contact__button, .portfolio__card-button, .header__button {
   display: inline-flex;
   align-items: center;
   font-size: 1rem;
@@ -152,11 +152,11 @@ meter {
   color: #000;
   background-color: #fff;
 }
-.portfolio__card-button:has(.aperture-icon), .header__button:has(.aperture-icon) {
+.contact__button:has(.aperture-icon), .portfolio__card-button:has(.aperture-icon), .header__button:has(.aperture-icon) {
   padding-left: 0.5rem;
   gap: 0.75rem;
 }
-.portfolio__card-button, .header__button {
+.contact__button, .portfolio__card-button, .header__button {
   transition: 250ms ease 0s;
   transition-property: opacity, background-color, --aperture-size, --aperture-bg-color;
 }
@@ -204,11 +204,24 @@ svg {
   position: absolute;
   bottom: 2.5rem;
   right: 0;
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: end;
   gap: 1rem;
+}
+.image-details::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  width: 100%;
+  height: 150%;
+  background: #000;
+  filter: blur(40px);
+  border-radius: 10px;
+  opacity: 0.4;
 }
 .image-details__item {
   display: flex;
@@ -385,7 +398,10 @@ svg {
 .portfolio__card {
   position: relative;
   display: flex;
-  align-items: end;
+  flex-direction: column;
+  align-items: start;
+  justify-content: end;
+  gap: 1rem;
   flex: 1 1 25.25rem;
   max-width: 36rem;
   height: 37.5rem;
@@ -396,6 +412,7 @@ svg {
   position: absolute;
   inset: 0;
   background: linear-gradient(360deg, rgba(0, 0, 0, 0.7333333333) 0%, rgba(255, 255, 255, 0) 60%);
+  z-index: -1;
 }
 .portfolio__card-image {
   position: absolute;
@@ -405,40 +422,17 @@ svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: -2;
 }
 .portfolio__card-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  max-height: 100%;
   overflow-y: auto;
-  z-index: 1;
 }
 .portfolio__card-title {
   color: #fff;
   margin-bottom: 0.625rem;
 }
-.portfolio__card-description {
-  margin-bottom: 1rem;
-}
 .portfolio__card-button {
   flex-shrink: 0;
-}
-.portfolio__card-title, .portfolio__card-description {
-  opacity: 0;
-  translate: 0 2rem;
-  filter: blur(4px);
-  transition: 600ms ease-out;
-  transition-property: opacity, translate, filter;
-}
-.portfolio__card-title.visible, .portfolio__card-description.visible {
-  opacity: 1;
-  translate: 0 0;
-  filter: blur(0);
-}
-.portfolio__card-description.visible {
-  transition-delay: 250ms;
 }
 
 .photo-highlight {
@@ -462,9 +456,26 @@ svg {
 }
 .photo-highlight__caption {
   max-width: 18.75rem;
+  transition: 400ms ease-out;
+  transition-property: opacity, filter;
 }
-.photo-highlight__caption.visible {
-  max-width: 18.75rem;
+.photo-highlight__caption::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  width: 110%;
+  height: 110%;
+  background: #000;
+  filter: blur(40px);
+  border-radius: 10px;
+  opacity: 0;
+  transition: inherit;
+}
+.photo-highlight__caption:has(> .visible)::before {
+  opacity: 0.4;
 }
 .photo-highlight__title {
   color: #fff;
@@ -472,14 +483,27 @@ svg {
 .photo-highlight__title, .photo-highlight__description {
   opacity: 0;
   filter: blur(4px);
-  transition: 400ms ease-out;
-  transition-property: opacity, filter;
+  transition: inherit;
 }
 .photo-highlight__title.visible, .photo-highlight__description.visible {
   opacity: 1;
   filter: blur(0);
 }
 
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.375rem;
+  text-align: center;
+}
+.contact__header {
+  max-width: 600px;
+}
+.contact__title {
+  color: #fff;
+  margin-bottom: 1.125rem;
+}
 .footer {
   gap: 2.25rem 1.25rem;
   padding-top: 6.25rem;
@@ -854,12 +878,12 @@ svg {
   }
 }
 @media (hover: hover){
-  .portfolio__card-button:hover, .header__button:hover, .portfolio__card-button:focus, .header__button:focus {
+  .contact__button:hover, .portfolio__card-button:hover, .header__button:hover, .contact__button:focus, .portfolio__card-button:focus, .header__button:focus {
     background-color: #d7bfa5;
     --aperture-size: -10deg;
     --aperture-bg-color: #d7bfa5;
   }
-  .portfolio__card-button:active, .header__button:active {
+  .contact__button:active, .portfolio__card-button:active, .header__button:active {
     opacity: 0.8;
   }
   .logo:hover, .logo:focus {
@@ -901,7 +925,7 @@ svg {
   }
 }
 @media (hover: none){
-  .portfolio__card-button:active, .header__button:active {
+  .contact__button:active, .portfolio__card-button:active, .header__button:active {
     background-color: #d7bfa5;
     --aperture-size: -10deg;
     --aperture-bg-color: #d7bfa5;
