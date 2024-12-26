@@ -1,0 +1,31 @@
+@use "./utilities/placeholders" as *;
+@use "./utilities/variables" as *;
+@use "./utilities/functions" as *;
+
+.contact {
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(22);
+    text-align: center;
+  }
+  // .contact__header
+  &__header {
+    max-width: 600px;
+  }
+  // .contact__title
+  &__title {
+    @extend %section-title;
+    color: $text-heading-color;
+    margin-bottom: toRem(18);
+  }
+  // .contact__subtitle
+  &__subtitle {
+    @extend %subtitle;
+  }
+  // .contact__button
+  &__button {
+    @extend %cta-btn;
+  }
+}
