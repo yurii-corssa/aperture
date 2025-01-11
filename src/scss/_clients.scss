@@ -1,0 +1,42 @@
+@use "./utilities/placeholders" as *;
+@use "./utilities/variables" as *;
+@use "./utilities/functions" as *;
+
+.clients {
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: toRem(40);
+    text-align: center;
+  }
+  // .clients__header
+  &__header {
+    max-width: 600px;
+  }
+  // .clients__title
+  &__title {
+    @extend %section-title;
+    color: $text-heading-color;
+    margin-bottom: toRem(18);
+  }
+  // .clients__subtitle
+  &__subtitle {
+    @extend %subtitle;
+  }
+
+  &__slider {
+    width: 100%;
+  }
+  // .clients__logos
+  &__logos {
+  }
+  // .clients__logo
+  &__logo {
+    align-self: center;
+    padding-inline: toRem(20);
+  }
+  // .clients__img
+  &__img {
+  }
+}
