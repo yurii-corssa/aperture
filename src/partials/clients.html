@@ -4,9 +4,14 @@
     <p data-blur-out-text class="clients__subtitle">Trusted by your favourite companies</p>
   </div>
 
-  <div class="clients__slider">
-    <ul class="clients__logos">
-      <li class="clients__logo">
+  <div
+    class="clients__slider slider"
+    data-logos-slider
+    data-logos-slider-autoplay="true"
+    data-logos-slider-slides-to-show="5"
+  >
+    <ul class="clients__logos slider__list" data-logos-slider-list>
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/hill-and-hayes.svg"
           alt="Hill & Hayes logo"
@@ -16,7 +21,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/riksgransen.svg"
           alt="Riksgransen logo"
@@ -26,7 +31,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/studio-cai.svg"
           alt="Studio Cai logo"
@@ -36,7 +41,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/chill-industries.svg"
           alt="Chill Industries logo"
@@ -46,7 +51,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/stockholm.svg"
           alt="Stockholm logo"
@@ -56,7 +61,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/moon-studio.svg"
           alt="Stockholm logo"
@@ -66,7 +71,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/iglam-cosmetics.svg"
           alt="Stockholm logo"
@@ -76,7 +81,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/shodwe-streetwear.svg"
           alt="Stockholm logo"
@@ -86,7 +91,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/studio-olivia-wilson.svg"
           alt="Stockholm logo"
@@ -96,7 +101,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/inside-out.svg"
           alt="Stockholm logo"
@@ -106,7 +111,7 @@
         />
       </li>
 
-      <li class="clients__logo">
+      <li class="clients__logo slider__item">
         <img
           src="./src/img/client-logos/noah-skincare.svg"
           alt="Stockholm logo"
@@ -116,5 +121,7 @@
         />
       </li>
     </ul>
+    <button class="slider__nav slider__nav--prev" data-logos-slider-prev-btn>&#8592;</button>
+    <button class="slider__nav slider__nav--next" data-logos-slider-next-btn>&#8594;</button>
   </div>
 </section>

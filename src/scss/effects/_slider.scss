@@ -1,0 +1,44 @@
+@use "../utilities/placeholders" as *;
+@use "../utilities/variables" as *;
+@use "../utilities/functions" as *;
+
+.slider {
+  --slider-item-width: 100%;
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  // .slider__list
+  &__list {
+    display: flex;
+    width: 100%;
+    // will-change: transform;
+    cursor: grab;
+  }
+  &__list:active {
+    cursor: grabbing;
+  }
+  // .slider__item
+  &__item {
+    flex: 0 0 var(--slider-item-width);
+    transition: all 0.3s ease-out;
+  }
+  // .slider__nav
+  &__nav {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%);
+    color: $text-primary-color;
+    cursor: pointer;
+
+    // .slider__nav--prev
+    &--prev {
+      left: toRem(10);
+    }
+    // .slider__nav--next
+    &--next {
+      right: toRem(10);
+    }
+  }
+}
