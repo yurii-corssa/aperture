@@ -23,10 +23,10 @@
 }
 
 .image-details {
-  & {
-    @include adaptiveValue("padding-right", 40, 15);
-    @include adaptiveValue("padding-left", 40, 15);
+  @include adaptiveValue("padding-right", 40, 15);
+  @include adaptiveValue("padding-left", 40, 15);
 
+  & {
     position: absolute;
     bottom: toRem(40);
     right: 0;
@@ -69,11 +69,12 @@
   $aperture-size: var(--aperture-size, -30deg);
   $aperture-bg-color: var(--aperture-bg-color, $btn-bg-color);
   $aperture-rotate: var(--aperture-rotate, 40deg);
-
-  width: toRem(28);
-  height: toRem(28);
-  border-radius: 50%;
-  overflow: hidden;
+  & {
+    width: toRem(28);
+    height: toRem(28);
+    border-radius: 50%;
+    overflow: hidden;
+  }
   // .aperture-icon__blades
   &__blades {
     padding: toRem(2);

@@ -4,6 +4,7 @@
 
 .photo-highlight {
   & {
+    --shadow-opacity: 0;
     position: relative;
     display: flex;
     justify-content: end;
@@ -11,6 +12,14 @@
     width: 100%;
     aspect-ratio: 1440 / 600;
     min-height: toRem(600);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(270deg, #000000bb 0%, #ffffff00 80%);
+      z-index: -1;
+    }
   }
 
   // .photo-highlight__image-thumb
@@ -30,28 +39,6 @@
     max-width: toRem(300);
     transition: 400ms ease-out;
     transition-property: opacity, filter;
-
-    &::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-      width: 110%;
-      height: 110%;
-      background: $background-page-color;
-      filter: blur(40px);
-      border-radius: 10px;
-      opacity: 0;
-      transition: inherit;
-    }
-
-    &:has(> .visible) {
-      &::before {
-        opacity: 0.4;
-      }
-    }
   }
   // .photo-highlight__title
   &__title {
@@ -61,6 +48,8 @@
 
   &__title,
   &__description {
+    position: relative;
+    display: inline-block;
     opacity: 0;
     filter: blur(4px);
     transition: inherit;
