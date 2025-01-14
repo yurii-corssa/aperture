@@ -199,7 +199,6 @@ svg {
   transition: 250ms ease 0s;
   transition-property: opacity, color;
 }
-
 .image-details {
   position: absolute;
   bottom: 2.5rem;
@@ -436,6 +435,7 @@ svg {
 }
 
 .photo-highlight {
+  --shadow-opacity: 0;
   position: relative;
   display: flex;
   justify-content: end;
@@ -443,6 +443,13 @@ svg {
   width: 100%;
   aspect-ratio: 1440/600;
   min-height: 37.5rem;
+}
+.photo-highlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0.7333333333) 0%, rgba(255, 255, 255, 0) 80%);
+  z-index: -1;
 }
 .photo-highlight__image-thumb {
   position: absolute;
@@ -459,28 +466,12 @@ svg {
   transition: 400ms ease-out;
   transition-property: opacity, filter;
 }
-.photo-highlight__caption::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  width: 110%;
-  height: 110%;
-  background: #000;
-  filter: blur(40px);
-  border-radius: 10px;
-  opacity: 0;
-  transition: inherit;
-}
-.photo-highlight__caption:has(> .visible)::before {
-  opacity: 0.4;
-}
 .photo-highlight__title {
   color: #fff;
 }
 .photo-highlight__title, .photo-highlight__description {
+  position: relative;
+  display: inline-block;
   opacity: 0;
   filter: blur(4px);
   transition: inherit;
@@ -722,6 +713,37 @@ svg {
   30%, 100% {
     opacity: var(--opacity, 1);
   }
+}
+.slider {
+  --slider-item-width: 100%;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.slider__list {
+  display: flex;
+  width: 100%;
+  cursor: grab;
+}
+.slider__list:active {
+  cursor: grabbing;
+}
+.slider__item {
+  flex: 0 0 var(--slider-item-width);
+  transition: all 0.3s ease-out;
+}
+.slider__nav {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%);
+  color: #c0c0c0;
+  cursor: pointer;
+}
+.slider__nav--prev {
+  left: 0.625rem;
+}
+.slider__nav--next {
+  right: 0.625rem;
 }
 @media (width >= 320px) and (width < 1440px){
   .container {

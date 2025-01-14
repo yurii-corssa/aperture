@@ -1,3 +1,6 @@
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -212,6 +215,162 @@ const parallax = (initialSettings = {}) => {
     });
   }
 };
+class Slider {
+  constructor(sliderElement, sliderKey, initialConfig) {
+    __publicField(this, "defaultConfig", {
+      autoplay: false,
+      interval: 3e3,
+      slidesToShow: 1,
+      loop: true
+    });
+    __publicField(this, "onClickPrevBtn", () => {
+      const activeItem = this.listElement.querySelector(this.elementSelectorsMap.activeItem);
+      const prevItem = this.listElement.querySelector(this.elementSelectorsMap.prevItem);
+      const nextItem = this.listElement.querySelector(this.elementSelectorsMap.nextItem);
+      const newActiveItem = prevItem;
+      const newPrevItem = prevItem.previousElementSibling;
+      const newNextItem = activeItem;
+      this.listElement.insertBefore(prevItem, activeItem);
+      activeItem.removeAttribute(this.dataAttributesMap.activeItem);
+      prevItem.removeAttribute(this.dataAttributesMap.prevItem);
+      nextItem.removeAttribute(this.dataAttributesMap.nextItem);
+      newActiveItem.setAttribute(this.dataAttributesMap.activeItem, "");
+      newPrevItem.setAttribute(this.dataAttributesMap.prevItem, "");
+      newNextItem.setAttribute(this.dataAttributesMap.nextItem, "");
+    });
+    __publicField(this, "onClickNextBtn", () => {
+      const activeItem = this.listElement.querySelector(this.elementSelectorsMap.activeItem);
+      const prevItem = this.listElement.querySelector(this.elementSelectorsMap.prevItem);
+      const nextItem = this.listElement.querySelector(this.elementSelectorsMap.nextItem);
+      const newActiveItem = nextItem;
+      const newPrevItem = activeItem;
+      const newNextItem = nextItem.nextElementSibling;
+      this.listElement.appendChild(activeItem);
+      activeItem.removeAttribute(this.dataAttributesMap.activeItem);
+      prevItem.removeAttribute(this.dataAttributesMap.prevItem);
+      nextItem.removeAttribute(this.dataAttributesMap.nextItem);
+      newActiveItem.setAttribute(this.dataAttributesMap.activeItem, "");
+      newPrevItem.setAttribute(this.dataAttributesMap.prevItem, "");
+      newNextItem.setAttribute(this.dataAttributesMap.nextItem, "");
+    });
+    var _a;
+    this.sliderKey = sliderKey;
+    this.dataAttributesMap = this.createDataAttributesMap();
+    this.elementSelectorsMap = this.createElementSelectorsMap();
+    this.sliderElement = sliderElement;
+    this.listElement = this.sliderElement.querySelector(this.elementSelectorsMap.list);
+    this.itemElements = (_a = this.listElement) == null ? void 0 : _a.children;
+    this.prevBtn = this.sliderElement.querySelector(this.elementSelectorsMap.prevBtn);
+    this.nextBtn = this.sliderElement.querySelector(this.elementSelectorsMap.nextBtn);
+    if (!this.listElement) {
+      console.warn(`Slider "${this.sliderKey}": list element not found.`);
+      return;
+    }
+    if (!this.itemElements || !this.itemElements.length) {
+      console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
+      return;
+    }
+    this.currentConfig = {
+      ...this.defaultConfig,
+      ...initialConfig,
+      ...this.getDataConfig()
+    };
+    this.itemWidthPercent = 100 / this.currentConfig.slidesToShow;
+    this.sliderElement.style.setProperty("--slider-item-width", `${this.itemWidthPercent}%`);
+    this.activeItem = this.itemElements[0];
+    this.prevItem = this.itemElements[this.itemElements.length - 1];
+    this.nextItem = this.activeItem.nextElementSibling;
+    this.activeItem.setAttribute(this.dataAttributesMap.activeItem, "");
+    this.prevItem.setAttribute(this.dataAttributesMap.prevItem, "");
+    this.nextItem.setAttribute(this.dataAttributesMap.nextItem, "");
+    this.bindEvents();
+  }
+  createDataAttributesMap() {
+    return {
+      autoplay: `data-${this.sliderKey}-autoplay`,
+      interval: `data-${this.sliderKey}-interval`,
+      slidesToShow: `data-${this.sliderKey}-slides-to-show`,
+      loop: `data-${this.sliderKey}-loop`,
+      activeItem: `data-${this.sliderKey}-active-item`,
+      prevItem: `data-${this.sliderKey}-prev-item`,
+      nextItem: `data-${this.sliderKey}-next-item`
+    };
+  }
+  createElementSelectorsMap() {
+    return {
+      list: `[data-${this.sliderKey}-list]`,
+      prevBtn: `[data-${this.sliderKey}-prev-btn]`,
+      nextBtn: `[data-${this.sliderKey}-next-btn]`,
+      activeItem: `[data-${this.sliderKey}-active-item]`,
+      prevItem: `[data-${this.sliderKey}-prev-item]`,
+      nextItem: `[data-${this.sliderKey}-next-item]`
+    };
+  }
+  parseAttributeValue(key, value) {
+    const parseBoolean = (value2) => {
+      if (value2 === "true" || value2 === "false") {
+        return value2 === "true";
+      }
+      console.warn(`Slider "${this.sliderKey}": invalid boolean value for "${key}": ${value2}`);
+      return null;
+    };
+    const parseNumber = (value2) => {
+      const numericValue = Number(value2);
+      if (isNaN(numericValue)) {
+        console.warn(`Value for ${key} is not a number: ${value2}`);
+        return null;
+      }
+      if (numericValue < 1) {
+        console.warn(`Slider "${this.sliderKey}": invalid number value for "${key}": ${value2}`);
+        return null;
+      }
+      return numericValue;
+    };
+    switch (key) {
+      case "autoplay":
+      case "loop":
+        return parseBoolean(value);
+      case "interval":
+      case "slidesToShow":
+        return parseNumber(value);
+      default:
+        return value;
+    }
+  }
+  getDataConfig() {
+    const dataConfig = {};
+    Object.entries(this.dataAttributesMap).forEach(([key, attribute]) => {
+      const dataValue = this.sliderElement.getAttribute(attribute);
+      if (dataValue !== null) {
+        const parsedValue = this.parseAttributeValue(key, dataValue);
+        if (parsedValue !== null) {
+          dataConfig[key] = parsedValue;
+        }
+      }
+    });
+    return dataConfig;
+  }
+  bindEvents() {
+    if (this.prevBtn && this.nextBtn) {
+      this.prevBtn.addEventListener("click", this.onClickPrevBtn);
+      this.nextBtn.addEventListener("click", this.onClickNextBtn);
+    }
+  }
+}
+class SliderGroup {
+  constructor(sliderKey = "slider", initialConfig = {}) {
+    this.sliderKey = sliderKey;
+    this.config = initialConfig;
+    this.sliderElements = document.querySelectorAll(`[data-${this.sliderKey}]`);
+    if (!this.sliderElements.length) {
+      console.warn(`No slider elements found for selector: [data-${this.sliderKey}]`);
+      return;
+    }
+    this.sliderElements.forEach((sliderElement) => {
+      new Slider(sliderElement, this.sliderKey, this.config);
+    });
+  }
+}
 const debounce = (func, delay) => {
   let timeout;
   return (...args) => {
@@ -322,7 +481,14 @@ const trackScrollPosition = (targetElement = document.documentElement, variableN
     targetElement.style.setProperty(variableName, scrollPosition);
   });
 };
-const effects = { parallax, splitTextAnimator, fluidText, trackScrollPosition, watcher };
+const effects = {
+  parallax,
+  splitTextAnimator,
+  fluidText,
+  trackScrollPosition,
+  watcher,
+  SliderGroup
+};
 const burgerBtn = document.querySelector(".burger-btn-js");
 const menu = document.querySelector(".menu-js");
 const closeMenu = () => {
@@ -388,3 +554,4 @@ window.addEventListener("scroll", handleScroll);
 effects.parallax();
 effects.watcher({ rootMargin: "-10% 0%" });
 effects.splitTextAnimator({ selector: "blur-out-text" });
+new effects.SliderGroup("logos-slider");
