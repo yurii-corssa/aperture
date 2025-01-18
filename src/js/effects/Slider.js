@@ -17,55 +17,42 @@ class Slider {
     this.prevBtn = this.sliderElement.querySelector(this.elementSelectorsMap.prevBtn);
     this.nextBtn = this.sliderElement.querySelector(this.elementSelectorsMap.nextBtn);
 
-    if (!this.listElement) {
-      console.warn(`Slider "${this.sliderKey}": list element not found.`);
-      return;
-    }
-    if (!this.itemElements || !this.itemElements.length) {
-      console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
-      return;
-    }
+    if (!this.validateSliderElements()) return;
 
-    this.currentConfig = {
-      ...this.defaultConfig,
-      ...initialConfig,
-      ...this.getDataConfig(),
-    };
-
-    this.itemWidthPercent = 100 / this.currentConfig.slidesToShow;
-    this.sliderElement.style.setProperty("--slider-item-width", `${this.itemWidthPercent}%`);
+    this.config = this.setupConfig(initialConfig);
 
     this.activeItem = this.itemElements[0];
     this.prevItem = this.itemElements[this.itemElements.length - 1];
     this.nextItem = this.activeItem.nextElementSibling;
 
-    this.activeItem.setAttribute(this.dataAttributesMap.activeItem, "");
-    this.prevItem.setAttribute(this.dataAttributesMap.prevItem, "");
-    this.nextItem.setAttribute(this.dataAttributesMap.nextItem, "");
-
+    this.updateSliderStyles();
     this.bindEvents();
   }
 
   createDataAttributesMap() {
+    const createAttributeString = (attr) => `data-${this.sliderKey}-${attr}`;
+
     return {
-      autoplay: `data-${this.sliderKey}-autoplay`,
-      interval: `data-${this.sliderKey}-interval`,
-      slidesToShow: `data-${this.sliderKey}-slides-to-show`,
-      loop: `data-${this.sliderKey}-loop`,
-      activeItem: `data-${this.sliderKey}-active-item`,
-      prevItem: `data-${this.sliderKey}-prev-item`,
-      nextItem: `data-${this.sliderKey}-next-item`,
+      autoplay: createAttributeString("autoplay"),
+      interval: createAttributeString("interval"),
+      slidesToShow: createAttributeString("slides-to-show"),
+      loop: createAttributeString("loop"),
+      activeItem: createAttributeString("active-item"),
+      prevItem: createAttributeString("prev-item"),
+      nextItem: createAttributeString("next-item"),
     };
   }
 
   createElementSelectorsMap() {
+    const createSelectorString = (selector) => `[data-${this.sliderKey}-${selector}]`;
+
     return {
-      list: `[data-${this.sliderKey}-list]`,
-      prevBtn: `[data-${this.sliderKey}-prev-btn]`,
-      nextBtn: `[data-${this.sliderKey}-next-btn]`,
-      activeItem: `[data-${this.sliderKey}-active-item]`,
-      prevItem: `[data-${this.sliderKey}-prev-item]`,
-      nextItem: `[data-${this.sliderKey}-next-item]`,
+      list: createSelectorString("list"),
+      prevBtn: createSelectorString("prev-btn"),
+      nextBtn: createSelectorString("next-btn"),
+      activeItem: createSelectorString("active-item"),
+      prevItem: createSelectorString("prev-item"),
+      nextItem: createSelectorString("next-item"),
     };
   }
 
@@ -103,71 +90,63 @@ class Slider {
     }
   }
 
-  getDataConfig() {
-    const dataConfig = {};
+  setupConfig(initialConfig) {
+    const config = {
+      ...this.defaultConfig,
+      ...initialConfig,
+    };
 
-    Object.entries(this.dataAttributesMap).forEach(([key, attribute]) => {
-      const dataValue = this.sliderElement.getAttribute(attribute);
-
-      if (dataValue !== null) {
+    Object.entries(this.dataAttributesMap)
+      .filter(([_, attribute]) => this.sliderElement.hasAttribute(attribute))
+      .forEach(([key, attribute]) => {
+        const dataValue = this.sliderElement.getAttribute(attribute);
         const parsedValue = this.parseAttributeValue(key, dataValue);
 
-        if (parsedValue !== null) {
-          dataConfig[key] = parsedValue;
-        }
-      }
-    });
+        config[key] = parsedValue;
+      });
 
-    return dataConfig;
+    return new Proxy(config, {
+      get: (target, prop) => target[prop],
+      set: (target, prop, value) => {
+        target[prop] = value;
+        this.updateSliderStyles();
+        return true;
+      },
+    });
   }
 
   onClickPrevBtn = () => {
-    const activeItem = this.listElement.querySelector(this.elementSelectorsMap.activeItem);
-    const prevItem = this.listElement.querySelector(this.elementSelectorsMap.prevItem);
-    const nextItem = this.listElement.querySelector(this.elementSelectorsMap.nextItem);
-
-    const newActiveItem = prevItem;
+    const activeItem = this.activeItem;
+    const prevItem = this.prevItem;
     const newPrevItem = prevItem.previousElementSibling;
-    const newNextItem = activeItem;
 
+    prevItem.classList.add("is-entering");
     this.listElement.insertBefore(prevItem, activeItem);
 
-    // this.prevItem.style.marginLeft = `-${this.itemWidthPercent}%`;
-    // setTimeout(() => {
-    //   this.prevItem.style.marginLeft = null;
-    // }, 1);
+    requestAnimationFrame(() => prevItem.classList.remove("is-entering"));
 
-    activeItem.removeAttribute(this.dataAttributesMap.activeItem);
-    prevItem.removeAttribute(this.dataAttributesMap.prevItem);
-    nextItem.removeAttribute(this.dataAttributesMap.nextItem);
-
-    newActiveItem.setAttribute(this.dataAttributesMap.activeItem, "");
-    newPrevItem.setAttribute(this.dataAttributesMap.prevItem, "");
-    newNextItem.setAttribute(this.dataAttributesMap.nextItem, "");
+    this.activeItem = prevItem;
+    this.prevItem = newPrevItem;
+    this.nextItem = activeItem;
   };
+
   onClickNextBtn = () => {
-    const activeItem = this.listElement.querySelector(this.elementSelectorsMap.activeItem);
-    const prevItem = this.listElement.querySelector(this.elementSelectorsMap.prevItem);
-    const nextItem = this.listElement.querySelector(this.elementSelectorsMap.nextItem);
+    const activeItem = this.activeItem;
+    const nextItem = this.nextItem;
 
-    const newActiveItem = nextItem;
-    const newPrevItem = activeItem;
-    const newNextItem = nextItem.nextElementSibling;
+    const onTransitionEnd = () => {
+      activeItem.removeEventListener("transitionend", onTransitionEnd);
+      activeItem.classList.remove("is-leaving");
+      this.listElement.appendChild(activeItem);
+    };
 
-    this.listElement.appendChild(activeItem);
+    requestAnimationFrame(() => activeItem.classList.add("is-leaving"));
 
-    // this.prevItem.style.marginLeft = `-${this.itemWidthPercent}%`;
-    // setTimeout(() => {
-    //   this.prevItem.style.marginLeft = null;
-    // }, 1);
+    activeItem.addEventListener("transitionend", onTransitionEnd);
 
-    activeItem.removeAttribute(this.dataAttributesMap.activeItem);
-    prevItem.removeAttribute(this.dataAttributesMap.prevItem);
-    nextItem.removeAttribute(this.dataAttributesMap.nextItem);
-
-    newActiveItem.setAttribute(this.dataAttributesMap.activeItem, "");
-    newPrevItem.setAttribute(this.dataAttributesMap.prevItem, "");
-    newNextItem.setAttribute(this.dataAttributesMap.nextItem, "");
+    this.activeItem = nextItem;
+    this.prevItem = activeItem;
+    this.nextItem = nextItem.nextElementSibling;
   };
 
   bindEvents() {
@@ -175,6 +154,23 @@ class Slider {
       this.prevBtn.addEventListener("click", this.onClickPrevBtn);
       this.nextBtn.addEventListener("click", this.onClickNextBtn);
     }
+  }
+
+  validateSliderElements() {
+    if (!this.listElement) {
+      console.warn(`Slider "${this.sliderKey}": list element not found.`);
+      return false;
+    }
+    if (!this.itemElements || !this.itemElements.length) {
+      console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
+      return false;
+    }
+    return true;
+  }
+
+  updateSliderStyles() {
+    this.itemWidthPercent = 100 / this.config.slidesToShow;
+    this.sliderElement.style.setProperty("--slider-item-width", `${this.itemWidthPercent}%`);
   }
 }
 

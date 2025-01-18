@@ -13,7 +13,7 @@
   &__list {
     display: flex;
     width: 100%;
-    // will-change: transform;
+    position: relative;
     cursor: grab;
   }
   &__list:active {
@@ -22,7 +22,18 @@
   // .slider__item
   &__item {
     flex: 0 0 var(--slider-item-width);
-    transition: all 0.3s ease-out;
+    margin-inline-start: 0%;
+    transition: margin-inline-start 0.3s ease-out;
+    will-change: margin-inline-start;
+
+    &.is-leaving {
+      margin-inline-start: calc(-1 * var(--slider-item-width));
+    }
+
+    &.is-entering {
+      margin-inline-start: calc(-1 * var(--slider-item-width));
+      transition: none;
+    }
   }
   // .slider__nav
   &__nav {
