@@ -27,16 +27,24 @@
 
   &__slider {
     width: 100%;
+    height: toRem(158);
+    padding: toRem(40) toRem(46);
   }
   // .clients__logos
   &__logos {
+    width: 100%;
+    height: 100%;
   }
   // .clients__logo
   &__logo {
-    align-self: center;
-    padding-inline: toRem(20);
+    display: inline-flex;
+    justify-content: center;
+    min-width: toRem(128);
+    height: 100%;
   }
   // .clients__img
   &__img {
+    width: toRem(128);
+    height: 100%;
   }
 }

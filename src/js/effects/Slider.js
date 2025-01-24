@@ -1,15 +1,19 @@
+import { toRem } from "js/utils";
+
 class Slider {
   defaultConfig = {
     autoplay: false,
     interval: 3000,
     slidesToShow: 1,
     loop: true,
+    listGap: 0,
+    slideMinWidth: 128,
   };
 
   constructor(sliderElement, sliderKey, initialConfig) {
     this.sliderKey = sliderKey;
-    this.dataAttributesMap = this.createDataAttributesMap();
-    this.elementSelectorsMap = this.createElementSelectorsMap();
+    this.dataAttributesMap = this.#createDataAttributesMap();
+    this.elementSelectorsMap = this.#createElementSelectorsMap();
 
     this.sliderElement = sliderElement;
     this.listElement = this.sliderElement.querySelector(this.elementSelectorsMap.list);
@@ -17,19 +21,20 @@ class Slider {
     this.prevBtn = this.sliderElement.querySelector(this.elementSelectorsMap.prevBtn);
     this.nextBtn = this.sliderElement.querySelector(this.elementSelectorsMap.nextBtn);
 
-    if (!this.validateSliderElements()) return;
+    if (!this.#validateSliderElements()) return;
 
-    this.config = this.setupConfig(initialConfig);
+    this.config = this.#setupConfig(initialConfig);
 
     this.activeItem = this.itemElements[0];
     this.prevItem = this.itemElements[this.itemElements.length - 1];
     this.nextItem = this.activeItem.nextElementSibling;
 
-    this.updateSliderStyles();
+    this.applyStyles();
+    this.setupResizeObserver();
     this.bindEvents();
   }
 
-  createDataAttributesMap() {
+  #createDataAttributesMap = () => {
     const createAttributeString = (attr) => `data-${this.sliderKey}-${attr}`;
 
     return {
@@ -37,13 +42,15 @@ class Slider {
       interval: createAttributeString("interval"),
       slidesToShow: createAttributeString("slides-to-show"),
       loop: createAttributeString("loop"),
+      listGap: createAttributeString("list-gap"),
+      slideMinWidth: createAttributeString("slide-min-width"),
       activeItem: createAttributeString("active-item"),
       prevItem: createAttributeString("prev-item"),
       nextItem: createAttributeString("next-item"),
     };
-  }
+  };
 
-  createElementSelectorsMap() {
+  #createElementSelectorsMap = () => {
     const createSelectorString = (selector) => `[data-${this.sliderKey}-${selector}]`;
 
     return {
@@ -54,9 +61,9 @@ class Slider {
       prevItem: createSelectorString("prev-item"),
       nextItem: createSelectorString("next-item"),
     };
-  }
+  };
 
-  parseAttributeValue(key, value) {
+  #parseAttributeValue = (key, value) => {
     const parseBoolean = (value) => {
       if (value === "true" || value === "false") {
         return value === "true";
@@ -78,19 +85,17 @@ class Slider {
       return numericValue;
     };
 
-    switch (key) {
-      case "autoplay":
-      case "loop":
+    switch (typeof this.defaultConfig[key]) {
+      case "boolean":
         return parseBoolean(value);
-      case "interval":
-      case "slidesToShow":
+      case "number":
         return parseNumber(value);
       default:
         return value;
     }
-  }
+  };
 
-  setupConfig(initialConfig) {
+  #setupConfig = (initialConfig) => {
     const config = {
       ...this.defaultConfig,
       ...initialConfig,
@@ -100,20 +105,47 @@ class Slider {
       .filter(([_, attribute]) => this.sliderElement.hasAttribute(attribute))
       .forEach(([key, attribute]) => {
         const dataValue = this.sliderElement.getAttribute(attribute);
-        const parsedValue = this.parseAttributeValue(key, dataValue);
+        const parsedValue = this.#parseAttributeValue(key, dataValue);
 
         config[key] = parsedValue;
       });
 
-    return new Proxy(config, {
-      get: (target, prop) => target[prop],
-      set: (target, prop, value) => {
-        target[prop] = value;
-        this.updateSliderStyles();
-        return true;
-      },
-    });
-  }
+    const get = (target, prop) => {
+      return target[prop];
+    };
+
+    const set = (target, prop, value) => {
+      if (target[prop] === value) return true;
+
+      target[prop] = value;
+      this.applyStyles();
+
+      return true;
+    };
+
+    return new Proxy(config, { get, set });
+  };
+
+  #validateSliderElements = () => {
+    if (!this.listElement) {
+      console.warn(`Slider "${this.sliderKey}": list element not found.`);
+      return false;
+    }
+    if (!this.itemElements || !this.itemElements.length) {
+      console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
+      return false;
+    }
+    return true;
+  };
+
+  #calculateVisibleSlides = () => {
+    const { listGap, slideMinWidth } = this.config;
+    const currentListWidth = this.listElement.offsetWidth;
+    const totalSlides = this.itemElements.length;
+    const slidesCount = Math.floor((currentListWidth + listGap) / (slideMinWidth + listGap));
+
+    this.config.slidesToShow = Math.min(totalSlides, Math.max(1, slidesCount));
+  };
 
   onClickPrevBtn = () => {
     const activeItem = this.activeItem;
@@ -149,29 +181,24 @@ class Slider {
     this.nextItem = nextItem.nextElementSibling;
   };
 
-  bindEvents() {
+  bindEvents = () => {
     if (this.prevBtn && this.nextBtn) {
       this.prevBtn.addEventListener("click", this.onClickPrevBtn);
       this.nextBtn.addEventListener("click", this.onClickNextBtn);
     }
-  }
+  };
 
-  validateSliderElements() {
-    if (!this.listElement) {
-      console.warn(`Slider "${this.sliderKey}": list element not found.`);
-      return false;
-    }
-    if (!this.itemElements || !this.itemElements.length) {
-      console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
-      return false;
-    }
-    return true;
-  }
+  applyStyles = () => {
+    const { listGap, slidesToShow } = this.config;
 
-  updateSliderStyles() {
-    this.itemWidthPercent = 100 / this.config.slidesToShow;
-    this.sliderElement.style.setProperty("--slider-item-width", `${this.itemWidthPercent}%`);
-  }
+    this.sliderElement.style.setProperty("--slider-list-gap", `${toRem(listGap)}rem`);
+    this.sliderElement.style.setProperty("--slider-slides-to-show", slidesToShow);
+  };
+
+  setupResizeObserver = () => {
+    const resizeObserver = new ResizeObserver(this.#calculateVisibleSlides);
+    resizeObserver.observe(this.listElement);
+  };
 }
 
 export class SliderGroup {
@@ -190,3 +217,19 @@ export class SliderGroup {
     });
   }
 }
+
+/* ---------------------------------- */
+
+// var swiper = new Swiper(".mySwiper", {
+//   slidesPerView: 5,
+//   spaceBetween: 0,
+//   loop: true,
+//   pagination: {
+//     el: ".swiper-pagination",
+//     clickable: true,
+//   },
+//   navigation: {
+//     nextEl: ".swiper-button-next",
+//     prevEl: ".swiper-button-prev",
+//   },
+// });

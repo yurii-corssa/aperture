@@ -3,17 +3,21 @@
 @use "../utilities/functions" as *;
 
 .slider {
-  --slider-item-width: 100%;
+  --slider-slides-to-show: 1;
+  --slider-list-gap: 0;
+  --slider-total-visible-gaps: calc((var(--slider-slides-to-show) - 1) * var(--slider-list-gap));
+  --slider-available-width: calc(100% - var(--slider-total-visible-gaps));
+  --slider-item-width: calc(var(--slider-available-width) / var(--slider-slides-to-show));
 
   position: relative;
   width: 100%;
-  overflow: hidden;
 
   // .slider__list
   &__list {
     display: flex;
+    gap: var(--slider-list-gap);
     width: 100%;
-    position: relative;
+    overflow: hidden;
     cursor: grab;
   }
   &__list:active {
@@ -27,11 +31,10 @@
     will-change: margin-inline-start;
 
     &.is-leaving {
-      margin-inline-start: calc(-1 * var(--slider-item-width));
+      margin-inline-start: calc(-1 * (var(--slider-item-width) + var(--slider-list-gap)));
     }
-
     &.is-entering {
-      margin-inline-start: calc(-1 * var(--slider-item-width));
+      margin-inline-start: calc(-1 * (var(--slider-item-width) + var(--slider-list-gap)));
       transition: none;
     }
   }
@@ -53,3 +56,71 @@
     }
   }
 }
+
+/* ---------------------------------- */
+
+// .slider {
+//   --slider-item-width: 100%;
+
+//   position: relative;
+//   width: 100%;
+//   overflow: hidden;
+
+//   // .slider__list
+//   &__list {
+//     display: flex;
+//     width: max-content;
+//     // justify-content: center;
+//     // will-change: transform;
+//     transition: all 0.3s ease-out;
+
+//     cursor: grab;
+//   }
+//   &__list:active {
+//     cursor: grabbing;
+//   }
+//   // .slider__item
+//   &__item {
+//     flex: 0 0 var(--slider-item-width);
+//     transition: all 0.3s ease-out;
+//   }
+//   // .slider__nav
+//   &__nav {
+//     position: absolute;
+//     top: 50%;
+//     transform: translate(-50%);
+//     color: $text-primary-color;
+//     cursor: pointer;
+
+//     // .slider__nav--prev
+//     &--prev {
+//       left: toRem(10);
+//     }
+//     // .slider__nav--next
+//     &--next {
+//       right: toRem(10);
+//     }
+//   }
+// }
+
+/* ---------------------------------- */
+
+// .swiper {
+//   width: 100%;
+//   height: 100%;
+// }
+
+// .swiper-slide {
+// }
+
+// .swiper-slide img {
+//   display: block;
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+// }
+
+// .swiper {
+//   margin-left: auto;
+//   margin-right: auto;
+// }
