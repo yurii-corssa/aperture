@@ -5,7 +5,6 @@ class Slider {
     autoplay: false,
     interval: 3000,
     slidesToShow: 1,
-    loop: true,
     listGap: 0,
     slideMinWidth: 128,
   };
@@ -135,6 +134,10 @@ class Slider {
       console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
       return false;
     }
+    if (this.itemElements.length < 2) {
+      console.warn(`Slider "${this.sliderKey}": less than two items in the list.`);
+      return false;
+    }
     return true;
   };
 
@@ -165,19 +168,20 @@ class Slider {
   onClickNextBtn = () => {
     const activeItem = this.activeItem;
     const nextItem = this.nextItem;
+    const clonedItem = activeItem.cloneNode(true);
+
+    activeItem.classList.add("is-leaving");
+    this.listElement.appendChild(clonedItem);
 
     const onTransitionEnd = () => {
       activeItem.removeEventListener("transitionend", onTransitionEnd);
-      activeItem.classList.remove("is-leaving");
-      this.listElement.appendChild(activeItem);
+      activeItem.remove();
     };
-
-    requestAnimationFrame(() => activeItem.classList.add("is-leaving"));
 
     activeItem.addEventListener("transitionend", onTransitionEnd);
 
     this.activeItem = nextItem;
-    this.prevItem = activeItem;
+    this.prevItem = clonedItem;
     this.nextItem = nextItem.nextElementSibling;
   };
 
@@ -190,9 +194,15 @@ class Slider {
 
   applyStyles = () => {
     const { listGap, slidesToShow } = this.config;
+    const totalSlides = this.itemElements.length;
 
     this.sliderElement.style.setProperty("--slider-list-gap", `${toRem(listGap)}rem`);
     this.sliderElement.style.setProperty("--slider-slides-to-show", slidesToShow);
+
+    const disableButtons = totalSlides <= slidesToShow;
+
+    if (this.prevBtn) this.prevBtn.disabled = disableButtons;
+    if (this.nextBtn) this.nextBtn.disabled = disableButtons;
   };
 
   setupResizeObserver = () => {

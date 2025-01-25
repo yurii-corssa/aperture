@@ -4,7 +4,7 @@
 
 .slider {
   --slider-slides-to-show: 1;
-  --slider-list-gap: 0;
+  --slider-list-gap: 0rem;
   --slider-total-visible-gaps: calc((var(--slider-slides-to-show) - 1) * var(--slider-list-gap));
   --slider-available-width: calc(100% - var(--slider-total-visible-gaps));
   --slider-item-width: calc(var(--slider-available-width) / var(--slider-slides-to-show));
