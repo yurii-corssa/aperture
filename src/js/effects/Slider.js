@@ -1,4 +1,4 @@
-import { toRem } from "js/utils";
+import { createObserver, toRem } from "js/utils";
 
 class Slider {
   defaultConfig = {
@@ -28,9 +28,9 @@ class Slider {
     this.prevItem = this.itemElements[this.itemElements.length - 1];
     this.nextItem = this.activeItem.nextElementSibling;
 
-    this.applyStyles();
-    this.setupResizeObserver();
-    this.bindEvents();
+    this.#applyStyles();
+    this.#setupIntersectionObserver();
+    this.#setupResizeObserver();
   }
 
   #createDataAttributesMap = () => {
@@ -94,6 +94,19 @@ class Slider {
     }
   };
 
+  #applyStyles = () => {
+    const { listGap, slidesToShow } = this.config;
+    const totalSlides = this.itemElements.length;
+
+    this.sliderElement.style.setProperty("--slider-list-gap", `${toRem(listGap)}rem`);
+    this.sliderElement.style.setProperty("--slider-slides-to-show", slidesToShow);
+
+    const disableButtons = totalSlides <= slidesToShow;
+
+    if (this.prevBtn) this.prevBtn.disabled = disableButtons;
+    if (this.nextBtn) this.nextBtn.disabled = disableButtons;
+  };
+
   #setupConfig = (initialConfig) => {
     const config = {
       ...this.defaultConfig,
@@ -117,7 +130,7 @@ class Slider {
       if (target[prop] === value) return true;
 
       target[prop] = value;
-      this.applyStyles();
+      this.#applyStyles();
 
       return true;
     };
@@ -150,7 +163,29 @@ class Slider {
     this.config.slidesToShow = Math.min(totalSlides, Math.max(1, slidesCount));
   };
 
-  onClickPrevBtn = () => {
+  #setupResizeObserver = () => {
+    const resizeObserver = new ResizeObserver(this.#calculateVisibleSlides);
+    resizeObserver.observe(this.listElement);
+  };
+
+  #setupIntersectionObserver = () => {
+    const onEnter = () => {
+      if (this.prevBtn) this.prevBtn.addEventListener("click", this.moveToLeft);
+      if (this.nextBtn) this.nextBtn.addEventListener("click", this.moveToRight);
+      if (this.config.autoplay) this.startAutoplay();
+    };
+
+    const onLeave = () => {
+      clearInterval(this.autoplayInterval);
+      this.sliderElement.removeEventListener("mouseenter", this.stopAutoplay);
+      this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
+    };
+
+    const observer = createObserver(onEnter, onLeave);
+    observer.observe(this.sliderElement);
+  };
+
+  moveToLeft = () => {
     const activeItem = this.activeItem;
     const prevItem = this.prevItem;
     const newPrevItem = prevItem.previousElementSibling;
@@ -165,7 +200,7 @@ class Slider {
     this.nextItem = activeItem;
   };
 
-  onClickNextBtn = () => {
+  moveToRight = () => {
     const activeItem = this.activeItem;
     const nextItem = this.nextItem;
     const clonedItem = activeItem.cloneNode(true);
@@ -185,29 +220,21 @@ class Slider {
     this.nextItem = nextItem.nextElementSibling;
   };
 
-  bindEvents = () => {
-    if (this.prevBtn && this.nextBtn) {
-      this.prevBtn.addEventListener("click", this.onClickPrevBtn);
-      this.nextBtn.addEventListener("click", this.onClickNextBtn);
-    }
+  stopAutoplay = () => {
+    clearInterval(this.autoplayInterval);
+    this.sliderElement.removeEventListener("mouseenter", this.stopAutoplay);
+    this.sliderElement.addEventListener("mouseleave", this.startAutoplay);
   };
 
-  applyStyles = () => {
-    const { listGap, slidesToShow } = this.config;
-    const totalSlides = this.itemElements.length;
+  startAutoplay = () => {
+    const { interval } = this.config;
 
-    this.sliderElement.style.setProperty("--slider-list-gap", `${toRem(listGap)}rem`);
-    this.sliderElement.style.setProperty("--slider-slides-to-show", slidesToShow);
+    this.autoplayInterval = setInterval(() => {
+      this.moveToRight();
+    }, interval);
 
-    const disableButtons = totalSlides <= slidesToShow;
-
-    if (this.prevBtn) this.prevBtn.disabled = disableButtons;
-    if (this.nextBtn) this.nextBtn.disabled = disableButtons;
-  };
-
-  setupResizeObserver = () => {
-    const resizeObserver = new ResizeObserver(this.#calculateVisibleSlides);
-    resizeObserver.observe(this.listElement);
+    this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
+    this.sliderElement.addEventListener("mouseenter", this.stopAutoplay);
   };
 }
 
