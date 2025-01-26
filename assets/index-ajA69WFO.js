@@ -1,6 +1,13 @@
 var __defProp = Object.defineProperty;
+var __typeError = (msg) => {
+  throw TypeError(msg);
+};
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
+var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+var _createDataAttributesMap, _createElementSelectorsMap, _parseAttributeValue, _applyStyles, _setupConfig, _validateSliderElements, _calculateVisibleSlides, _setupResizeObserver, _setupIntersectionObserver;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -70,6 +77,13 @@ const traverseTextNodes = (node, callback, ...args) => {
       queue.unshift(...currentNode.childNodes);
     }
   }
+};
+const toRem = (value, base = 16) => {
+  if (typeof value !== "number" || typeof base !== "number") {
+    console.warn("Both value and base must be numbers");
+    return;
+  }
+  return Number((value / base).toFixed(4));
 };
 const onEnter$1 = (element) => {
   element.classList.add("animate");
@@ -221,142 +235,200 @@ class Slider {
       autoplay: false,
       interval: 3e3,
       slidesToShow: 1,
-      loop: true
+      listGap: 0,
+      slideMinWidth: 128
     });
-    __publicField(this, "onClickPrevBtn", () => {
-      const activeItem = this.listElement.querySelector(this.elementSelectorsMap.activeItem);
-      const prevItem = this.listElement.querySelector(this.elementSelectorsMap.prevItem);
-      const nextItem = this.listElement.querySelector(this.elementSelectorsMap.nextItem);
-      const newActiveItem = prevItem;
+    __privateAdd(this, _createDataAttributesMap, () => {
+      const createAttributeString = (attr) => `data-${this.sliderKey}-${attr}`;
+      return {
+        autoplay: createAttributeString("autoplay"),
+        interval: createAttributeString("interval"),
+        slidesToShow: createAttributeString("slides-to-show"),
+        loop: createAttributeString("loop"),
+        listGap: createAttributeString("list-gap"),
+        slideMinWidth: createAttributeString("slide-min-width"),
+        activeItem: createAttributeString("active-item"),
+        prevItem: createAttributeString("prev-item"),
+        nextItem: createAttributeString("next-item")
+      };
+    });
+    __privateAdd(this, _createElementSelectorsMap, () => {
+      const createSelectorString = (selector) => `[data-${this.sliderKey}-${selector}]`;
+      return {
+        list: createSelectorString("list"),
+        prevBtn: createSelectorString("prev-btn"),
+        nextBtn: createSelectorString("next-btn"),
+        activeItem: createSelectorString("active-item"),
+        prevItem: createSelectorString("prev-item"),
+        nextItem: createSelectorString("next-item")
+      };
+    });
+    __privateAdd(this, _parseAttributeValue, (key, value) => {
+      const parseBoolean = (value2) => {
+        if (value2 === "true" || value2 === "false") {
+          return value2 === "true";
+        }
+        console.warn(`Slider "${this.sliderKey}": invalid boolean value for "${key}": ${value2}`);
+        return null;
+      };
+      const parseNumber = (value2) => {
+        const numericValue = Number(value2);
+        if (isNaN(numericValue)) {
+          console.warn(`Value for ${key} is not a number: ${value2}`);
+          return null;
+        }
+        if (numericValue < 1) {
+          console.warn(`Slider "${this.sliderKey}": invalid number value for "${key}": ${value2}`);
+          return null;
+        }
+        return numericValue;
+      };
+      switch (typeof this.defaultConfig[key]) {
+        case "boolean":
+          return parseBoolean(value);
+        case "number":
+          return parseNumber(value);
+        default:
+          return value;
+      }
+    });
+    __privateAdd(this, _applyStyles, () => {
+      const { listGap, slidesToShow } = this.config;
+      const totalSlides = this.itemElements.length;
+      this.sliderElement.style.setProperty("--slider-list-gap", `${toRem(listGap)}rem`);
+      this.sliderElement.style.setProperty("--slider-slides-to-show", slidesToShow);
+      const disableButtons = totalSlides <= slidesToShow;
+      if (this.prevBtn) this.prevBtn.disabled = disableButtons;
+      if (this.nextBtn) this.nextBtn.disabled = disableButtons;
+    });
+    __privateAdd(this, _setupConfig, (initialConfig) => {
+      const config = {
+        ...this.defaultConfig,
+        ...initialConfig
+      };
+      Object.entries(this.dataAttributesMap).filter(([_, attribute]) => this.sliderElement.hasAttribute(attribute)).forEach(([key, attribute]) => {
+        const dataValue = this.sliderElement.getAttribute(attribute);
+        const parsedValue = __privateGet(this, _parseAttributeValue).call(this, key, dataValue);
+        config[key] = parsedValue;
+      });
+      const get = (target, prop) => {
+        return target[prop];
+      };
+      const set = (target, prop, value) => {
+        if (target[prop] === value) return true;
+        target[prop] = value;
+        __privateGet(this, _applyStyles).call(this);
+        return true;
+      };
+      return new Proxy(config, { get, set });
+    });
+    __privateAdd(this, _validateSliderElements, () => {
+      if (!this.listElement) {
+        console.warn(`Slider "${this.sliderKey}": list element not found.`);
+        return false;
+      }
+      if (!this.itemElements || !this.itemElements.length) {
+        console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
+        return false;
+      }
+      if (this.itemElements.length < 2) {
+        console.warn(`Slider "${this.sliderKey}": less than two items in the list.`);
+        return false;
+      }
+      return true;
+    });
+    __privateAdd(this, _calculateVisibleSlides, () => {
+      const { listGap, slideMinWidth } = this.config;
+      const currentListWidth = this.listElement.offsetWidth;
+      const totalSlides = this.itemElements.length;
+      const slidesCount = Math.floor((currentListWidth + listGap) / (slideMinWidth + listGap));
+      this.config.slidesToShow = Math.min(totalSlides, Math.max(1, slidesCount));
+    });
+    __privateAdd(this, _setupResizeObserver, () => {
+      const resizeObserver = new ResizeObserver(__privateGet(this, _calculateVisibleSlides));
+      resizeObserver.observe(this.listElement);
+    });
+    __privateAdd(this, _setupIntersectionObserver, () => {
+      const onEnter2 = () => {
+        if (this.prevBtn) this.prevBtn.addEventListener("click", this.moveToLeft);
+        if (this.nextBtn) this.nextBtn.addEventListener("click", this.moveToRight);
+        if (this.config.autoplay) this.startAutoplay();
+      };
+      const onLeave2 = () => {
+        clearInterval(this.autoplayInterval);
+        this.sliderElement.removeEventListener("mouseenter", this.stopAutoplay);
+        this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
+      };
+      const observer2 = createObserver(onEnter2, onLeave2);
+      observer2.observe(this.sliderElement);
+    });
+    __publicField(this, "moveToLeft", () => {
+      const activeItem = this.activeItem;
+      const prevItem = this.prevItem;
       const newPrevItem = prevItem.previousElementSibling;
-      const newNextItem = activeItem;
+      prevItem.classList.add("is-entering");
       this.listElement.insertBefore(prevItem, activeItem);
-      activeItem.removeAttribute(this.dataAttributesMap.activeItem);
-      prevItem.removeAttribute(this.dataAttributesMap.prevItem);
-      nextItem.removeAttribute(this.dataAttributesMap.nextItem);
-      newActiveItem.setAttribute(this.dataAttributesMap.activeItem, "");
-      newPrevItem.setAttribute(this.dataAttributesMap.prevItem, "");
-      newNextItem.setAttribute(this.dataAttributesMap.nextItem, "");
+      requestAnimationFrame(() => prevItem.classList.remove("is-entering"));
+      this.activeItem = prevItem;
+      this.prevItem = newPrevItem;
+      this.nextItem = activeItem;
     });
-    __publicField(this, "onClickNextBtn", () => {
-      const activeItem = this.listElement.querySelector(this.elementSelectorsMap.activeItem);
-      const prevItem = this.listElement.querySelector(this.elementSelectorsMap.prevItem);
-      const nextItem = this.listElement.querySelector(this.elementSelectorsMap.nextItem);
-      const newActiveItem = nextItem;
-      const newPrevItem = activeItem;
-      const newNextItem = nextItem.nextElementSibling;
-      this.listElement.appendChild(activeItem);
-      activeItem.removeAttribute(this.dataAttributesMap.activeItem);
-      prevItem.removeAttribute(this.dataAttributesMap.prevItem);
-      nextItem.removeAttribute(this.dataAttributesMap.nextItem);
-      newActiveItem.setAttribute(this.dataAttributesMap.activeItem, "");
-      newPrevItem.setAttribute(this.dataAttributesMap.prevItem, "");
-      newNextItem.setAttribute(this.dataAttributesMap.nextItem, "");
+    __publicField(this, "moveToRight", () => {
+      const activeItem = this.activeItem;
+      const nextItem = this.nextItem;
+      const clonedItem = activeItem.cloneNode(true);
+      activeItem.classList.add("is-leaving");
+      this.listElement.appendChild(clonedItem);
+      const onTransitionEnd = () => {
+        activeItem.removeEventListener("transitionend", onTransitionEnd);
+        activeItem.remove();
+      };
+      activeItem.addEventListener("transitionend", onTransitionEnd);
+      this.activeItem = nextItem;
+      this.prevItem = clonedItem;
+      this.nextItem = nextItem.nextElementSibling;
+    });
+    __publicField(this, "stopAutoplay", () => {
+      clearInterval(this.autoplayInterval);
+      this.sliderElement.removeEventListener("mouseenter", this.stopAutoplay);
+      this.sliderElement.addEventListener("mouseleave", this.startAutoplay);
+    });
+    __publicField(this, "startAutoplay", () => {
+      const { interval } = this.config;
+      this.autoplayInterval = setInterval(() => {
+        this.moveToRight();
+      }, interval);
+      this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
+      this.sliderElement.addEventListener("mouseenter", this.stopAutoplay);
     });
     var _a;
     this.sliderKey = sliderKey;
-    this.dataAttributesMap = this.createDataAttributesMap();
-    this.elementSelectorsMap = this.createElementSelectorsMap();
+    this.dataAttributesMap = __privateGet(this, _createDataAttributesMap).call(this);
+    this.elementSelectorsMap = __privateGet(this, _createElementSelectorsMap).call(this);
     this.sliderElement = sliderElement;
     this.listElement = this.sliderElement.querySelector(this.elementSelectorsMap.list);
     this.itemElements = (_a = this.listElement) == null ? void 0 : _a.children;
     this.prevBtn = this.sliderElement.querySelector(this.elementSelectorsMap.prevBtn);
     this.nextBtn = this.sliderElement.querySelector(this.elementSelectorsMap.nextBtn);
-    if (!this.listElement) {
-      console.warn(`Slider "${this.sliderKey}": list element not found.`);
-      return;
-    }
-    if (!this.itemElements || !this.itemElements.length) {
-      console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
-      return;
-    }
-    this.currentConfig = {
-      ...this.defaultConfig,
-      ...initialConfig,
-      ...this.getDataConfig()
-    };
-    this.itemWidthPercent = 100 / this.currentConfig.slidesToShow;
-    this.sliderElement.style.setProperty("--slider-item-width", `${this.itemWidthPercent}%`);
+    if (!__privateGet(this, _validateSliderElements).call(this)) return;
+    this.config = __privateGet(this, _setupConfig).call(this, initialConfig);
     this.activeItem = this.itemElements[0];
     this.prevItem = this.itemElements[this.itemElements.length - 1];
     this.nextItem = this.activeItem.nextElementSibling;
-    this.activeItem.setAttribute(this.dataAttributesMap.activeItem, "");
-    this.prevItem.setAttribute(this.dataAttributesMap.prevItem, "");
-    this.nextItem.setAttribute(this.dataAttributesMap.nextItem, "");
-    this.bindEvents();
-  }
-  createDataAttributesMap() {
-    return {
-      autoplay: `data-${this.sliderKey}-autoplay`,
-      interval: `data-${this.sliderKey}-interval`,
-      slidesToShow: `data-${this.sliderKey}-slides-to-show`,
-      loop: `data-${this.sliderKey}-loop`,
-      activeItem: `data-${this.sliderKey}-active-item`,
-      prevItem: `data-${this.sliderKey}-prev-item`,
-      nextItem: `data-${this.sliderKey}-next-item`
-    };
-  }
-  createElementSelectorsMap() {
-    return {
-      list: `[data-${this.sliderKey}-list]`,
-      prevBtn: `[data-${this.sliderKey}-prev-btn]`,
-      nextBtn: `[data-${this.sliderKey}-next-btn]`,
-      activeItem: `[data-${this.sliderKey}-active-item]`,
-      prevItem: `[data-${this.sliderKey}-prev-item]`,
-      nextItem: `[data-${this.sliderKey}-next-item]`
-    };
-  }
-  parseAttributeValue(key, value) {
-    const parseBoolean = (value2) => {
-      if (value2 === "true" || value2 === "false") {
-        return value2 === "true";
-      }
-      console.warn(`Slider "${this.sliderKey}": invalid boolean value for "${key}": ${value2}`);
-      return null;
-    };
-    const parseNumber = (value2) => {
-      const numericValue = Number(value2);
-      if (isNaN(numericValue)) {
-        console.warn(`Value for ${key} is not a number: ${value2}`);
-        return null;
-      }
-      if (numericValue < 1) {
-        console.warn(`Slider "${this.sliderKey}": invalid number value for "${key}": ${value2}`);
-        return null;
-      }
-      return numericValue;
-    };
-    switch (key) {
-      case "autoplay":
-      case "loop":
-        return parseBoolean(value);
-      case "interval":
-      case "slidesToShow":
-        return parseNumber(value);
-      default:
-        return value;
-    }
-  }
-  getDataConfig() {
-    const dataConfig = {};
-    Object.entries(this.dataAttributesMap).forEach(([key, attribute]) => {
-      const dataValue = this.sliderElement.getAttribute(attribute);
-      if (dataValue !== null) {
-        const parsedValue = this.parseAttributeValue(key, dataValue);
-        if (parsedValue !== null) {
-          dataConfig[key] = parsedValue;
-        }
-      }
-    });
-    return dataConfig;
-  }
-  bindEvents() {
-    if (this.prevBtn && this.nextBtn) {
-      this.prevBtn.addEventListener("click", this.onClickPrevBtn);
-      this.nextBtn.addEventListener("click", this.onClickNextBtn);
-    }
+    __privateGet(this, _applyStyles).call(this);
+    __privateGet(this, _setupIntersectionObserver).call(this);
+    __privateGet(this, _setupResizeObserver).call(this);
   }
 }
+_createDataAttributesMap = new WeakMap();
+_createElementSelectorsMap = new WeakMap();
+_parseAttributeValue = new WeakMap();
+_applyStyles = new WeakMap();
+_setupConfig = new WeakMap();
+_validateSliderElements = new WeakMap();
+_calculateVisibleSlides = new WeakMap();
+_setupResizeObserver = new WeakMap();
+_setupIntersectionObserver = new WeakMap();
 class SliderGroup {
   constructor(sliderKey = "slider", initialConfig = {}) {
     this.sliderKey = sliderKey;
