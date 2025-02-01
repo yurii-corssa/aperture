@@ -7,7 +7,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
 var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
 var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-var _createDataAttributesMap, _createElementSelectorsMap, _parseAttributeValue, _applyStyles, _setupConfig, _validateSliderElements, _calculateVisibleSlides, _setupResizeObserver, _setupIntersectionObserver;
+var _createDataAttributesMap, _createElementSelectorsMap, _parseAttributeValue, _applyStyles, _setupConfig, _validateSliderElements, _calculateVisibleSlides, _setupNavigation, _onResize, _onIntersect;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -234,9 +234,15 @@ class Slider {
     __publicField(this, "defaultConfig", {
       autoplay: false,
       interval: 3e3,
+      delay: 300,
       slidesToShow: 1,
       listGap: 0,
       slideMinWidth: 128
+    });
+    __publicField(this, "intersectionConfig", {
+      root: null,
+      rootMargin: "0%",
+      threshold: 0
     });
     __privateAdd(this, _createDataAttributesMap, () => {
       const createAttributeString = (attr) => `data-${this.sliderKey}-${attr}`;
@@ -294,12 +300,8 @@ class Slider {
     });
     __privateAdd(this, _applyStyles, () => {
       const { listGap, slidesToShow } = this.config;
-      const totalSlides = this.itemElements.length;
       this.sliderElement.style.setProperty("--slider-list-gap", `${toRem(listGap)}rem`);
       this.sliderElement.style.setProperty("--slider-slides-to-show", slidesToShow);
-      const disableButtons = totalSlides <= slidesToShow;
-      if (this.prevBtn) this.prevBtn.disabled = disableButtons;
-      if (this.nextBtn) this.nextBtn.disabled = disableButtons;
     });
     __privateAdd(this, _setupConfig, (initialConfig) => {
       const config = {
@@ -324,15 +326,11 @@ class Slider {
     });
     __privateAdd(this, _validateSliderElements, () => {
       if (!this.listElement) {
-        console.warn(`Slider "${this.sliderKey}": list element not found.`);
+        console.error(`Slider "${this.sliderKey}": list element not found.`);
         return false;
       }
       if (!this.itemElements || !this.itemElements.length) {
         console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
-        return false;
-      }
-      if (this.itemElements.length < 2) {
-        console.warn(`Slider "${this.sliderKey}": less than two items in the list.`);
         return false;
       }
       return true;
@@ -340,27 +338,43 @@ class Slider {
     __privateAdd(this, _calculateVisibleSlides, () => {
       const { listGap, slideMinWidth } = this.config;
       const currentListWidth = this.listElement.offsetWidth;
-      const totalSlides = this.itemElements.length;
       const slidesCount = Math.floor((currentListWidth + listGap) / (slideMinWidth + listGap));
-      this.config.slidesToShow = Math.min(totalSlides, Math.max(1, slidesCount));
+      this.config.slidesToShow = Math.min(this.totalSlides, Math.max(1, slidesCount));
     });
-    __privateAdd(this, _setupResizeObserver, () => {
-      const resizeObserver = new ResizeObserver(__privateGet(this, _calculateVisibleSlides));
-      resizeObserver.observe(this.listElement);
+    __privateAdd(this, _setupNavigation, () => {
+      const shouldDisableNavigation = this.totalSlides <= this.config.slidesToShow;
+      const navigationStateChanged = shouldDisableNavigation !== this.navigationIsDisabled;
+      this.navigationIsDisabled = shouldDisableNavigation;
+      if (navigationStateChanged) {
+        if (this.navBtnsExist) {
+          this.prevBtnElement.disabled = shouldDisableNavigation;
+          this.nextBtnElement.disabled = shouldDisableNavigation;
+        }
+      }
+      if (shouldDisableNavigation) this.stopAutoplay();
+      else this.startAutoplay();
     });
-    __privateAdd(this, _setupIntersectionObserver, () => {
-      const onEnter2 = () => {
-        if (this.prevBtn) this.prevBtn.addEventListener("click", this.moveToLeft);
-        if (this.nextBtn) this.nextBtn.addEventListener("click", this.moveToRight);
-        if (this.config.autoplay) this.startAutoplay();
-      };
-      const onLeave2 = () => {
-        clearInterval(this.autoplayInterval);
-        this.sliderElement.removeEventListener("mouseenter", this.stopAutoplay);
-        this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
-      };
-      const observer2 = createObserver(onEnter2, onLeave2);
-      observer2.observe(this.sliderElement);
+    __privateAdd(this, _onResize, () => {
+      __privateGet(this, _calculateVisibleSlides).call(this);
+      __privateGet(this, _setupNavigation).call(this);
+    });
+    __privateAdd(this, _onIntersect, (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (this.navBtnsExist) {
+            this.prevBtnElement.addEventListener("click", this.moveToLeft);
+            this.nextBtnElement.addEventListener("click", this.moveToRight);
+          }
+          this.resizeObserver.observe(this.sliderElement);
+        } else {
+          if (this.navBtnsExist) {
+            this.prevBtnElement.removeEventListener("click", this.moveToLeft);
+            this.nextBtnElement.removeEventListener("click", this.moveToRight);
+          }
+          this.stopAutoplay();
+          this.resizeObserver.unobserve(this.sliderElement);
+        }
+      });
     });
     __publicField(this, "moveToLeft", () => {
       const activeItem = this.activeItem;
@@ -389,17 +403,38 @@ class Slider {
       this.nextItem = nextItem.nextElementSibling;
     });
     __publicField(this, "stopAutoplay", () => {
-      clearInterval(this.autoplayInterval);
-      this.sliderElement.removeEventListener("mouseenter", this.stopAutoplay);
-      this.sliderElement.addEventListener("mouseleave", this.startAutoplay);
+      if (this.autoplayIntervalId) {
+        clearInterval(this.autoplayIntervalId);
+        clearTimeout(this.autoplayDelayId);
+        this.autoplayDelayId = null;
+        this.autoplayIntervalId = null;
+        this.sliderElement.removeEventListener("mouseenter", this.pauseAutoplay);
+        this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
+      }
+    });
+    __publicField(this, "pauseAutoplay", () => {
+      if (this.autoplayIntervalId) {
+        clearTimeout(this.autoplayDelayId);
+        clearInterval(this.autoplayIntervalId);
+        this.autoplayDelayId = null;
+        this.autoplayIntervalId = null;
+        this.sliderElement.removeEventListener("mouseenter", this.pauseAutoplay);
+        this.sliderElement.addEventListener("mouseleave", this.startAutoplay);
+      }
     });
     __publicField(this, "startAutoplay", () => {
-      const { interval } = this.config;
-      this.autoplayInterval = setInterval(() => {
-        this.moveToRight();
-      }, interval);
-      this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
-      this.sliderElement.addEventListener("mouseenter", this.stopAutoplay);
+      const isNotRunning = !this.autoplayIntervalId && !this.autoplayDelayId;
+      if (this.config.autoplay && !this.navigationIsDisabled && isNotRunning) {
+        const { interval, delay } = this.config;
+        this.autoplayDelayId = setTimeout(() => {
+          this.moveToRight();
+          this.autoplayIntervalId = setInterval(() => {
+            this.moveToRight();
+          }, interval);
+        }, delay);
+        this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
+        this.sliderElement.addEventListener("mouseenter", this.pauseAutoplay);
+      }
     });
     var _a;
     this.sliderKey = sliderKey;
@@ -408,16 +443,20 @@ class Slider {
     this.sliderElement = sliderElement;
     this.listElement = this.sliderElement.querySelector(this.elementSelectorsMap.list);
     this.itemElements = (_a = this.listElement) == null ? void 0 : _a.children;
-    this.prevBtn = this.sliderElement.querySelector(this.elementSelectorsMap.prevBtn);
-    this.nextBtn = this.sliderElement.querySelector(this.elementSelectorsMap.nextBtn);
-    if (!__privateGet(this, _validateSliderElements).call(this)) return;
+    this.prevBtnElement = this.sliderElement.querySelector(this.elementSelectorsMap.prevBtn);
+    this.nextBtnElement = this.sliderElement.querySelector(this.elementSelectorsMap.nextBtn);
     this.config = __privateGet(this, _setupConfig).call(this, initialConfig);
+    if (!__privateGet(this, _validateSliderElements).call(this)) return;
+    this.totalSlides = this.itemElements.length;
     this.activeItem = this.itemElements[0];
-    this.prevItem = this.itemElements[this.itemElements.length - 1];
+    this.prevItem = this.itemElements[this.totalSlides - 1];
     this.nextItem = this.activeItem.nextElementSibling;
-    __privateGet(this, _applyStyles).call(this);
-    __privateGet(this, _setupIntersectionObserver).call(this);
-    __privateGet(this, _setupResizeObserver).call(this);
+    this.navBtnsExist = this.prevBtnElement && this.nextBtnElement;
+    this.navigationIsDisabled = false;
+    this.autoplayIntervalId = null;
+    this.resizeObserver = new ResizeObserver(__privateGet(this, _onResize));
+    this.intersectObserver = new IntersectionObserver(__privateGet(this, _onIntersect), this.intersectionConfig);
+    this.intersectObserver.observe(this.sliderElement);
   }
 }
 _createDataAttributesMap = new WeakMap();
@@ -427,8 +466,9 @@ _applyStyles = new WeakMap();
 _setupConfig = new WeakMap();
 _validateSliderElements = new WeakMap();
 _calculateVisibleSlides = new WeakMap();
-_setupResizeObserver = new WeakMap();
-_setupIntersectionObserver = new WeakMap();
+_setupNavigation = new WeakMap();
+_onResize = new WeakMap();
+_onIntersect = new WeakMap();
 class SliderGroup {
   constructor(sliderKey = "slider", initialConfig = {}) {
     this.sliderKey = sliderKey;
