@@ -1,6 +1,7 @@
 @use "../utilities/placeholders" as *;
 @use "../utilities/variables" as *;
 @use "../utilities/functions" as *;
+@use "../utilities/mixins" as *;
 
 .slider {
   --slider-slides-to-show: 1;
@@ -9,8 +10,13 @@
   --slider-available-width: calc(100% - var(--slider-total-visible-gaps));
   --slider-item-width: calc(var(--slider-available-width) / var(--slider-slides-to-show));
 
-  position: relative;
-  width: 100%;
+  // .slider
+  & {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
 
   // .slider__list
   &__list {
@@ -27,7 +33,7 @@
   &__item {
     flex: 0 0 var(--slider-item-width);
     margin-inline-start: 0%;
-    transition: margin-inline-start 0.3s ease-out;
+    transition: margin-inline-start 0.8s cubic-bezier(0.23, 0.55, 0.28, 1);
     will-change: margin-inline-start;
 
     &.is-leaving {
@@ -40,19 +46,28 @@
   }
   // .slider__nav
   &__nav {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%);
-    color: $text-primary-color;
-    cursor: pointer;
-
-    // .slider__nav--prev
-    &--prev {
-      left: toRem(10);
+    @include hover(color, $accent-color);
+    & {
+      display: inline-flex;
+      color: $text-primary-color;
+      padding: toRem(8);
+      cursor: pointer;
     }
-    // .slider__nav--next
+
+    svg {
+      stroke: currentColor;
+      width: toRem(30);
+      height: toRem(30);
+    }
+    &--prev {
+      order: -1;
+    }
     &--next {
-      right: toRem(10);
+      rotate: 180deg;
+    }
+    &:disabled {
+      opacity: 0.3;
+      pointer-events: none;
     }
   }
 }
