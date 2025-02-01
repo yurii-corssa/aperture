@@ -1,12 +1,19 @@
-import { createObserver, toRem } from "js/utils";
+import { toRem } from "js/utils";
 
 class Slider {
   defaultConfig = {
     autoplay: false,
     interval: 3000,
+    delay: 300,
     slidesToShow: 1,
     listGap: 0,
     slideMinWidth: 128,
+  };
+
+  intersectionConfig = {
+    root: null,
+    rootMargin: "0%",
+    threshold: 0,
   };
 
   constructor(sliderElement, sliderKey, initialConfig) {
@@ -17,20 +24,25 @@ class Slider {
     this.sliderElement = sliderElement;
     this.listElement = this.sliderElement.querySelector(this.elementSelectorsMap.list);
     this.itemElements = this.listElement?.children;
-    this.prevBtn = this.sliderElement.querySelector(this.elementSelectorsMap.prevBtn);
-    this.nextBtn = this.sliderElement.querySelector(this.elementSelectorsMap.nextBtn);
-
-    if (!this.#validateSliderElements()) return;
+    this.prevBtnElement = this.sliderElement.querySelector(this.elementSelectorsMap.prevBtn);
+    this.nextBtnElement = this.sliderElement.querySelector(this.elementSelectorsMap.nextBtn);
 
     this.config = this.#setupConfig(initialConfig);
 
-    this.activeItem = this.itemElements[0];
-    this.prevItem = this.itemElements[this.itemElements.length - 1];
-    this.nextItem = this.activeItem.nextElementSibling;
+    if (!this.#validateSliderElements()) return;
 
-    this.#applyStyles();
-    this.#setupIntersectionObserver();
-    this.#setupResizeObserver();
+    this.totalSlides = this.itemElements.length;
+    this.activeItem = this.itemElements[0];
+    this.prevItem = this.itemElements[this.totalSlides - 1];
+    this.nextItem = this.activeItem.nextElementSibling;
+    this.navBtnsExist = this.prevBtnElement && this.nextBtnElement;
+    this.navigationIsDisabled = false;
+    this.autoplayIntervalId = null;
+
+    this.resizeObserver = new ResizeObserver(this.#onResize);
+    this.intersectObserver = new IntersectionObserver(this.#onIntersect, this.intersectionConfig);
+
+    this.intersectObserver.observe(this.sliderElement);
   }
 
   #createDataAttributesMap = () => {
@@ -96,15 +108,9 @@ class Slider {
 
   #applyStyles = () => {
     const { listGap, slidesToShow } = this.config;
-    const totalSlides = this.itemElements.length;
 
     this.sliderElement.style.setProperty("--slider-list-gap", `${toRem(listGap)}rem`);
     this.sliderElement.style.setProperty("--slider-slides-to-show", slidesToShow);
-
-    const disableButtons = totalSlides <= slidesToShow;
-
-    if (this.prevBtn) this.prevBtn.disabled = disableButtons;
-    if (this.nextBtn) this.nextBtn.disabled = disableButtons;
   };
 
   #setupConfig = (initialConfig) => {
@@ -140,49 +146,66 @@ class Slider {
 
   #validateSliderElements = () => {
     if (!this.listElement) {
-      console.warn(`Slider "${this.sliderKey}": list element not found.`);
+      console.error(`Slider "${this.sliderKey}": list element not found.`);
       return false;
     }
     if (!this.itemElements || !this.itemElements.length) {
       console.warn(`Slider "${this.sliderKey}": no items found in the list.`);
       return false;
     }
-    if (this.itemElements.length < 2) {
-      console.warn(`Slider "${this.sliderKey}": less than two items in the list.`);
-      return false;
-    }
+
     return true;
   };
 
   #calculateVisibleSlides = () => {
     const { listGap, slideMinWidth } = this.config;
     const currentListWidth = this.listElement.offsetWidth;
-    const totalSlides = this.itemElements.length;
     const slidesCount = Math.floor((currentListWidth + listGap) / (slideMinWidth + listGap));
 
-    this.config.slidesToShow = Math.min(totalSlides, Math.max(1, slidesCount));
+    this.config.slidesToShow = Math.min(this.totalSlides, Math.max(1, slidesCount));
   };
 
-  #setupResizeObserver = () => {
-    const resizeObserver = new ResizeObserver(this.#calculateVisibleSlides);
-    resizeObserver.observe(this.listElement);
+  #setupNavigation = () => {
+    const shouldDisableNavigation = this.totalSlides <= this.config.slidesToShow;
+    const navigationStateChanged = shouldDisableNavigation !== this.navigationIsDisabled;
+
+    this.navigationIsDisabled = shouldDisableNavigation;
+
+    if (navigationStateChanged) {
+      if (this.navBtnsExist) {
+        this.prevBtnElement.disabled = shouldDisableNavigation;
+        this.nextBtnElement.disabled = shouldDisableNavigation;
+      }
+    }
+
+    if (shouldDisableNavigation) this.stopAutoplay();
+    else this.startAutoplay();
   };
 
-  #setupIntersectionObserver = () => {
-    const onEnter = () => {
-      if (this.prevBtn) this.prevBtn.addEventListener("click", this.moveToLeft);
-      if (this.nextBtn) this.nextBtn.addEventListener("click", this.moveToRight);
-      if (this.config.autoplay) this.startAutoplay();
-    };
+  #onResize = () => {
+    this.#calculateVisibleSlides();
+    this.#setupNavigation();
+  };
 
-    const onLeave = () => {
-      clearInterval(this.autoplayInterval);
-      this.sliderElement.removeEventListener("mouseenter", this.stopAutoplay);
-      this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
-    };
+  #onIntersect = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (this.navBtnsExist) {
+          this.prevBtnElement.addEventListener("click", this.moveToLeft);
+          this.nextBtnElement.addEventListener("click", this.moveToRight);
+        }
 
-    const observer = createObserver(onEnter, onLeave);
-    observer.observe(this.sliderElement);
+        this.resizeObserver.observe(this.sliderElement);
+      } else {
+        if (this.navBtnsExist) {
+          this.prevBtnElement.removeEventListener("click", this.moveToLeft);
+          this.nextBtnElement.removeEventListener("click", this.moveToRight);
+        }
+
+        this.stopAutoplay();
+        this.resizeObserver.unobserve(this.sliderElement);
+      }
+    });
   };
 
   moveToLeft = () => {
@@ -221,20 +244,43 @@ class Slider {
   };
 
   stopAutoplay = () => {
-    clearInterval(this.autoplayInterval);
-    this.sliderElement.removeEventListener("mouseenter", this.stopAutoplay);
-    this.sliderElement.addEventListener("mouseleave", this.startAutoplay);
+    if (this.autoplayIntervalId) {
+      clearInterval(this.autoplayIntervalId);
+      clearTimeout(this.autoplayDelayId);
+      this.autoplayDelayId = null;
+      this.autoplayIntervalId = null;
+      this.sliderElement.removeEventListener("mouseenter", this.pauseAutoplay);
+      this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
+    }
+  };
+
+  pauseAutoplay = () => {
+    if (this.autoplayIntervalId) {
+      clearTimeout(this.autoplayDelayId);
+      clearInterval(this.autoplayIntervalId);
+      this.autoplayDelayId = null;
+      this.autoplayIntervalId = null;
+      this.sliderElement.removeEventListener("mouseenter", this.pauseAutoplay);
+      this.sliderElement.addEventListener("mouseleave", this.startAutoplay);
+    }
   };
 
   startAutoplay = () => {
-    const { interval } = this.config;
+    const isNotRunning = !this.autoplayIntervalId && !this.autoplayDelayId;
 
-    this.autoplayInterval = setInterval(() => {
-      this.moveToRight();
-    }, interval);
+    if (this.config.autoplay && !this.navigationIsDisabled && isNotRunning) {
+      const { interval, delay } = this.config;
 
-    this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
-    this.sliderElement.addEventListener("mouseenter", this.stopAutoplay);
+      this.autoplayDelayId = setTimeout(() => {
+        this.moveToRight();
+        this.autoplayIntervalId = setInterval(() => {
+          this.moveToRight();
+        }, interval);
+      }, delay);
+
+      this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
+      this.sliderElement.addEventListener("mouseenter", this.pauseAutoplay);
+    }
   };
 }
 
@@ -254,19 +300,3 @@ export class SliderGroup {
     });
   }
 }
-
-/* ---------------------------------- */
-
-// var swiper = new Swiper(".mySwiper", {
-//   slidesPerView: 5,
-//   spaceBetween: 0,
-//   loop: true,
-//   pagination: {
-//     el: ".swiper-pagination",
-//     clickable: true,
-//   },
-//   navigation: {
-//     nextEl: ".swiper-button-next",
-//     prevEl: ".swiper-button-prev",
-//   },
-// });
