@@ -9,6 +9,7 @@
   --slider-total-visible-gaps: calc((var(--slider-slides-to-show) - 1) * var(--slider-list-gap));
   --slider-available-width: calc(100% - var(--slider-total-visible-gaps));
   --slider-item-width: calc(var(--slider-available-width) / var(--slider-slides-to-show));
+  --slider-translate-x: 0;
 
   // .slider
   & {
@@ -24,11 +25,10 @@
     gap: var(--slider-list-gap);
     width: 100%;
     overflow: hidden;
-    cursor: grab;
+    translate: var(--slider-translate-x) 0;
+    transition: translate 0.8s cubic-bezier(0.23, 0.55, 0.28, 1);
   }
-  &__list:active {
-    cursor: grabbing;
-  }
+
   // .slider__item
   &__item {
     flex: 0 0 var(--slider-item-width);

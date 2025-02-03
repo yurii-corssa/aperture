@@ -1,3 +1,4 @@
+import { throttle } from "js/helpers";
 import { toRem } from "js/utils";
 
 class Slider {
@@ -38,6 +39,9 @@ class Slider {
     this.navBtnsExist = this.prevBtnElement && this.nextBtnElement;
     this.navigationIsDisabled = false;
     this.autoplayIntervalId = null;
+    this.autoplayDelayId = null;
+    this.autoplayOnPause = false;
+    this.isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
     this.resizeObserver = new ResizeObserver(this.#onResize);
     this.intersectObserver = new IntersectionObserver(this.#onIntersect, this.intersectionConfig);
@@ -187,28 +191,93 @@ class Slider {
     this.#setupNavigation();
   };
 
+  #onTouchStart = (e) => {
+    if (this.navigationIsDisabled) return;
+
+    this.touchStartX = e.touches[0].clientX;
+    this.touchTimeoutId = setTimeout(() => this.#onTouchEnd(), 3000);
+
+    this.pauseAutoplay();
+  };
+
+  #onTouchMove = (e) => {
+    if (this.navigationIsDisabled) return;
+
+    const swipeThreshold = 35;
+    const touchDelta = e.changedTouches[0].clientX - this.touchStartX;
+
+    if (Math.abs(touchDelta) < swipeThreshold) return;
+
+    this.touchStartX = e.changedTouches[0].clientX;
+
+    if (touchDelta > 0) this.moveToLeft();
+    if (touchDelta < 0) this.moveToRight();
+  };
+
+  #onTouchEnd = () => {
+    if (this.navigationIsDisabled) return;
+
+    clearTimeout(this.touchTimeout);
+    this.touchTimeout = null;
+    this.touchStartX = null;
+
+    this.startAutoplay();
+  };
+
+  #onWheel = (e) => {
+    if (this.navigationIsDisabled) return;
+
+    e.preventDefault();
+
+    if (Math.abs(e.deltaY) < 5) return;
+
+    if (e.deltaY > 1) this.moveToRight();
+    if (e.deltaY < -1) this.moveToLeft();
+  };
+
   #onIntersect = (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        if (this.navBtnsExist) {
-          this.prevBtnElement.addEventListener("click", this.moveToLeft);
-          this.nextBtnElement.addEventListener("click", this.moveToRight);
-        }
-
-        this.resizeObserver.observe(this.sliderElement);
-      } else {
-        if (this.navBtnsExist) {
-          this.prevBtnElement.removeEventListener("click", this.moveToLeft);
-          this.nextBtnElement.removeEventListener("click", this.moveToRight);
-        }
-
-        this.stopAutoplay();
-        this.resizeObserver.unobserve(this.sliderElement);
+    const onEnter = () => {
+      if (this.navBtnsExist) {
+        this.prevBtnElement.addEventListener("click", this.moveToLeft);
+        this.nextBtnElement.addEventListener("click", this.moveToRight);
       }
+
+      if (this.isTouchDevice) {
+        this.sliderElement.addEventListener("touchstart", this.#onTouchStart, { passive: true });
+        this.sliderElement.addEventListener("touchmove", this.#onTouchMove, { passive: true });
+        this.sliderElement.addEventListener("touchend", this.#onTouchEnd, { passive: true });
+      }
+
+      this.sliderElement.addEventListener("wheel", this.#onWheel, { passive: false });
+
+      this.resizeObserver.observe(this.sliderElement);
+    };
+
+    const onLeave = () => {
+      if (this.navBtnsExist) {
+        this.prevBtnElement.removeEventListener("click", this.moveToLeft);
+        this.nextBtnElement.removeEventListener("click", this.moveToRight);
+      }
+
+      if (this.isTouchDevice) {
+        this.sliderElement.removeEventListener("touchstart", this.#onTouchStart);
+        this.sliderElement.removeEventListener("touchmove", this.#onTouchMove);
+        this.sliderElement.removeEventListener("touchend", this.#onTouchEnd);
+      }
+
+      this.sliderElement.removeEventListener("wheel", this.#onWheel);
+
+      this.stopAutoplay();
+      this.resizeObserver.unobserve(this.sliderElement);
+    };
+
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) onEnter();
+      else onLeave();
     });
   };
 
-  moveToLeft = () => {
+  moveToLeft = throttle(() => {
     const activeItem = this.activeItem;
     const prevItem = this.prevItem;
     const newPrevItem = prevItem.previousElementSibling;
@@ -221,9 +290,9 @@ class Slider {
     this.activeItem = prevItem;
     this.prevItem = newPrevItem;
     this.nextItem = activeItem;
-  };
+  }, 100);
 
-  moveToRight = () => {
+  moveToRight = throttle(() => {
     const activeItem = this.activeItem;
     const nextItem = this.nextItem;
     const clonedItem = activeItem.cloneNode(true);
@@ -241,12 +310,12 @@ class Slider {
     this.activeItem = nextItem;
     this.prevItem = clonedItem;
     this.nextItem = nextItem.nextElementSibling;
-  };
+  }, 100);
 
   stopAutoplay = () => {
-    if (this.autoplayIntervalId) {
-      clearInterval(this.autoplayIntervalId);
+    if (this.autoplayDelayId || this.autoplayIntervalId) {
       clearTimeout(this.autoplayDelayId);
+      clearInterval(this.autoplayIntervalId);
       this.autoplayDelayId = null;
       this.autoplayIntervalId = null;
       this.sliderElement.removeEventListener("mouseenter", this.pauseAutoplay);
@@ -255,9 +324,10 @@ class Slider {
   };
 
   pauseAutoplay = () => {
-    if (this.autoplayIntervalId) {
+    if (this.autoplayDelayId || this.autoplayIntervalId) {
       clearTimeout(this.autoplayDelayId);
       clearInterval(this.autoplayIntervalId);
+      this.autoplayOnPause = true;
       this.autoplayDelayId = null;
       this.autoplayIntervalId = null;
       this.sliderElement.removeEventListener("mouseenter", this.pauseAutoplay);
@@ -270,13 +340,17 @@ class Slider {
 
     if (this.config.autoplay && !this.navigationIsDisabled && isNotRunning) {
       const { interval, delay } = this.config;
+      const autoplayDelay = this.autoplayOnPause ? 0 : delay;
 
       this.autoplayDelayId = setTimeout(() => {
-        this.moveToRight();
+        if (!this.autoplayOnPause) this.moveToRight();
+
         this.autoplayIntervalId = setInterval(() => {
           this.moveToRight();
         }, interval);
-      }, delay);
+
+        this.autoplayOnPause = false;
+      }, autoplayDelay);
 
       this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
       this.sliderElement.addEventListener("mouseenter", this.pauseAutoplay);
