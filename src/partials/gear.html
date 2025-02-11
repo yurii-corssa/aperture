@@ -1,0 +1,43 @@
+<section class="gear container">
+  <div class="gear__content">
+    <h3 class="gear__subtitle" data-blur-out-text>The Gear cage</h3>
+    <h2 class="gear__title" data-blur-out-text>The tools that we use.</h2>
+    <p class="gear__description" data-watch>
+      The say that &quot;no place is boring if you&#39;ve had a good night&#39;s sleep and have a
+      pocket full of unexposed film&quot;. While we don&#39;t shoot (a lot) of film these days
+      &mdash; these are the tools that we actually use everyday to capture the amazing things around
+      us.
+    </p>
+    <a href="#" class="gear__button">
+      <load src="src/components/aperture-icon.htm" />
+      <span>Check it out</span>
+    </a>
+  </div>
+
+  <div class="gear__photo-highlight">
+    <picture>
+      <source
+        srcset="
+          ./src/img/gear/gear-img.webp    1x,
+          ./src/img/gear/gear-img@2x.webp 2x,
+          ./src/img/gear/gear-img@3x.webp 3x
+        "
+        type="image/webp"
+      />
+      <img
+        src="./src/img/gear/gear-img.webp"
+        alt="Photography and videography equipment"
+        class="gear__bg-image"
+        loading="lazy"
+      />
+    </picture>
+    <load
+      src="src/components/image-details.htm"
+      block="gear"
+      shutterSpeed="0.8s"
+      aperture="f/5.6"
+      iso="100"
+      location="Poland"
+    />
+  </div>
+</section>
