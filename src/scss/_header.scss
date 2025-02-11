@@ -4,7 +4,7 @@
 @use "./utilities/mixins" as *;
 
 .header {
-  @include adaptiveValue("column-gap", 32, 16, $bp-desktop-md, $bp-tablet);
+  @include adaptiveValue("column-gap", 32, 16, $bp-desktop, $bp-tablet);
 
   & {
     position: fixed;
@@ -28,12 +28,12 @@
     translate: 0 -100%;
   }
 
-  @media (width >= #{$bp-tablet}px) {
+  @include mobile {
     justify-items: end;
     row-gap: toRem(8);
   }
 
-  @media (width >= #{$bp-desktop-md}px) {
+  @include desktop {
     grid-template-columns: min-content 1fr max-content;
   }
 
@@ -43,7 +43,7 @@
       max-height 550ms ease,
       padding 250ms ease;
 
-    @media (width < #{$bp-tablet}px) {
+    @include max-tablet {
       grid-column: 1 / 3;
       padding: 0 1rem;
       max-height: 0;
@@ -54,19 +54,19 @@
       }
     }
 
-    @media (width >= #{$bp-tablet}px) {
+    @include tablet {
       display: contents;
     }
   }
 
   &__nav {
-    @media (width < #{$bp-tablet}px) {
+    @include max-tablet {
       margin-bottom: toRem(8);
     }
   }
 
   &__list {
-    @media (width >= #{$bp-tablet}px) {
+    @include tablet {
       display: flex;
     }
     @include adaptiveValue("column-gap", 32, 16, 1024, 768);
@@ -81,7 +81,7 @@
 
     @include hover(color, $accent-color);
 
-    @media (width >= #{$bp-tablet}px) {
+    @include tablet {
       font-size: 0.94rem;
       line-height: 1.33333;
       padding: toRem(4) 0;
@@ -91,15 +91,17 @@
   &__button {
     @extend %cta-btn;
 
-    @media (width >= #{$bp-tablet}px) and (width < #{$bp-desktop-md}px) {
-      grid-column: 2 / 3;
+    @include tablet {
+      @include max-desktop {
+        grid-column: 2 / 3;
+      }
     }
   }
 
   &__burger-btn {
     display: none;
 
-    @media (width < #{$bp-tablet}px) {
+    @include max-tablet {
       display: block;
       position: relative;
       justify-self: end;

@@ -10,46 +10,50 @@
   transition-property: padding-left, padding-right;
   background-color: $background-page-color;
 
-  @media (width < #{$bp-mobile-lg}px) {
+  @include max-mobile {
     display: flex;
     flex-direction: column;
   }
 
-  @media (width >= #{$bp-mobile-lg}px) {
+  @include mobile {
     display: grid;
+
+    @include max-desktop {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include max-tablet {
+      grid-template-areas:
+        "br br"
+        "pg bu"
+        "fl fl"
+        "nc nc"
+        "nf nf"
+        "sl sl"
+        "cp so";
+    }
   }
 
-  @media (width >= #{$bp-mobile-lg}px) and (width < #{$bp-tablet}px) {
-    grid-template-areas:
-      "br br"
-      "pg bu"
-      "fl fl"
-      "nc nc"
-      "nf nf"
-      "sl sl"
-      "cp so";
-    grid-template-columns: repeat(2, 1fr);
+  @include tablet {
+    @include max-desktop {
+      grid-template-areas:
+        "br br"
+        "pg bu"
+        "fl fl"
+        "nc nf"
+        "sl sl"
+        "cp so";
+    }
   }
 
-  @media (width >= #{$bp-tablet}px) and (width < #{$bp-desktop-md}px) {
-    grid-template-areas:
-      "br br"
-      "pg bu"
-      "fl fl"
-      "nc nf"
-      "sl sl"
-      "cp so";
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (width >= #{$bp-desktop-md}px) {
+  @include desktop {
+    grid-template-columns: 1fr repeat(2, minmax(toRem(220), max-content));
     grid-template-areas:
       "br bu pg"
       "fl fl fl"
       "nc nf nf"
       "sl sl sl"
       "cp .  so";
-    grid-template-columns: 1fr repeat(2, minmax(toRem(220), max-content));
   }
 
   // .footer__navigation
@@ -68,7 +72,7 @@
 
   // .footer__branding
   &__branding {
-    @media (width >= #{$bp-mobile-lg}px) {
+    @include mobile {
       grid-area: br;
     }
   }
@@ -91,14 +95,14 @@
 
   // .footer__business-areas
   &__business-areas {
-    @media (width >= #{$bp-mobile-lg}px) {
+    @include mobile {
       grid-area: bu;
     }
   }
 
   // .footer__pages
   &__pages {
-    @media (width >= #{$bp-mobile-lg}px) {
+    @include mobile {
       grid-area: pg;
     }
   }
@@ -149,7 +153,7 @@
 
   // .footer__copyright
   &__copyright {
-    @media (width >= #{$bp-mobile-lg}px) {
+    @include mobile {
       grid-area: cp;
     }
   }
@@ -159,7 +163,7 @@
     display: flex;
     gap: toRem(20);
 
-    @media (width >= #{$bp-mobile-lg}px) {
+    @include mobile {
       grid-area: so;
       justify-self: end;
     }
@@ -186,7 +190,7 @@
 .newsletter {
   // .newsletter__content
   &__content {
-    @media (width >= #{$bp-mobile-lg}px) {
+    @include mobile {
       grid-area: nc;
     }
   }
