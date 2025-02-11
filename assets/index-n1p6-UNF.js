@@ -7,7 +7,7 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
 var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
 var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
 var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
-var _createDataAttributesMap, _createElementSelectorsMap, _parseAttributeValue, _applyStyles, _setupConfig, _validateSliderElements, _calculateVisibleSlides, _setupNavigation, _onResize, _onIntersect;
+var _createDataAttributesMap, _createElementSelectorsMap, _parseAttributeValue, _applyStyles, _setupConfig, _validateSliderElements, _calculateVisibleSlides, _setupNavigation, _onResize, _onTouchStart, _onTouchMove, _onTouchEnd, _onWheel, _onIntersect;
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -229,6 +229,23 @@ const parallax = (initialSettings = {}) => {
     });
   }
 };
+const debounce = (func, delay) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+};
+const throttle = (func, delay) => {
+  let isThrottled = false;
+  return (...args) => {
+    if (isThrottled) return;
+    func(...args);
+    isThrottled = true;
+    setTimeout(() => isThrottled = false, delay);
+  };
+};
+const toKebabCase = (str) => str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 class Slider {
   constructor(sliderElement, sliderKey, initialConfig) {
     __publicField(this, "defaultConfig", {
@@ -358,25 +375,69 @@ class Slider {
       __privateGet(this, _calculateVisibleSlides).call(this);
       __privateGet(this, _setupNavigation).call(this);
     });
+    __privateAdd(this, _onTouchStart, (e) => {
+      if (this.navigationIsDisabled) return;
+      this.touchStartX = e.touches[0].clientX;
+      this.touchTimeoutId = setTimeout(() => __privateGet(this, _onTouchEnd).call(this), 3e3);
+      this.pauseAutoplay();
+    });
+    __privateAdd(this, _onTouchMove, (e) => {
+      if (this.navigationIsDisabled) return;
+      const swipeThreshold = 35;
+      const touchDelta = e.changedTouches[0].clientX - this.touchStartX;
+      if (Math.abs(touchDelta) < swipeThreshold) return;
+      this.touchStartX = e.changedTouches[0].clientX;
+      if (touchDelta > 0) this.moveToLeft();
+      if (touchDelta < 0) this.moveToRight();
+    });
+    __privateAdd(this, _onTouchEnd, () => {
+      if (this.navigationIsDisabled) return;
+      clearTimeout(this.touchTimeout);
+      this.touchTimeout = null;
+      this.touchStartX = null;
+      this.startAutoplay();
+    });
+    __privateAdd(this, _onWheel, (e) => {
+      if (this.navigationIsDisabled) return;
+      e.preventDefault();
+      if (Math.abs(e.deltaY) < 5) return;
+      if (e.deltaY > 1) this.moveToRight();
+      if (e.deltaY < -1) this.moveToLeft();
+    });
     __privateAdd(this, _onIntersect, (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (this.navBtnsExist) {
-            this.prevBtnElement.addEventListener("click", this.moveToLeft);
-            this.nextBtnElement.addEventListener("click", this.moveToRight);
-          }
-          this.resizeObserver.observe(this.sliderElement);
-        } else {
-          if (this.navBtnsExist) {
-            this.prevBtnElement.removeEventListener("click", this.moveToLeft);
-            this.nextBtnElement.removeEventListener("click", this.moveToRight);
-          }
-          this.stopAutoplay();
-          this.resizeObserver.unobserve(this.sliderElement);
+      const onEnter2 = () => {
+        if (this.navBtnsExist) {
+          this.prevBtnElement.addEventListener("click", this.moveToLeft);
+          this.nextBtnElement.addEventListener("click", this.moveToRight);
         }
+        if (this.isTouchDevice) {
+          this.sliderElement.addEventListener("touchstart", __privateGet(this, _onTouchStart), { passive: true });
+          this.sliderElement.addEventListener("touchmove", __privateGet(this, _onTouchMove), { passive: true });
+          this.sliderElement.addEventListener("touchend", __privateGet(this, _onTouchEnd), { passive: true });
+        }
+        this.sliderElement.addEventListener("wheel", __privateGet(this, _onWheel), { passive: false });
+        this.resizeObserver.observe(this.sliderElement);
+      };
+      const onLeave2 = () => {
+        if (this.navBtnsExist) {
+          this.prevBtnElement.removeEventListener("click", this.moveToLeft);
+          this.nextBtnElement.removeEventListener("click", this.moveToRight);
+        }
+        if (this.isTouchDevice) {
+          this.sliderElement.removeEventListener("touchstart", __privateGet(this, _onTouchStart));
+          this.sliderElement.removeEventListener("touchmove", __privateGet(this, _onTouchMove));
+          this.sliderElement.removeEventListener("touchend", __privateGet(this, _onTouchEnd));
+        }
+        this.sliderElement.removeEventListener("wheel", __privateGet(this, _onWheel));
+        this.stopAutoplay();
+        this.resizeObserver.unobserve(this.sliderElement);
+      };
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) onEnter2();
+        else onLeave2();
       });
     });
-    __publicField(this, "moveToLeft", () => {
+    __publicField(this, "moveToLeft", throttle(() => {
       const activeItem = this.activeItem;
       const prevItem = this.prevItem;
       const newPrevItem = prevItem.previousElementSibling;
@@ -386,8 +447,8 @@ class Slider {
       this.activeItem = prevItem;
       this.prevItem = newPrevItem;
       this.nextItem = activeItem;
-    });
-    __publicField(this, "moveToRight", () => {
+    }, 100));
+    __publicField(this, "moveToRight", throttle(() => {
       const activeItem = this.activeItem;
       const nextItem = this.nextItem;
       const clonedItem = activeItem.cloneNode(true);
@@ -401,11 +462,11 @@ class Slider {
       this.activeItem = nextItem;
       this.prevItem = clonedItem;
       this.nextItem = nextItem.nextElementSibling;
-    });
+    }, 100));
     __publicField(this, "stopAutoplay", () => {
-      if (this.autoplayIntervalId) {
-        clearInterval(this.autoplayIntervalId);
+      if (this.autoplayDelayId || this.autoplayIntervalId) {
         clearTimeout(this.autoplayDelayId);
+        clearInterval(this.autoplayIntervalId);
         this.autoplayDelayId = null;
         this.autoplayIntervalId = null;
         this.sliderElement.removeEventListener("mouseenter", this.pauseAutoplay);
@@ -413,9 +474,10 @@ class Slider {
       }
     });
     __publicField(this, "pauseAutoplay", () => {
-      if (this.autoplayIntervalId) {
+      if (this.autoplayDelayId || this.autoplayIntervalId) {
         clearTimeout(this.autoplayDelayId);
         clearInterval(this.autoplayIntervalId);
+        this.autoplayOnPause = true;
         this.autoplayDelayId = null;
         this.autoplayIntervalId = null;
         this.sliderElement.removeEventListener("mouseenter", this.pauseAutoplay);
@@ -426,12 +488,14 @@ class Slider {
       const isNotRunning = !this.autoplayIntervalId && !this.autoplayDelayId;
       if (this.config.autoplay && !this.navigationIsDisabled && isNotRunning) {
         const { interval, delay } = this.config;
+        const autoplayDelay = this.autoplayOnPause ? 0 : delay;
         this.autoplayDelayId = setTimeout(() => {
-          this.moveToRight();
+          if (!this.autoplayOnPause) this.moveToRight();
           this.autoplayIntervalId = setInterval(() => {
             this.moveToRight();
           }, interval);
-        }, delay);
+          this.autoplayOnPause = false;
+        }, autoplayDelay);
         this.sliderElement.removeEventListener("mouseleave", this.startAutoplay);
         this.sliderElement.addEventListener("mouseenter", this.pauseAutoplay);
       }
@@ -454,6 +518,9 @@ class Slider {
     this.navBtnsExist = this.prevBtnElement && this.nextBtnElement;
     this.navigationIsDisabled = false;
     this.autoplayIntervalId = null;
+    this.autoplayDelayId = null;
+    this.autoplayOnPause = false;
+    this.isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
     this.resizeObserver = new ResizeObserver(__privateGet(this, _onResize));
     this.intersectObserver = new IntersectionObserver(__privateGet(this, _onIntersect), this.intersectionConfig);
     this.intersectObserver.observe(this.sliderElement);
@@ -468,6 +535,10 @@ _validateSliderElements = new WeakMap();
 _calculateVisibleSlides = new WeakMap();
 _setupNavigation = new WeakMap();
 _onResize = new WeakMap();
+_onTouchStart = new WeakMap();
+_onTouchMove = new WeakMap();
+_onTouchEnd = new WeakMap();
+_onWheel = new WeakMap();
 _onIntersect = new WeakMap();
 class SliderGroup {
   constructor(sliderKey = "slider", initialConfig = {}) {
@@ -483,23 +554,6 @@ class SliderGroup {
     });
   }
 }
-const debounce = (func, delay) => {
-  let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), delay);
-  };
-};
-const throttle = (func, delay) => {
-  let isThrottled = false;
-  return (...args) => {
-    if (isThrottled) return;
-    func(...args);
-    isThrottled = true;
-    setTimeout(() => isThrottled = false, delay);
-  };
-};
-const toKebabCase = (str) => str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 const onEnter = (element) => {
   element.classList.add("visible");
 };
