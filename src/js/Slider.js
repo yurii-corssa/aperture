@@ -2,7 +2,7 @@ import { throttle } from "js/helpers";
 import { toRem } from "js/utils";
 
 class Slider {
-  defaultConfig = {
+  #defaultConfig = {
     autoplay: false,
     interval: 3000,
     delay: 300,
@@ -11,7 +11,7 @@ class Slider {
     slideMinWidth: 128,
   };
 
-  intersectionConfig = {
+  #intersectionConfig = {
     root: null,
     rootMargin: "0%",
     threshold: 0,
@@ -44,7 +44,7 @@ class Slider {
     this.isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
     this.resizeObserver = new ResizeObserver(this.#onResize);
-    this.intersectObserver = new IntersectionObserver(this.#onIntersect, this.intersectionConfig);
+    this.intersectObserver = new IntersectionObserver(this.#onIntersect, this.#intersectionConfig);
 
     this.intersectObserver.observe(this.sliderElement);
   }
@@ -100,7 +100,7 @@ class Slider {
       return numericValue;
     };
 
-    switch (typeof this.defaultConfig[key]) {
+    switch (typeof this.#defaultConfig[key]) {
       case "boolean":
         return parseBoolean(value);
       case "number":
@@ -119,7 +119,7 @@ class Slider {
 
   #setupConfig = (initialConfig) => {
     const config = {
-      ...this.defaultConfig,
+      ...this.#defaultConfig,
       ...initialConfig,
     };
 
@@ -235,45 +235,45 @@ class Slider {
     if (e.deltaY < -1) this.moveToLeft();
   };
 
+  #enableInteractions = () => {
+    if (this.navBtnsExist) {
+      this.prevBtnElement.addEventListener("click", this.moveToLeft);
+      this.nextBtnElement.addEventListener("click", this.moveToRight);
+    }
+
+    if (this.isTouchDevice) {
+      this.sliderElement.addEventListener("touchstart", this.#onTouchStart, { passive: true });
+      this.sliderElement.addEventListener("touchmove", this.#onTouchMove, { passive: true });
+      this.sliderElement.addEventListener("touchend", this.#onTouchEnd, { passive: true });
+    }
+
+    this.sliderElement.addEventListener("wheel", this.#onWheel, { passive: false });
+
+    this.resizeObserver.observe(this.sliderElement);
+  };
+
+  #disableInteractions = () => {
+    if (this.navBtnsExist) {
+      this.prevBtnElement.removeEventListener("click", this.moveToLeft);
+      this.nextBtnElement.removeEventListener("click", this.moveToRight);
+    }
+
+    if (this.isTouchDevice) {
+      this.sliderElement.removeEventListener("touchstart", this.#onTouchStart);
+      this.sliderElement.removeEventListener("touchmove", this.#onTouchMove);
+      this.sliderElement.removeEventListener("touchend", this.#onTouchEnd);
+    }
+
+    this.sliderElement.removeEventListener("wheel", this.#onWheel);
+
+    this.stopAutoplay();
+    this.resizeObserver.unobserve(this.sliderElement);
+  };
+
   #onIntersect = (entries) => {
-    const onEnter = () => {
-      if (this.navBtnsExist) {
-        this.prevBtnElement.addEventListener("click", this.moveToLeft);
-        this.nextBtnElement.addEventListener("click", this.moveToRight);
-      }
-
-      if (this.isTouchDevice) {
-        this.sliderElement.addEventListener("touchstart", this.#onTouchStart, { passive: true });
-        this.sliderElement.addEventListener("touchmove", this.#onTouchMove, { passive: true });
-        this.sliderElement.addEventListener("touchend", this.#onTouchEnd, { passive: true });
-      }
-
-      this.sliderElement.addEventListener("wheel", this.#onWheel, { passive: false });
-
-      this.resizeObserver.observe(this.sliderElement);
-    };
-
-    const onLeave = () => {
-      if (this.navBtnsExist) {
-        this.prevBtnElement.removeEventListener("click", this.moveToLeft);
-        this.nextBtnElement.removeEventListener("click", this.moveToRight);
-      }
-
-      if (this.isTouchDevice) {
-        this.sliderElement.removeEventListener("touchstart", this.#onTouchStart);
-        this.sliderElement.removeEventListener("touchmove", this.#onTouchMove);
-        this.sliderElement.removeEventListener("touchend", this.#onTouchEnd);
-      }
-
-      this.sliderElement.removeEventListener("wheel", this.#onWheel);
-
-      this.stopAutoplay();
-      this.resizeObserver.unobserve(this.sliderElement);
-    };
-
     entries.forEach((entry) => {
-      if (entry.isIntersecting) onEnter();
-      else onLeave();
+      if (entry.isIntersecting) this.#enableInteractions();
+      else this.#disableInteractions();
     });
   };
 
