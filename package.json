@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "vite build --base=/aperture/",
-    "preview": "vite preview",
+    "preview": "vite preview --open",
     "watch": "npx vite build --watch"
   },
   "browserslist": [
