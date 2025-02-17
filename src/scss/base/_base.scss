@@ -11,6 +11,10 @@ body {
   line-height: 1.42857;
   color: $text-primary-color;
   background: $background-page-color;
+
+  &.no-scroll {
+    overflow: hidden;
+  }
 }
 
 svg {

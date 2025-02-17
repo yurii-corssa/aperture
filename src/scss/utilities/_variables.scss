@@ -1,3 +1,7 @@
+:root {
+  --header-height: 0;
+}
+
 $main-font: "Poppins", sans-serif;
 
 $accent-color: #d7bfa5;
@@ -9,6 +13,7 @@ $input-bg-color: $text-heading-color;
 $text-light-bg-color: #000;
 $background-header-color: #181818;
 $background-page-color: #000;
+$backdrop-color: #181818a1;
 
 $min-width-page: 320;
 $max-width-page: 1440;

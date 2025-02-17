@@ -27,6 +27,7 @@ html {
   text-size-adjust: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
 }
 
 /* Reapply the pointer cursor for anchor tags */
@@ -43,7 +44,17 @@ menu {
 }
 
 /* For images to not be able to exceed their container */
+picture {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
   max-inline-size: 100%;
   max-block-size: 100%;
 }

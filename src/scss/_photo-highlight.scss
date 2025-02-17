@@ -5,6 +5,7 @@
 .photo-highlight {
   & {
     --shadow-opacity: 0;
+
     position: relative;
     display: flex;
     justify-content: end;
@@ -53,11 +54,10 @@
     opacity: 0;
     filter: blur(4px);
     transition: inherit;
-  }
 
-  &__title.visible,
-  &__description.visible {
-    opacity: 1;
-    filter: blur(0);
+    &.visible {
+      opacity: 1;
+      filter: blur(0);
+    }
   }
 }

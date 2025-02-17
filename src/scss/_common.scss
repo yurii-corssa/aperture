@@ -6,12 +6,10 @@
 .container {
   padding-top: toRem(120);
   padding-bottom: toRem(100);
-  @include adaptiveValue("padding-left", $container-padding-l, 15);
-  @include adaptiveValue("padding-right", $container-padding-l, 15);
+  @include adaptiveValue("padding-inline", $container-padding-l, 15);
 
   &--wide {
-    @include adaptiveValue("padding-left", $container-padding-s, 15);
-    @include adaptiveValue("padding-right", $container-padding-s, 15);
+    @include adaptiveValue("padding-inline", $container-padding-s, 15);
   }
 }
 
@@ -22,9 +20,22 @@
   @include hover(color, $accent-color);
 }
 
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: $backdrop-color;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms ease-out;
+
+  &.is-visible {
+    pointer-events: auto;
+    opacity: 1;
+  }
+}
+
 .image-details {
-  @include adaptiveValue("padding-right", 40, 15);
-  @include adaptiveValue("padding-left", 40, 15);
+  @include adaptiveValue("padding-inline", 40, 15);
 
   & {
     position: absolute;
