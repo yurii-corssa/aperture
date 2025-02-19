@@ -1,4 +1,4 @@
-<header class="header container">
+<header class="header container" data-header>
   <a href="#" class="header__logo logo">
     <svg width="128" height="31">
       <use href="./src/img/sprite.svg#icon-logo"></use>
@@ -7,14 +7,15 @@
 
   <button
     type="button"
-    class="header__burger-btn burger-btn-js"
+    class="header__burger-btn"
+    data-burger-menu-button
     aria-expanded="false"
     aria-controls="header-menu"
   >
     <span></span>
   </button>
 
-  <div id="header-menu" class="header__menu menu-js" aria-hidden="true">
+  <div id="header-menu" class="header__menu" data-mobile-menu aria-hidden="true">
     <nav class="header__nav">
       <ul class="header__list">
         <li class="header__item"><a href="#" class="header__link">Business areas</a></li>

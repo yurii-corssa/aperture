@@ -23,8 +23,6 @@ export class Header {
     IS_HIDDEN: "is-hidden",
     IS_OPEN: "is-open",
     NO_SCROLL: "no-scroll",
-    menuType: "",
-    menuPosition: "",
   };
 
   defaultConfig = {
@@ -93,15 +91,15 @@ export class Header {
 
     if (shouldBeActive) {
       this.burgerButtonEl.addEventListener("click", this.toggleMenuOpen);
-      this.headerEl.classList.add(this.config.menuType);
+      this.menuEl.classList.add(this.config.menuType);
 
       if (this.config.menuType === this.menuTypes.SLIDE) {
-        this.headerEl.classList.add(this.config.menuPosition);
+        this.menuEl.classList.add(this.config.menuPosition);
       }
     } else {
       this.burgerButtonEl.removeEventListener("click", this.toggleMenuOpen);
-      delete this.headerEl.classList.remove(this.config.menuType);
-      delete this.headerEl.classList.remove(this.config.menuPosition);
+      delete this.menuEl.classList.remove(this.config.menuType);
+      delete this.menuEl.classList.remove(this.config.menuPosition);
 
       if (this.menuIsOpen) this.closeMenu();
     }
