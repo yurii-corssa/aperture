@@ -1069,7 +1069,6 @@ svg {
     width: 1.5rem;
     height: 1.5rem;
     color: #fff;
-    border: 1px solid red;
   }
   .header__burger-btn span, .header__burger-btn::before, .header__burger-btn::after {
     content: "";
