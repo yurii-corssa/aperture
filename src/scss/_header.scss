@@ -97,7 +97,8 @@
         transition:
           opacity 550ms ease,
           filter 550ms ease,
-          padding-inline 450ms 250ms ease;
+          padding-inline 450ms 250ms ease,
+          background-color 250ms ease;
       }
 
       &.is-open > * {

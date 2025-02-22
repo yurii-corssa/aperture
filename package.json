@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --open",
-    "build": "vite build --base=/aperture/",
+    "build": "vite build",
     "preview": "vite preview --open",
     "watch": "npx vite build --watch"
   },

@@ -16,10 +16,7 @@ export default defineConfig({
     tsconfigPaths(),
     injectHTML(),
     ViteImageOptimizer({
-      png: { quality: 60 },
-      jpeg: { quality: 55 },
-      webp: { quality: 60 },
-      avif: { quality: 50 },
+      webp: { quality: 85 },
       svg: {
         plugins: [{ name: "removeViewBox", active: false }, { name: "sortAttrs" }],
       },
@@ -32,9 +29,9 @@ export default defineConfig({
     //   apply: "serve",
     // },
   ],
-  base: "/aperture/",
+  base: "/",
   build: {
-    minify: false, // disable minification
+    minify: true, // disable minification
     rollupOptions: {
       input: Object.fromEntries(
         glob
