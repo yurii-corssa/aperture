@@ -10,10 +10,12 @@ body {
   font-size: 0.88rem;
   line-height: 1.42857;
   color: $text-primary-color;
-  background: $background-page-color;
+  background-color: $background-page-color;
 
   &.no-scroll {
     overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
   }
 }
 
