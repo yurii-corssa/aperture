@@ -58,21 +58,16 @@
   </div>
 
   <div class="hero__thumb">
-    <video data-prlx data-coefficient="10" class="hero__video" autoplay muted loop playsinline>
-      <source src="/assets/hero-bg-video-720.webm" type="video/webm" media="(width < 1280px)" />
-      <source
-        src="/assets/hero-bg-video-1080.webm"
-        type="video/webm"
-        media="(width >= 1280px) and (width < 2560px)"
-      />
-      <source src="/assets/hero-bg-video-4k.webm" type="video/webm" media="(width >= 2560px)" />
-      <source src="/assets/hero-bg-video-720.mp4" type="video/mp4" media="(width < 1280px)" />
-      <source
-        src="/assets/hero-bg-video-1080.mp4"
-        type="video/mp4"
-        media="(width >= 1280px) and (width < 2560px)"
-      />
-      <source src="/assets/hero-bg-video-4k.mp4" type="video/mp4" media="(width >= 2560px)" />
+    <video
+      class="hero__video"
+      poster="/assets/iceland-hero-bg@1x.webp"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source src="/assets/iceland-hero-bg.webm" type="video/webm" />
+      <source src="/assets/iceland-hero-bg.mp4" type="video/mp4" />
     </video>
   </div>
 
@@ -118,9 +113,9 @@
     <p class="portfolio__subtitle">The areas that we're specialized in.</p>
   </div>
 
-  <ul class="portfolio__card-list">
-    <li class="portfolio__card" data-prlx-parent data-prlx-position="bottom">
-      <picture>
+  <ul class="portfolio__list">
+    <li class="portfolio__item category-card">
+      <picture class="category-card__thumb">
         <source
           srcset="/assets/portfolio-card-img.webp 1x, /assets/portfolio-card-img@2x.webp 2x, /assets/portfolio-card-img@3x.webp 3x"
           type="image/webp"
@@ -128,21 +123,22 @@
         <img
           src="/assets/portfolio-card-img.webp"
           alt="Tech gadgets on a dark surface."
-          class="portfolio__card-image"
+          class="category-card__image"
           loading="lazy"
         />
       </picture>
 
-      <div class="portfolio__card-content" data-prlx>
-        <h3 class="portfolio__card-title">Product Photography</h3>
-        <p class="portfolio__card-description">
-          Capture every detail of your products with professional photography. We create visual
-          content that boosts sales and showcases your products in the best light.
-        </p>
-      </div>
+      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
+        <div class="category-card__content" data-prlx>
+          <h3 class="category-card__title">Product Photography</h3>
+          <p class="category-card__description">
+            Capture every detail of your products with professional photography. We create visual
+            content that boosts sales and showcases your products in the best light.
+          </p>
+        </div>
 
-      <a href="#" class="portfolio__card-button">
-        <div class="aperture-icon">
+        <a href="#" class="category-card__button">
+          <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
     <div class="aperture-icon__blade"></div>
@@ -153,12 +149,13 @@
   </div>
 </div>
 
-        <span>Read more</span>
-      </a>
+          <span>Read more</span>
+        </a>
+      </div>
     </li>
 
-    <li class="portfolio__card" data-prlx-parent data-prlx-position="bottom">
-      <picture>
+    <li class="portfolio__item category-card">
+      <picture class="category-card__thumb">
         <source
           srcset="/assets/portfolio-card-img-1.webp 1x, /assets/portfolio-card-img-1@2x.webp 2x, /assets/portfolio-card-img-1@3x.webp 3x"
           type="image/webp"
@@ -166,21 +163,22 @@
         <img
           src="/assets/portfolio-card-img-1.webp"
           alt="Geometric architectural pattern."
-          class="portfolio__card-image"
+          class="category-card__image"
           loading="lazy"
         />
       </picture>
 
-      <div class="portfolio__card-content" data-prlx>
-        <h3 data-watch class="portfolio__card-title">Architecture Photography</h3>
-        <p data-watch class="portfolio__card-description">
-          Unveil the grandeur of architecture through the lens. We deliver stunning shots that
-          highlight the design, structure, and concept of your spaces.
-        </p>
-      </div>
+      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
+        <div class="category-card__content" data-prlx>
+          <h3 data-watch class="category-card__title">Architecture Photography</h3>
+          <p data-watch class="category-card__description">
+            Unveil the grandeur of architecture through the lens. We deliver stunning shots that
+            highlight the design, structure, and concept of your spaces.
+          </p>
+        </div>
 
-      <a href="" class="portfolio__card-button">
-        <div class="aperture-icon">
+        <a href="" class="category-card__button">
+          <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
     <div class="aperture-icon__blade"></div>
@@ -191,12 +189,13 @@
   </div>
 </div>
 
-        <span>Read more</span>
-      </a>
+          <span>Read more</span>
+        </a>
+      </div>
     </li>
 
-    <li class="portfolio__card" data-prlx-parent data-prlx-position="bottom">
-      <picture>
+    <li class="portfolio__item category-card">
+      <picture class="category-card__thumb">
         <source
           srcset="/assets/portfolio-card-img-2.webp 1x, /assets/portfolio-card-img-2@2x.webp 2x, /assets/portfolio-card-img-2@3x.webp 3x"
           type="image/webp"
@@ -204,21 +203,22 @@
         <img
           src="/assets/portfolio-card-img-2.webp"
           alt="Aerial view of a forest."
-          class="portfolio__card-image"
+          class="category-card__image"
           loading="lazy"
         />
       </picture>
 
-      <div class="portfolio__card-content" data-prlx>
-        <h3 data-watch class="portfolio__card-title">Drone Photography</h3>
-        <p data-watch class="portfolio__card-description">
-          Breathtaking views from a bird&rsquo;s-eye perspective. Our drones provide a unique angle
-          for landscapes, events, or real estate.
-        </p>
-      </div>
+      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
+        <div class="category-card__content" data-prlx>
+          <h3 data-watch class="category-card__title">Drone Photography</h3>
+          <p data-watch class="category-card__description">
+            Breathtaking views from a bird&rsquo;s-eye perspective. Our drones provide a unique
+            angle for landscapes, events, or real estate.
+          </p>
+        </div>
 
-      <a href="" class="portfolio__card-button">
-        <div class="aperture-icon">
+        <a href="" class="category-card__button">
+          <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
     <div class="aperture-icon__blade"></div>
@@ -229,12 +229,13 @@
   </div>
 </div>
 
-        <span>Read more</span>
-      </a>
+          <span>Read more</span>
+        </a>
+      </div>
     </li>
 
-    <li class="portfolio__card" data-prlx-parent data-prlx-position="bottom">
-      <picture>
+    <li class="portfolio__item category-card">
+      <picture class="category-card__thumb">
         <source
           srcset="/assets/portfolio-card-img-3.webp 1x, /assets/portfolio-card-img-3@2x.webp 2x, /assets/portfolio-card-img-3@3x.webp 3x"
           type="image/webp"
@@ -242,21 +243,22 @@
         <img
           src="/assets/portfolio-card-img-3.webp"
           alt="Deer in a forest."
-          class="portfolio__card-image"
+          class="category-card__image"
           loading="lazy"
         />
       </picture>
 
-      <div class="portfolio__card-content" data-prlx>
-        <h3 data-watch class="portfolio__card-title">Wildlife Photography</h3>
-        <p data-watch class="portfolio__card-description">
-          Dive into the wilderness. We capture rare moments of wildlife, showcasing the raw beauty
-          of the natural world.
-        </p>
-      </div>
+      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
+        <div class="category-card__content" data-prlx>
+          <h3 data-watch class="category-card__title">Wildlife Photography</h3>
+          <p data-watch class="category-card__description">
+            Dive into the wilderness. We capture rare moments of wildlife, showcasing the raw beauty
+            of the natural world.
+          </p>
+        </div>
 
-      <a href="" class="portfolio__card-button">
-        <div class="aperture-icon">
+        <a href="" class="category-card__button">
+          <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
     <div class="aperture-icon__blade"></div>
@@ -267,17 +269,18 @@
   </div>
 </div>
 
-        <span>Read more</span>
-      </a>
+          <span>Read more</span>
+        </a>
+      </div>
     </li>
   </ul>
 </section>
 
       <section class="fuji photo-highlight container">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
-  <picture class="photo-highlight__image-thumb">
+  <picture class="photo-highlight__thumb">
     <source srcset="/assets/fuji.webp 1x, /assets/fuji@2x.webp 2x, /assets/fuji@3x.webp 3x" type="image/webp" />
-    <img src="/assets/fuji.webp" alt="Sunset at Mount Fuji" class="photo-highlight__bg-image" loading="lazy" />
+    <img src="/assets/fuji.webp" alt="Sunset at Mount Fuji" class="photo-highlight__image" loading="lazy" />
   </picture>
 
   <figcaption class="photo-highlight__caption" data-prlx>
@@ -350,7 +353,7 @@
   </div>
 
   <div class="gear__photo-highlight">
-    <picture>
+    <picture class="gear__thumb">
       <source
         srcset="/assets/gear-img.webp 1x, /assets/gear-img@2x.webp 2x, /assets/gear-img@3x.webp 3x"
         type="image/webp"
@@ -358,10 +361,11 @@
       <img
         src="/assets/gear-img.webp"
         alt="Photography and videography equipment"
-        class="gear__bg-image"
+        class="gear__image"
         loading="lazy"
       />
     </picture>
+
     <ul class="gear__details image-details">
   <li class="image-details__item">
     <svg class="image-details__icon" width="16" height="16">
@@ -401,9 +405,9 @@
 
       <section class="monstera-leafs photo-highlight container">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
-  <picture class="photo-highlight__image-thumb">
+  <picture class="photo-highlight__thumb">
     <source srcset="/assets/monstera-leafs.webp 1x, /assets/monstera-leafs@2x.webp 2x, /assets/monstera-leafs@3x.webp 3x" type="image/webp" />
-    <img src="/assets/monstera-leafs.webp" alt="Monstera Leafs" class="photo-highlight__bg-image" loading="lazy" />
+    <img src="/assets/monstera-leafs.webp" alt="Monstera Leafs" class="photo-highlight__image" loading="lazy" />
   </picture>
 
   <figcaption class="photo-highlight__caption" data-prlx>
@@ -589,9 +593,9 @@
 
       <section class="himalayas-starfall photo-highlight container">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
-  <picture class="photo-highlight__image-thumb">
+  <picture class="photo-highlight__thumb">
     <source srcset="/assets/himalayas-starfall.webp 1x, /assets/himalayas-starfall@2x.webp 2x, /assets/himalayas-starfall@3x.webp 3x" type="image/webp" />
-    <img src="/assets/himalayas-starfall.webp" alt="Star fall in the Himalayas" class="photo-highlight__bg-image" loading="lazy" />
+    <img src="/assets/himalayas-starfall.webp" alt="Star fall in the Himalayas" class="photo-highlight__image" loading="lazy" />
   </picture>
 
   <figcaption class="photo-highlight__caption" data-prlx>
