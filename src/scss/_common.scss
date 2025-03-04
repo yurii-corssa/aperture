@@ -6,6 +6,8 @@
 .container {
   padding-top: toRem(120);
   padding-bottom: toRem(100);
+  background-color: $background-page-color;
+
   @include adaptiveValue("padding-inline", $container-padding-l, 15);
 
   &--wide {

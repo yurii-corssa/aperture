@@ -10,14 +10,12 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
-
   // .gear__content
   &__content {
     color: $text-heading-color;
 
     @include adaptiveValue("padding-right", $container-padding-l, 15);
   }
-
   // .gear__subtitle
   &__subtitle {
     @extend %title-label;
@@ -25,14 +23,12 @@
     color: $text-primary-color;
     margin-bottom: toRem(6);
   }
-
   // .gear__title
   &__title {
     @extend %block-title;
 
     margin-bottom: toRem(18);
   }
-
   // .gear__description
   &__description {
     margin-bottom: toRem(20);
@@ -53,7 +49,6 @@
       filter: blur(0);
     }
   }
-
   // .gear__button
   &__button {
     @extend %cta-btn;
@@ -74,16 +69,17 @@
     }
   }
 
+  &__thumb {
+    position: absolute;
+    inset: 0;
+  }
+
   // .gear__bg-image
-  &__bg-image {
+  &__image {
     @include tablet {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      z-index: -1;
     }
   }
 }
