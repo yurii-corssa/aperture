@@ -28,6 +28,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scrollbar-gutter: stable;
+  scroll-behavior: smooth;
 }
 
 /* Reapply the pointer cursor for anchor tags */

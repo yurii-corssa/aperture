@@ -1,5 +1,5 @@
 <header class="header container" data-header>
-  <a href="#" class="header__logo logo">
+  <a href="/" class="header__logo logo">
     <svg width="128" height="31">
       <use href="./src/img/sprite.svg#icon-logo"></use>
     </svg>
@@ -15,16 +15,24 @@
     <span></span>
   </button>
 
-  <div id="header-menu" class="header__menu" data-mobile-menu aria-hidden="true">
+  <div id="header-menu" class="header__menu" data-header-menu aria-hidden="true">
     <nav class="header__nav">
       <ul class="header__list">
-        <li class="header__item"><a href="#" class="header__link">Business areas</a></li>
-        <li class="header__item"><a href="#" class="header__link">Featured images</a></li>
-        <li class="header__item"><a href="#" class="header__link">Gear cage</a></li>
-        <li class="header__item"><a href="#" class="header__link">Contact</a></li>
+        <li class="header__item">
+          <a href="#portfolio" class="header__link" data-header-menu-item>What we do</a>
+        </li>
+        <li class="header__item">
+          <a href="#fuji" class="header__link" data-header-menu-item>Featured image</a>
+        </li>
+        <li class="header__item">
+          <a href="#gear-cage" class="header__link" data-header-menu-item>Gear cage</a>
+        </li>
+        <li class="header__item">
+          <a href="#past-clients" class="header__link" data-header-menu-item>Past clients</a>
+        </li>
       </ul>
     </nav>
 
-    <a href="#" class="header__button">Get template</a>
+    <button type="button" class="header__button" data-header-menu-item>Get in touch</button>
   </div>
 </header>

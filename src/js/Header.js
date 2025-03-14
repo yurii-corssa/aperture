@@ -13,7 +13,8 @@ export class Header {
 
   selectors = {
     HEADER: "[data-header]",
-    MOBILE_MENU: "[data-mobile-menu]",
+    HEADER_MENU: "[data-header-menu]",
+    HEADER_MENU_ITEM: "[data-header-menu-item]",
     BURGER_BUTTON: "[data-burger-menu-button]",
     BACKDROP: "[data-backdrop]",
   };
@@ -36,7 +37,8 @@ export class Header {
     this.config = { ...this.defaultConfig, ...initialConfig };
 
     this.headerEl = document.querySelector(this.selectors.HEADER);
-    this.menuEl = this.headerEl.querySelector(this.selectors.MOBILE_MENU);
+    this.menuEl = this.headerEl.querySelector(this.selectors.HEADER_MENU);
+    this.menuItemEls = [...this.menuEl.querySelectorAll(this.selectors.HEADER_MENU_ITEM)];
     this.burgerButtonEl = this.headerEl.querySelector(this.selectors.BURGER_BUTTON);
     this.backdropEl = document.querySelector(this.selectors.BACKDROP);
 
@@ -48,8 +50,12 @@ export class Header {
     this.init();
   }
 
-  handleClickOutside = (e) => {
-    if (!this.headerEl.contains(e.target) && !this.burgerButtonEl.contains(e.target)) {
+  handleClick = (e) => {
+    const isMenu = this.menuEl.contains(e.target);
+    const isBurgerButton = this.burgerButtonEl.contains(e.target);
+    const isMenuItem = this.menuItemEls.includes(e.target);
+
+    if ((!isMenu && !isBurgerButton) || isMenuItem) {
       this.closeMenu();
     }
   };
@@ -63,7 +69,7 @@ export class Header {
 
     this.menuIsOpen = true;
 
-    window.addEventListener("click", this.handleClickOutside);
+    window.addEventListener("click", this.handleClick);
   };
 
   closeMenu = () => {
