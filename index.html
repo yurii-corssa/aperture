@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Aperture</title>
-    <script type="module" crossorigin src="/assets/index-DCMeZrbL.js"></script>
+    <script type="module" crossorigin src="/assets/index-C-SXfxIt.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index.css">
   </head>
   <body>
     <header class="header container" data-header>
-  <a href="#" class="header__logo logo">
+  <a href="/" class="header__logo logo">
     <svg width="128" height="31">
       <use href="/assets/sprite.svg#icon-logo"></use>
     </svg>
@@ -27,17 +27,25 @@
     <span></span>
   </button>
 
-  <div id="header-menu" class="header__menu" data-mobile-menu aria-hidden="true">
+  <div id="header-menu" class="header__menu" data-header-menu aria-hidden="true">
     <nav class="header__nav">
       <ul class="header__list">
-        <li class="header__item"><a href="#" class="header__link">Business areas</a></li>
-        <li class="header__item"><a href="#" class="header__link">Featured images</a></li>
-        <li class="header__item"><a href="#" class="header__link">Gear cage</a></li>
-        <li class="header__item"><a href="#" class="header__link">Contact</a></li>
+        <li class="header__item">
+          <a href="#portfolio" class="header__link" data-header-menu-item>What we do</a>
+        </li>
+        <li class="header__item">
+          <a href="#fuji" class="header__link" data-header-menu-item>Featured image</a>
+        </li>
+        <li class="header__item">
+          <a href="#gear-cage" class="header__link" data-header-menu-item>Gear cage</a>
+        </li>
+        <li class="header__item">
+          <a href="#past-clients" class="header__link" data-header-menu-item>Past clients</a>
+        </li>
       </ul>
     </nav>
 
-    <a href="#" class="header__button">Get template</a>
+    <button type="button" class="header__button" data-header-menu-item>Get in touch</button>
   </div>
 </header>
 
@@ -107,14 +115,14 @@
 
 </section>
 
-      <section class="portfolio container">
+      <section id="portfolio" class="portfolio container">
   <div data-blur-out-text class="portfolio__header">
     <h2 class="portfolio__title">What we do.</h2>
     <p class="portfolio__subtitle">The areas that we're specialized in.</p>
   </div>
 
   <ul class="portfolio__list">
-    <li class="portfolio__item category-card">
+    <li id="product-photography" class="portfolio__item category-card">
       <picture class="category-card__thumb">
         <source
           srcset="/assets/portfolio-card-img.webp 1x, /assets/portfolio-card-img@2x.webp 2x, /assets/portfolio-card-img@3x.webp 3x"
@@ -154,7 +162,7 @@
       </div>
     </li>
 
-    <li class="portfolio__item category-card">
+    <li id="architecture-photography" class="portfolio__item category-card">
       <picture class="category-card__thumb">
         <source
           srcset="/assets/portfolio-card-img-1.webp 1x, /assets/portfolio-card-img-1@2x.webp 2x, /assets/portfolio-card-img-1@3x.webp 3x"
@@ -194,7 +202,7 @@
       </div>
     </li>
 
-    <li class="portfolio__item category-card">
+    <li id="drone-photography" class="portfolio__item category-card">
       <picture class="category-card__thumb">
         <source
           srcset="/assets/portfolio-card-img-2.webp 1x, /assets/portfolio-card-img-2@2x.webp 2x, /assets/portfolio-card-img-2@3x.webp 3x"
@@ -234,7 +242,7 @@
       </div>
     </li>
 
-    <li class="portfolio__item category-card">
+    <li id="wildlife-photography" class="portfolio__item category-card">
       <picture class="category-card__thumb">
         <source
           srcset="/assets/portfolio-card-img-3.webp 1x, /assets/portfolio-card-img-3@2x.webp 2x, /assets/portfolio-card-img-3@3x.webp 3x"
@@ -276,7 +284,7 @@
   </ul>
 </section>
 
-      <section class="fuji photo-highlight container">
+      <section id="fuji" class="fuji photo-highlight container">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
   <picture class="photo-highlight__thumb">
     <source srcset="/assets/fuji.webp 1x, /assets/fuji@2x.webp 2x, /assets/fuji@3x.webp 3x" type="image/webp" />
@@ -326,7 +334,7 @@
 
 </section>
 
-      <section class="gear container">
+      <section id="gear-cage" class="gear container">
   <div class="gear__content">
     <h3 class="gear__subtitle" data-blur-out-text>The Gear cage</h3>
     <h2 class="gear__title" data-blur-out-text>The tools that we use.</h2>
@@ -336,7 +344,7 @@
       &mdash; these are the tools that we actually use everyday to capture the amazing things around
       us.
     </p>
-    <a href="#" class="gear__button">
+    <button type="button" class="gear__button">
       <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
@@ -349,7 +357,7 @@
 </div>
 
       <span>Check it out</span>
-    </a>
+    </button>
   </div>
 
   <div class="gear__photo-highlight">
@@ -403,7 +411,7 @@
   </div>
 </section>
 
-      <section class="monstera-leafs photo-highlight container">
+      <section id="monstera-leafs" class="monstera-leafs photo-highlight container">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
   <picture class="photo-highlight__thumb">
     <source srcset="/assets/monstera-leafs.webp 1x, /assets/monstera-leafs@2x.webp 2x, /assets/monstera-leafs@3x.webp 3x" type="image/webp" />
@@ -453,7 +461,7 @@
 
 </section>
 
-      <section class="clients container">
+      <section id="past-clients" class="clients container">
   <div class="clients__header">
     <h2 data-blur-out-text data-blur-out-text-delay="1000" class="clients__title">Past clients</h2>
     <p data-blur-out-text class="clients__subtitle">Trusted by your favourite companies</p>
@@ -591,7 +599,7 @@
   </div>
 </section>
 
-      <section class="himalayas-starfall photo-highlight container">
+      <section id="himalayas-starfall" class="himalayas-starfall photo-highlight container">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
   <picture class="photo-highlight__thumb">
     <source srcset="/assets/himalayas-starfall.webp 1x, /assets/himalayas-starfall@2x.webp 2x, /assets/himalayas-starfall@3x.webp 3x" type="image/webp" />
@@ -641,7 +649,7 @@
 
 </section>
 
-      <section class="contact container">
+      <section id="contact" class="contact container">
   <div class="contact__header">
     <h2 data-blur-out-text data-blur-out-text-delay="1000" class="contact__title">
       Need help with photography or videography?
@@ -685,63 +693,53 @@
 
       <ul class="footer__list">
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer">
-            Product Photography
-          </a>
+          <a href="#product-photography" class="footer__link">Product Photography</a>
         </li>
 
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer">
-            Architecture Photography
-          </a>
+          <a href="#architecture-photography" class="footer__link">Architecture Photography</a>
         </li>
 
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer">
-            Drone Photography
-          </a>
+          <a href="#drone-photography" class="footer__link">Drone Photography</a>
         </li>
 
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer">
-            Wildlife Photography
-          </a>
+          <a href="#wildlife-photography" class="footer__link">Wildlife Photography</a>
         </li>
       </ul>
     </div>
 
     <div class="footer__pages">
-      <h3 class="footer__list-title">Pages</h3>
+      <h3 class="footer__list-title">Sections</h3>
 
       <ul class="footer__list">
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer"> Gear cage </a>
+          <a href="#portfolio" class="footer__link">What we do</a>
         </li>
 
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer">
-            Featured images
-          </a>
+          <a href="#fuji" class="footer__link">Mount Fuji</a>
         </li>
 
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer"> Contact </a>
+          <a href="#gear-cage" class="footer__link">Gear cage</a>
         </li>
 
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer">
-            Style guide
-          </a>
+          <a href="#monstera-leafs" class="footer__link">Monstera Leafs</a>
         </li>
 
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer">
-            Instructions
-          </a>
+          <a href="#past-clients" class="footer__link">Past clients</a>
         </li>
 
         <li class="footer__list-item">
-          <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer"> Changelog </a>
+          <a href="#himalayas-starfall" class="footer__link">Himalayas Starfall</a>
+        </li>
+
+        <li class="footer__list-item">
+          <a href="#contact" class="footer__link">Contact</a>
         </li>
       </ul>
     </div>
@@ -765,28 +763,44 @@
   </div>
 
   <div class="footer__bottom">
-    <p class="footer__copyright">
+    <p id="copyright" class="footer__copyright">
       &copy; Aperture Photography, Inc. All rights reserved.
-      <a href="#" class="footer__link" target="_blank" rel="noopener noreferrer">Licensing</a>.
+      <a href="#copyright" class="footer__link">Licensing</a>.
     </p>
 
     <ul class="footer__social">
       <li class="footer__socials-item">
-        <a href="" class="footer__socials-link" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://twitter.com/aperture-studio"
+          class="footer__socials-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg width="24" height="24">
-            <use href="/assets/sprite.svg#icon-twiter"></use>
+            <use href="/assets/sprite.svg#icon-twitter"></use>
           </svg>
         </a>
       </li>
+
       <li class="footer__socials-item">
-        <a href="" class="footer__socials-link" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://instagram.com/aperture-studio"
+          class="footer__socials-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg width="24" height="24">
             <use href="/assets/sprite.svg#icon-instagram"></use>
           </svg>
         </a>
       </li>
       <li class="footer__socials-item">
-        <a href="" class="footer__socials-link" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://facebook.com/aperture-studio"
+          class="footer__socials-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg width="24" height="24">
             <use href="/assets/sprite.svg#icon-facebook"></use>
           </svg>
