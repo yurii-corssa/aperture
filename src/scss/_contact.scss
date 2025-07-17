@@ -1,6 +1,4 @@
-@use "./utilities/placeholders" as *;
-@use "./utilities/variables" as *;
-@use "./utilities/functions" as *;
+@use "utilities" as *;
 
 .contact {
   & {
@@ -23,9 +21,5 @@
   // .contact__subtitle
   &__subtitle {
     @extend %subtitle;
-  }
-  // .contact__button
-  &__button {
-    @extend %cta-btn;
   }
 }
