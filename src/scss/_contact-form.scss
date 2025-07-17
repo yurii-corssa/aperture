@@ -1,0 +1,30 @@
+@use "utilities" as *;
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(32);
+
+  // .contact-form__inputs
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(16);
+  }
+  // .contact-form__input-wrapper
+  &__input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(4);
+  }
+  // .contact-form__label
+  &__label {
+    @extend %title-label;
+    display: block;
+    padding-left: toRem(8);
+  }
+  // .contact-form__button
+  &__button {
+    align-self: flex-end;
+  }
+}
