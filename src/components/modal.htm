@@ -1,0 +1,21 @@
+<div
+  class="modal"
+  role="dialog"
+  aria-labelledby="modal-{=$modalName}-title"
+  aria-hidden="true"
+  data-modal-name="{=$modalName}"
+>
+  <div class="modal__wrapper">
+    <div class="modal__window" data-modal-window>
+      <div class="modal__header">
+        <h2 id="modal-{=$modalName}-title" class="modal__title">{=$title}</h2>
+
+        <button type="button" class="modal__close-btn" aria-label="Close" data-modal-close></button>
+      </div>
+
+      <div class="modal__body">
+        <load src="{=$bodySrc}" />
+      </div>
+    </div>
+  </div>
+</div>

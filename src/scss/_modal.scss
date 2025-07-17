@@ -1,0 +1,114 @@
+@use "utilities" as *;
+
+.modal {
+  & {
+    --transition-duration: 400ms;
+
+    position: fixed;
+    inset: 0;
+    padding-block: toRem($container-padding-s);
+    pointer-events: none;
+    z-index: 1001;
+
+    @include adaptiveValue("padding-inline", $container-padding-s, 15);
+    @include backdrop(".is-visible");
+  }
+  &.is-hidden & {
+    &__window {
+      transition:
+        opacity calc(var(--transition-duration) / 2) calc(var(--transition-duration) / 4),
+        transform var(--transition-duration) ease-out,
+        filter calc(var(--transition-duration) / 2) ease-out,
+        visibility 0ms var(--transition-duration);
+    }
+  }
+  &.is-visible & {
+    &__window {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      filter: blur(0);
+      visibility: visible;
+      pointer-events: all;
+
+      transition:
+        opacity calc(var(--transition-duration) / 2),
+        transform var(--transition-duration) ease,
+        filter calc(var(--transition-duration) / 2) calc(var(--transition-duration) / 2),
+        visibility 0ms;
+    }
+  }
+  // .modal__wrapper
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    // flex: 1 1 auto;
+    width: 100%;
+    min-height: 100%;
+  }
+  // .modal__window
+  &__window {
+    display: flex;
+    flex-direction: column;
+    gap: toRem(32);
+    width: 100%;
+    max-width: toRem(400);
+    padding-block: toRem(32);
+    background-color: $background-header-color;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    pointer-events: none;
+
+    opacity: 0;
+    transform: translate3d(0, -5%, 0);
+    filter: blur(4px);
+
+    @include adaptiveValue("padding-inline", 32, 15, $bp-mobile);
+  }
+  // .modal__header
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: toRem(32);
+  }
+  // .modal__title
+  &__title {
+    font-size: 1.5rem;
+    line-height: 1;
+    color: $text-heading-color;
+  }
+  // .modal__close-btn
+  &__close-btn {
+    position: relative;
+    width: toRem(24);
+    height: toRem(24);
+    color: $text-heading-color;
+    transition: color 250ms;
+
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      translate: 0 -50%;
+      display: block;
+      height: toRem(3);
+      background-color: currentColor;
+      border-radius: 0.625rem;
+    }
+    &::after {
+      transform: rotate(45deg);
+    }
+    &::before {
+      transform: rotate(-45deg);
+    }
+    @include hover() {
+      color: $accent-color;
+    }
+  }
+}
