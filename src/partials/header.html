@@ -1,38 +1,40 @@
-<header class="header container" data-header>
-  <a href="/" class="header__logo logo">
-    <svg width="128" height="31">
-      <use href="./src/img/sprite.svg#icon-logo"></use>
-    </svg>
-  </a>
+<header class="header" data-header>
+  <div class="header__container container">
+    <a href="/" class="header__logo logo">
+      <svg width="128" height="31">
+        <use href="./src/img/sprite.svg#icon-logo"></use>
+      </svg>
+    </a>
 
-  <button
-    type="button"
-    class="header__burger-btn"
-    data-burger-menu-button
-    aria-expanded="false"
-    aria-controls="header-menu"
-  >
-    <span></span>
-  </button>
+    <button
+      type="button"
+      class="header__burger-btn"
+      data-mobile-menu-toggle
+      aria-expanded="false"
+      aria-controls="header-menu"
+    >
+      <span></span>
+    </button>
 
-  <div id="header-menu" class="header__menu" data-header-menu aria-hidden="true">
-    <nav class="header__nav">
-      <ul class="header__list">
-        <li class="header__item">
-          <a href="#portfolio" class="header__link" data-header-menu-item>What we do</a>
-        </li>
-        <li class="header__item">
-          <a href="#fuji" class="header__link" data-header-menu-item>Featured image</a>
-        </li>
-        <li class="header__item">
-          <a href="#gear-cage" class="header__link" data-header-menu-item>Gear cage</a>
-        </li>
-        <li class="header__item">
-          <a href="#past-clients" class="header__link" data-header-menu-item>Past clients</a>
-        </li>
-      </ul>
-    </nav>
+    <div id="header-menu" class="header__menu menu" data-mobile-menu aria-hidden="true">
+      <nav class="menu__nav">
+        <ul class="menu__list">
+          <li class="menu__item">
+            <a href="#portfolio" class="menu__link" data-mobile-menu-item>What we do</a>
+          </li>
+          <li class="menu__item">
+            <a href="#fuji" class="menu__link" data-mobile-menu-item>Featured image</a>
+          </li>
+          <li class="menu__item">
+            <a href="#gear-cage" class="menu__link" data-mobile-menu-item>Gear cage</a>
+          </li>
+          <li class="menu__item">
+            <a href="#past-clients" class="menu__link" data-mobile-menu-item>Past clients</a>
+          </li>
+        </ul>
+      </nav>
 
-    <button type="button" class="header__button" data-header-menu-item>Get in touch</button>
+      <button type="button" class="menu__button button" data-mobile-menu-item>Get in touch</button>
+    </div>
   </div>
 </header>
