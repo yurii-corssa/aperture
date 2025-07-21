@@ -1,15 +1,25 @@
 @use "base";
 @use "common";
 @use "header";
+@use "menu";
 
 @use "photo-highlight";
+@use "image-details";
 @use "hero";
 @use "portfolio";
+@use "category-card";
+@use "aperture-icon";
 @use "gear";
 @use "contact";
 @use "clients";
 
 @use "footer";
+@use "newsletter";
+
+@use "modal";
+@use "contact-form";
+@use "success";
+@use "gallery-slider";
 
 @use "effects/split-text";
 @use "effects/fluid-text";

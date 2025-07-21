@@ -1,13 +1,8 @@
-@use "./utilities/variables" as *;
-@use "./utilities/functions" as *;
-@use "./utilities/placeholders" as *;
-@use "./utilities/mixins" as *;
+@use "utilities" as *;
 
 .container {
-  padding-top: toRem(120);
-  padding-bottom: toRem(100);
-  background-color: $background-page-color;
-
+  @include adaptiveValue("padding-top", 120, 80);
+  @include adaptiveValue("padding-bottom", 100, 60);
   @include adaptiveValue("padding-inline", $container-padding-l, 15);
 
   &--wide {
@@ -18,112 +13,68 @@
 .logo {
   display: inline-flex;
   color: $text-heading-color;
+  transition: color 250ms;
 
-  @include hover(color, $accent-color);
-}
-
-.backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: $backdrop-color;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 250ms ease-out;
-
-  &.is-visible {
-    pointer-events: auto;
-    opacity: 1;
+  @include hover() {
+    color: $accent-color;
   }
 }
 
-.image-details {
-  @include adaptiveValue("padding-inline", 40, 15);
+.button {
+  --button-bg-color: #{$btn-bg-color};
+  --button-color: #{$text-light-bg-color};
 
-  & {
-    position: absolute;
-    bottom: toRem(40);
-    right: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: end;
-    gap: toRem(16);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  font-size: 1rem;
+  line-height: 1.25;
+  letter-spacing: 0.03em;
+  padding: toRem(11) toRem(20);
+  border-radius: 0.88rem;
+  color: var(--button-color);
+  background-color: var(--button-bg-color);
+  transition-duration: 250ms;
+  transition-property: background-color, color;
 
-    &::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-      width: 100%;
-      height: 150%;
-      background: $background-page-color;
-      filter: blur(40px);
-      border-radius: 10px;
-      opacity: 0.4;
+  &--aperture {
+    --button-color: #{$btn-bg-color};
+
+    padding: toRem(7) 0.5rem;
+    gap: 0.8rem;
+
+    span {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--button-color);
+      padding: toRem(5) toRem(15);
+      background-color: $background-page-color;
+      border-radius: 0.69rem;
+      transition: color 250ms;
+    }
+
+    @include hover() {
+      --aperture-size: -30deg;
+      --button-color: #{$accent-color};
     }
   }
 
-  // .image-details__item
-  &__item {
-    display: flex;
-    align-items: center;
-    gap: toRem(6);
-    color: $text-heading-color;
-  }
-  // .image-details__text
-  &__text {
-    font-size: 0.75rem;
-    line-height: 1;
+  &:not(.button--aperture) {
+    @include hover() {
+      --button-bg-color: #{$accent-color};
+    }
   }
 }
 
-.aperture-icon {
-  $aperture-size: var(--aperture-size, -30deg);
-  $aperture-bg-color: var(--aperture-bg-color, $btn-bg-color);
-  $aperture-rotate: var(--aperture-rotate, 40deg);
-  & {
-    width: toRem(28);
-    height: toRem(28);
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  // .aperture-icon__blades
-  &__blades {
-    padding: toRem(2);
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 250ms ease;
-  }
-  // .aperture-icon__blade
-  &__blade {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 50%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transform: rotate(calc(var(--i) * 60deg)) scaleY(2) rotateX(-60deg);
-    transform-origin: 0% 50%;
+.input {
+  width: 100%;
+  padding: toRem(8) toRem(16);
+  color: $text-light-bg-color;
+  background-color: $input-bg-color;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
 
-    @for $i from 1 through 6 {
-      &:nth-of-type(#{$i}) {
-        --i: #{$i};
-      }
-    }
-    // .aperture-icon__blade::before
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-color: currentColor;
-      border-left: toRem(2) solid;
-      border-color: $aperture-bg-color;
-      transform-origin: 0% 0%;
-      transform: rotate($aperture-size);
-      transition: all 250ms ease;
-    }
+  &::placeholder {
+    opacity: 0.5;
   }
 }

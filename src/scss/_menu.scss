@@ -1,0 +1,160 @@
+@use "./utilities/" as *;
+
+.menu {
+  @include max-desktop {
+    & {
+      grid-area: menu;
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      justify-content: center;
+      align-items: start;
+      background-color: $background-header-color;
+      overflow: hidden;
+      visibility: hidden;
+
+      @supports (position-anchor: --header-anchor) {
+        position-anchor: --header-anchor;
+        top: anchor(bottom);
+      }
+      @supports not (position-anchor: --header-anchor) {
+        top: 0;
+        margin-top: toRem(79);
+      }
+      @include adaptiveValue("padding-inline", $container-padding-l, 15);
+      @include backdrop(".is-visible");
+    }
+    &.is-visible,
+    &.is-hidden {
+      transition: 550ms;
+      transition-property: visibility, translate, max-height, padding-bottom;
+
+      > * {
+        transition:
+          opacity 550ms,
+          filter 550ms,
+          padding-inline 450ms 250ms,
+          background-color 250ms;
+      }
+    }
+    &.is-visible {
+      visibility: visible;
+
+      > * {
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+    &.is-hidden {
+      > * {
+        opacity: 0;
+        filter: blur(toRem(4));
+      }
+    }
+    &.is-visible &__nav {
+      padding-inline: 1rem;
+    }
+    &[data-menu-type="dropdown"] {
+      inset-inline: 0;
+      max-height: 0;
+      padding-bottom: 0;
+
+      &.is-visible {
+        max-height: toRem(300);
+        padding-bottom: 2rem;
+      }
+    }
+    &[data-menu-type="slide"] {
+      bottom: 0;
+      width: max-content;
+    }
+    &[data-menu-position="left"] {
+      right: 100%;
+
+      &.is-visible {
+        translate: 100%;
+      }
+    }
+    &[data-menu-position="right"] {
+      left: 100%;
+
+      &.is-visible {
+        translate: -100%;
+      }
+    }
+  }
+  @include desktop {
+    display: contents;
+  }
+  // .menu__nav
+  &__nav {
+    padding-inline: 0;
+
+    @include desktop {
+      grid-area: nav;
+      display: flex;
+    }
+  }
+  // .menu__list
+  &__list {
+    @include desktop {
+      display: flex;
+      justify-content: end;
+      gap: toRem(32);
+      width: 100%;
+    }
+  }
+  // .menu__item
+  &__item {
+    display: flex;
+    flex-shrink: 0;
+  }
+  // .menu__link
+  &__link {
+    position: relative;
+    align-self: center;
+    color: $text-heading-color;
+    transition: color 250ms;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: block;
+      width: 0;
+      height: 1px;
+      background-color: $text-heading-color;
+      transition:
+        width 250ms,
+        background-color 250ms;
+    }
+    @include hover() {
+      color: $accent-color;
+
+      &::after {
+        left: 0;
+        width: 100%;
+        background-color: $accent-color;
+      }
+    }
+    @include max-desktop {
+      font-size: 1.44rem;
+      line-height: 1.30435;
+      padding: toRem(8) 0;
+    }
+    @include desktop {
+      font-size: 0.94rem;
+      line-height: 1.33333;
+      padding: toRem(4) 0;
+    }
+  }
+  // .menu__button
+  &__button {
+    @include desktop {
+      grid-area: cta;
+      justify-self: end;
+    }
+  }
+}

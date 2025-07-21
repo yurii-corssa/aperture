@@ -1,11 +1,7 @@
-@use "./utilities/placeholders" as *;
-@use "./utilities/variables" as *;
-@use "./utilities/functions" as *;
-@use "./utilities/mixins" as *;
+@use "utilities" as *;
 
 .portfolio {
   $portfolio-list-gap: 1rem;
-  $card-height: toRem(600);
   $card-min-width: toRem(404);
   $card-max-width: toRem(576);
 
@@ -14,6 +10,13 @@
     flex-direction: column;
     align-items: center;
   }
+
+  @include max-mobile {
+    &.container {
+      padding-inline: 0;
+    }
+  }
+
   // .portfolio__header
   &__header {
     text-align: center;
@@ -29,7 +32,7 @@
     @extend %subtitle;
     margin-bottom: toRem(42);
   }
-  // .portfolio__card-list
+  // .portfolio__list
   &__list {
     display: flex;
     flex-wrap: wrap;
@@ -37,60 +40,10 @@
     max-width: calc($card-max-width * 2 + $portfolio-list-gap);
     justify-content: center;
   }
-  // .portfolio__card
+  // .portfolio__item
   &__item {
     flex: 1 1 $card-min-width;
     max-width: $card-max-width;
-    height: $card-height;
-  }
-}
-
-// .category-card
-.category-card {
-  position: relative;
-  display: inline-flex;
-  padding: toRem(30);
-
-  // .category-card__thumb
-  &__thumb {
-    position: absolute;
-    inset: 0;
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(360deg, #000000bb 0%, #ffffff00 60%);
-    }
-  }
-  // .category-card__image
-  &__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  // .category-card__body
-  &__body {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: end;
-    gap: toRem(16);
-  }
-
-  &__content {
-    overflow-y: auto;
-  }
-
-  &__title {
-    @extend %title-label;
-    color: $text-heading-color;
-    margin-bottom: toRem(10);
-  }
-
-  &__button {
-    @extend %cta-btn;
-    flex-shrink: 0;
+    @include adaptiveValue("height", 600, 450, $bp-tablet);
   }
 }
