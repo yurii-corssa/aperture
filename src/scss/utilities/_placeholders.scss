@@ -3,58 +3,39 @@
 @use "./functions" as *;
 
 %title-label {
-  font-size: 0.88rem;
   line-height: 1.42857;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: currentColor;
+
+  @include adaptiveValue("font-size", 14, 12, $bp-tablet);
 }
 
 %main-title {
-  font-size: 3.38rem;
   line-height: 1.1;
   color: currentColor;
+
+  @include adaptiveValue("font-size", 54, 40, $bp-tablet);
 }
 
 %section-title {
-  font-size: 2.5rem;
   line-height: 1.05;
   color: currentColor;
+
+  @include adaptiveValue("font-size", 40, 32, $bp-tablet);
 }
 
 %block-title {
-  font-size: 1.75rem;
   line-height: 1.14286;
   color: currentColor;
+
+  @include adaptiveValue("font-size", 28, 24, $bp-tablet);
 }
 
 %subtitle {
-  font-size: 1.5rem;
   line-height: 1.25;
-}
 
-%cta-btn {
-  display: inline-flex;
-  align-items: center;
-  font-size: 1rem;
-  line-height: 1.25;
-  letter-spacing: 0.03em;
-  padding: 0 1.25rem;
-  height: toRem(42);
-  border-radius: 0.88rem;
-  color: $text-light-bg-color;
-  background-color: $btn-bg-color;
-
-  &:has(.aperture-icon) {
-    padding-left: 0.5rem;
-    gap: 0.75rem;
-  }
-
-  @include hover(
-    (background-color, --aperture-size, --aperture-bg-color),
-    ($accent-color, -10deg, $accent-color)
-  ) {
-  }
+  @include adaptiveValue("font-size", 24, 20, $bp-tablet);
 }
 
 %visually-hidden {
