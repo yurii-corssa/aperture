@@ -1,0 +1,56 @@
+@use "utilities" as *;
+
+.newsletter {
+  display: contents;
+
+  &::after {
+    content: "";
+    display: block;
+    grid-area: sl;
+    width: 100%;
+    height: 0.12rem;
+    background-color: $text-heading-color;
+  }
+  // .newsletter__content
+  &__content {
+    grid-area: nc;
+  }
+  // .newsletter__title
+  &__title {
+    @extend %title-label;
+    color: $text-heading-color;
+    margin-bottom: toRem(20);
+  }
+  // .newsletter__form
+  &__form {
+    grid-area: nf;
+    position: relative;
+    height: min-content;
+  }
+  // .newsletter__label
+  &__label {
+    @extend %visually-hidden;
+  }
+  // .newsletter__input
+  &__input {
+    padding: toRem(15);
+    padding-right: toRem(106);
+  }
+  // .newsletter__button
+  &__button {
+    position: absolute;
+    top: 50%;
+    right: toRem(6);
+    transform: translateY(-50%);
+    font-size: 0.81rem;
+    line-height: 1.53846;
+    padding: toRem(5) toRem(15);
+    background-color: $background-page-color;
+    border-radius: 0.69rem;
+    transition: color 250ms;
+
+    @include hover() {
+      color: $accent-color;
+    }
+  }
+}

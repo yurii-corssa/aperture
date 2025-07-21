@@ -31,10 +31,8 @@ export class Newsletter {
   handleIntersect = (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        console.log("Form is visible");
         this.elements.form.addEventListener("submit", this.handleSubmit);
       } else {
-        console.log("Form is not visible");
         this.elements.form.removeEventListener("submit", this.handleSubmit);
       }
     });
