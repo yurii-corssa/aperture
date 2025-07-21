@@ -1,7 +1,4 @@
-@use "./utilities/placeholders" as *;
-@use "./utilities/variables" as *;
-@use "./utilities/functions" as *;
-@use "./utilities/mixins" as *;
+@use "utilities" as *;
 
 .gear {
   & {
@@ -43,37 +40,30 @@
     @supports (text-wrap: pretty) {
       text-wrap: pretty;
     }
-
     &.visible {
       opacity: 1;
       filter: blur(0);
     }
   }
-  // .gear__button
-  &__button {
-    @extend %cta-btn;
-  }
-
   // .gear__photo-highlight
   &__photo-highlight {
     @include max-tablet {
       display: none;
     }
-
     @include tablet {
       position: relative;
-      margin-top: toRem(-120);
-      margin-bottom: toRem(-100);
-
+      // margin-top: toRem(-120);
+      // margin-bottom: toRem(-100);
+      @include adaptiveValue("margin-top", -120, -80);
+      @include adaptiveValue("margin-bottom", -100, -60);
       @include adaptiveValue("margin-right", $container-padding-l * -1, -15);
     }
   }
-
+  // .gear__thumb
   &__thumb {
     position: absolute;
     inset: 0;
   }
-
   // .gear__bg-image
   &__image {
     @include tablet {

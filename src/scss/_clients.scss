@@ -1,6 +1,4 @@
-@use "./utilities/placeholders" as *;
-@use "./utilities/variables" as *;
-@use "./utilities/functions" as *;
+@use "utilities" as *;
 
 .clients {
   & {
@@ -24,7 +22,7 @@
   &__subtitle {
     @extend %subtitle;
   }
-
+  // ..clients__slider
   &__slider {
     width: 100%;
     height: toRem(158);

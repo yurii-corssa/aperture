@@ -1,7 +1,4 @@
-@use "../utilities/placeholders" as *;
-@use "../utilities/variables" as *;
-@use "../utilities/functions" as *;
-@use "../utilities/mixins" as *;
+@use "../utilities" as *;
 
 .slider {
   --slider-slides-to-show: 1;
@@ -46,13 +43,11 @@
   }
   // .slider__nav
   &__nav {
-    @include hover(color, $accent-color);
-    & {
-      display: inline-flex;
-      color: $text-primary-color;
-      padding: toRem(8);
-      cursor: pointer;
-    }
+    display: inline-flex;
+    color: $text-primary-color;
+    padding: toRem(8);
+    cursor: pointer;
+    transition: color 250ms;
 
     svg {
       stroke: currentColor;
@@ -68,6 +63,10 @@
     &:disabled {
       opacity: 0.3;
       pointer-events: none;
+    }
+
+    @include hover() {
+      color: $accent-color;
     }
   }
 }

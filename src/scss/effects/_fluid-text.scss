@@ -1,4 +1,4 @@
-@use "../utilities/variables" as *;
+@use "../utilities" as *;
 
 .fluid-text {
   &__words,
@@ -9,7 +9,6 @@
     transform-style: preserve-3d;
     display: inline-block;
   }
-
   &__words:nth-of-type(1) {
     --idx: 0;
   }
@@ -22,22 +21,18 @@
   &__words:nth-of-type(4) {
     --idx: 15;
   }
-
   & &__words &__char,
   & &__char::after,
   & &__char::before {
     animation: none;
   }
-
   &.animate &__words &__char {
     animation: flip var(--duration) var(--delay) forwards ease;
   }
-
   &.animate &__char::after,
   &.animate &__char::before {
     animation: fade var(--duration) var(--delay) forwards ease;
   }
-
   &__words &__char {
     --duration: 2.2s;
     --delay: calc(
@@ -47,7 +42,6 @@
     display: inline-block;
     transform: rotateX(90deg);
   }
-
   &__char {
     color: transparent;
     position: relative;
@@ -65,7 +59,6 @@
       height: 1lh;
       width: 100%;
     }
-
     &::before {
       transform-origin: 50% 50%;
       translate: -50% -50%;
@@ -73,21 +66,18 @@
       opacity: 1;
       --opacity: 0;
     }
-
     &::after {
       translate: -50% -50%;
       transform: translate3d(0, 0, 0.45lh);
     }
   }
 }
-
 @keyframes flip {
   25%,
   100% {
     transform: rotateX(0deg);
   }
 }
-
 @keyframes fade {
   30%,
   100% {

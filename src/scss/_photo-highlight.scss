@@ -1,6 +1,4 @@
-@use "./utilities/placeholders" as *;
-@use "./utilities/variables" as *;
-@use "./utilities/functions" as *;
+@use "utilities" as *;
 
 .photo-highlight {
   & {
@@ -22,7 +20,6 @@
       z-index: -1;
     }
   }
-
   // .photo-highlight__thumb
   &__thumb {
     position: absolute;
@@ -37,22 +34,22 @@
   // .photo-highlight__caption
   &__caption {
     max-width: toRem(300);
-    transition: 400ms ease-out;
-    transition-property: opacity, filter;
   }
   // .photo-highlight__title
   &__title {
     @extend %title-label;
     color: $text-heading-color;
   }
-
+  // .photo-highlight__title,
+  // .photo-highlight__description
   &__title,
   &__description {
     position: relative;
     display: inline-block;
     opacity: 0;
     filter: blur(4px);
-    transition: inherit;
+    transition: 400ms ease-out;
+    transition-property: opacity, filter;
 
     &.visible {
       opacity: 1;
