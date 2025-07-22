@@ -1,36 +1,30 @@
-@use "./utilities/placeholders" as *;
-@use "./utilities/variables" as *;
-@use "./utilities/functions" as *;
+@use "utilities" as *;
 
 .hero {
   & {
     position: relative;
-    min-height: calc(100svh - var(--header-height));
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: center;
     overflow: hidden;
-    background: none;
-  }
+    @include adaptiveValue("padding-bottom", 100, 80);
 
-  &::after {
+    // background-blend-mode: darken;
+  }
+  &::before {
     content: "";
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(360deg, #000000 0%, #ffffff00 100%);
+    background-image: linear-gradient(360deg, #000000 0%, #ffffff00 100%);
     mix-blend-mode: darken;
-    z-index: 1;
   }
   // .hero__content
   &__content {
     text-align: center;
     max-width: 37.5rem;
-    z-index: 2;
   }
-
   // .hero__subtitle
   &__subtitle {
     @extend %title-label;
@@ -45,27 +39,27 @@
 
     color: $text-heading-color;
   }
-  // .hero__description
-  &__description {
-    font-size: 0.88rem;
-    line-height: 1.42857;
-  }
   // .hero__thumb
   &__thumb {
-    position: fixed;
+    position: absolute;
     inset: 0;
+    translate: 0px 0svh;
     z-index: -1;
+
+    animation: heroBackground linear;
+    animation-timeline: scroll(root);
+    animation-range: 0svh 100svh;
   }
   // .hero__video
   &__video {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+}
 
-  &__details {
-    z-index: 2;
+@keyframes heroBackground {
+  to {
+    translate: 0px 100svh;
   }
 }
