@@ -74,10 +74,14 @@
       <h3 class="newsletter__title">Subscribe to our newsletter</h3>
       <p class="newsletter__text">Read about all the things we do.</p>
     </div>
-    <form class="newsletter__form">
+
+    <form class="newsletter__form" data-newsletter-form>
+      <label for="newsletter-email" class="newsletter__label">Email</label>
       <input
+        id="newsletter-email"
         type="email"
-        class="newsletter__input"
+        name="email"
+        class="newsletter__input input"
         placeholder="Enter your email"
         autocomplete="email"
         required
