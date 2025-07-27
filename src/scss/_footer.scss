@@ -4,7 +4,6 @@
   display: grid;
   gap: toRem(36) toRem(20);
   padding-top: toRem(100);
-  background-color: $background-page-color;
 
   @include max-desktop {
     grid-template-columns: repeat(2, 1fr);

@@ -6,7 +6,7 @@ body {
   font-family: $main-font;
   line-height: 1.42857;
   color: $text-primary-color;
-  background-color: $background-page-color;
+  background-color: $black-color;
 
   @include adaptiveValue("font-size", 14, 12, $bp-tablet);
 
@@ -20,8 +20,9 @@ body {
     content: "";
     position: fixed;
     inset: 0;
-    background-color: $backdrop-color;
+    background-color: color-mix(in srgb, $dark-color, transparent 40%);
     opacity: 0;
+    backdrop-filter: blur(6px);
     pointer-events: none;
     // z-index: 888;
     transition: opacity 200ms ease-out;

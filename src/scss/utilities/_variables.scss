@@ -3,14 +3,16 @@ $main-font: "Poppins", sans-serif;
 $accent-color: #d7bfa5;
 $success-color: #4caf50;
 // $accent-color: #53615b;
-$text-primary-color: #c0c0c0;
-$text-heading-color: #fff;
-$btn-bg-color: $text-heading-color;
-$input-bg-color: $text-heading-color;
-$text-light-bg-color: #000;
-$background-header-color: #181818;
-$background-page-color: #000;
-$backdrop-color: #181818a1;
+$white-color: #fff;
+$light-color: #c0c0c0;
+$black-color: #000;
+$dark-color: #181818;
+
+$text-primary-color: $light-color;
+$text-heading-color: $white-color;
+$btn-bg-color: $white-color;
+$input-bg-color: $white-color;
+$text-dark-color: $black-color;
 
 $min-width-page: 320;
 $max-width-page: 1440;

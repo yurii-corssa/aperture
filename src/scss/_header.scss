@@ -18,7 +18,7 @@
     display: grid;
     align-items: center;
     color: $text-heading-color;
-    background-color: $background-header-color;
+    background-color: $dark-color;
     anchor-name: --header-anchor;
 
     @include adaptiveValue("column-gap", 32, 16, $bp-desktop, $bp-tablet);
