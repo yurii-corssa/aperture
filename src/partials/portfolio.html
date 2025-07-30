@@ -6,138 +6,162 @@
 
   <ul class="portfolio__list">
     <li id="product-photography" class="portfolio__item category-card">
-      <picture class="category-card__thumb">
-        <source
-          srcset="
-            ./src/img/portfolio/portfolio-card-img.webp    1x,
-            ./src/img/portfolio/portfolio-card-img@2x.webp 2x,
-            ./src/img/portfolio/portfolio-card-img@3x.webp 3x
-          "
-          type="image/webp"
-        />
-        <img
-          src="./src/img/portfolio/portfolio-card-img.webp"
-          alt="Tech gadgets on a dark surface."
-          class="category-card__image"
-          loading="lazy"
-        />
-      </picture>
+      <div class="category-card__container">
+        <picture class="category-card__thumb">
+          <source
+            srcset="
+              ./src/img/portfolio/portfolio-card-img.webp    1x,
+              ./src/img/portfolio/portfolio-card-img@2x.webp 2x,
+              ./src/img/portfolio/portfolio-card-img@3x.webp 3x
+            "
+            type="image/webp"
+          />
+          <img
+            src="./src/img/portfolio/portfolio-card-img.webp"
+            alt="Tech gadgets on a dark surface."
+            class="category-card__image"
+            loading="lazy"
+          />
+        </picture>
 
-      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
-        <div class="category-card__content" data-prlx>
-          <h3 class="category-card__title">Product Photography</h3>
-          <p class="category-card__description">
-            Capture every detail of your products with professional photography. We create visual
-            content that boosts sales and showcases your products in the best light.
-          </p>
+        <div class="category-card__body">
+          <div class="category-card__content">
+            <h3 class="category-card__title" data-watch>Product Photography</h3>
+            <p class="category-card__description" data-watch>
+              Capture every detail of your products with professional photography. We create visual
+              content that boosts sales and showcases your products in the best light.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="category-card__button button button--aperture"
+            data-modal-open="product-gallery"
+          >
+            <load src="src/components/aperture-icon.htm" />
+            <span>Read more</span>
+          </button>
         </div>
-
-        <a href="#" class="category-card__button">
-          <load src="src/components/aperture-icon.htm" />
-          <span>Read more</span>
-        </a>
       </div>
     </li>
 
     <li id="architecture-photography" class="portfolio__item category-card">
-      <picture class="category-card__thumb">
-        <source
-          srcset="
-            ./src/img/portfolio/portfolio-card-img-1.webp    1x,
-            ./src/img/portfolio/portfolio-card-img-1@2x.webp 2x,
-            ./src/img/portfolio/portfolio-card-img-1@3x.webp 3x
-          "
-          type="image/webp"
-        />
-        <img
-          src="./src/img/portfolio/portfolio-card-img-1.webp"
-          alt="Geometric architectural pattern."
-          class="category-card__image"
-          loading="lazy"
-        />
-      </picture>
+      <div class="category-card__container">
+        <picture class="category-card__thumb">
+          <source
+            srcset="
+              ./src/img/portfolio/portfolio-card-img-1.webp    1x,
+              ./src/img/portfolio/portfolio-card-img-1@2x.webp 2x,
+              ./src/img/portfolio/portfolio-card-img-1@3x.webp 3x
+            "
+            type="image/webp"
+          />
+          <img
+            src="./src/img/portfolio/portfolio-card-img-1.webp"
+            alt="Geometric architectural pattern."
+            class="category-card__image"
+            loading="lazy"
+          />
+        </picture>
 
-      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
-        <div class="category-card__content" data-prlx>
-          <h3 data-watch class="category-card__title">Architecture Photography</h3>
-          <p data-watch class="category-card__description">
-            Unveil the grandeur of architecture through the lens. We deliver stunning shots that
-            highlight the design, structure, and concept of your spaces.
-          </p>
+        <div class="category-card__body">
+          <div class="category-card__content">
+            <h3 data-watch class="category-card__title" data-watch>Architecture Photography</h3>
+            <p data-watch class="category-card__description" data-watch>
+              Unveil the grandeur of architecture through the lens. We deliver stunning shots that
+              highlight the design, structure, and concept of your spaces.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="category-card__button button button--aperture"
+            data-modal-open="architecture-gallery"
+          >
+            <load src="src/components/aperture-icon.htm" />
+            <span>Read more</span>
+          </button>
         </div>
-
-        <a href="" class="category-card__button">
-          <load src="src/components/aperture-icon.htm" />
-          <span>Read more</span>
-        </a>
       </div>
     </li>
 
     <li id="drone-photography" class="portfolio__item category-card">
-      <picture class="category-card__thumb">
-        <source
-          srcset="
-            ./src/img/portfolio/portfolio-card-img-2.webp    1x,
-            ./src/img/portfolio/portfolio-card-img-2@2x.webp 2x,
-            ./src/img/portfolio/portfolio-card-img-2@3x.webp 3x
-          "
-          type="image/webp"
-        />
-        <img
-          src="./src/img/portfolio/portfolio-card-img-2.webp"
-          alt="Aerial view of a forest."
-          class="category-card__image"
-          loading="lazy"
-        />
-      </picture>
+      <div class="category-card__container">
+        <picture class="category-card__thumb">
+          <source
+            srcset="
+              ./src/img/portfolio/portfolio-card-img-2.webp    1x,
+              ./src/img/portfolio/portfolio-card-img-2@2x.webp 2x,
+              ./src/img/portfolio/portfolio-card-img-2@3x.webp 3x
+            "
+            type="image/webp"
+          />
+          <img
+            src="./src/img/portfolio/portfolio-card-img-2.webp"
+            alt="Aerial view of a forest."
+            class="category-card__image"
+            loading="lazy"
+          />
+        </picture>
 
-      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
-        <div class="category-card__content" data-prlx>
-          <h3 data-watch class="category-card__title">Drone Photography</h3>
-          <p data-watch class="category-card__description">
-            Breathtaking views from a bird&rsquo;s-eye perspective. Our drones provide a unique
-            angle for landscapes, events, or real estate.
-          </p>
+        <div class="category-card__body">
+          <div class="category-card__content">
+            <h3 data-watch class="category-card__title" data-watch>Drone Photography</h3>
+            <p data-watch class="category-card__description" data-watch>
+              Breathtaking views from a bird&rsquo;s-eye perspective. Our drones provide a unique
+              angle for landscapes, events, or real estate.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="category-card__button button button--aperture"
+            data-modal-open="drone-gallery"
+          >
+            <load src="src/components/aperture-icon.htm" />
+            <span>Read more</span>
+          </button>
         </div>
-
-        <a href="" class="category-card__button">
-          <load src="src/components/aperture-icon.htm" />
-          <span>Read more</span>
-        </a>
       </div>
     </li>
 
     <li id="wildlife-photography" class="portfolio__item category-card">
-      <picture class="category-card__thumb">
-        <source
-          srcset="
-            ./src/img/portfolio/portfolio-card-img-3.webp    1x,
-            ./src/img/portfolio/portfolio-card-img-3@2x.webp 2x,
-            ./src/img/portfolio/portfolio-card-img-3@3x.webp 3x
-          "
-          type="image/webp"
-        />
-        <img
-          src="./src/img/portfolio/portfolio-card-img-3.webp"
-          alt="Deer in a forest."
-          class="category-card__image"
-          loading="lazy"
-        />
-      </picture>
+      <div class="category-card__container">
+        <picture class="category-card__thumb">
+          <source
+            srcset="
+              ./src/img/portfolio/portfolio-card-img-3.webp    1x,
+              ./src/img/portfolio/portfolio-card-img-3@2x.webp 2x,
+              ./src/img/portfolio/portfolio-card-img-3@3x.webp 3x
+            "
+            type="image/webp"
+          />
+          <img
+            src="./src/img/portfolio/portfolio-card-img-3.webp"
+            alt="Deer in a forest."
+            class="category-card__image"
+            loading="lazy"
+          />
+        </picture>
 
-      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
-        <div class="category-card__content" data-prlx>
-          <h3 data-watch class="category-card__title">Wildlife Photography</h3>
-          <p data-watch class="category-card__description">
-            Dive into the wilderness. We capture rare moments of wildlife, showcasing the raw beauty
-            of the natural world.
-          </p>
+        <div class="category-card__body">
+          <div class="category-card__content">
+            <h3 data-watch class="category-card__title" data-watch>Wildlife Photography</h3>
+            <p data-watch class="category-card__description" data-watch>
+              Dive into the wilderness. We capture rare moments of wildlife, showcasing the raw
+              beauty of the natural world.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="category-card__button button button--aperture"
+            data-modal-open="wildlife-gallery"
+          >
+            <load src="src/components/aperture-icon.htm" />
+            <span>Read more</span>
+          </button>
         </div>
-
-        <a href="" class="category-card__button">
-          <load src="src/components/aperture-icon.htm" />
-          <span>Read more</span>
-        </a>
       </div>
     </li>
   </ul>
