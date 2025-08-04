@@ -1,11 +1,22 @@
-<figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
-  <picture class="{=$block}__thumb">
-    <source srcset="{=$imageSrc} 1x, {=$imageSrc2x} 2x, {=$imageSrc3x} 3x" type="{=$imageType}" />
-    <img src="{=$imageSrc}" alt="{=$title}" class="{=$block}__image" loading="lazy" />
-  </picture>
+<article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="{=$imageSrc} 1x, {=$imageSrc2x} 2x, {=$imageSrc3x} 3x" type="{=$imageType}" />
+      <img src="{=$imageSrc}" alt="{=$title}" class="photo-highlight__image" loading="lazy" />
+    </picture>
 
-  <figcaption class="{=$block}__caption" data-prlx>
-    <h3 class="{=$block}__title" data-watch>{=$title}</h3>
-    <p class="{=$block}__description" data-watch>{=$description}</p>
-  </figcaption>
-</figure>
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>{=$title}</h3>
+      <p class="photo-highlight__description" data-watch>{=$description}</p>
+    </figcaption>
+  </figure>
+
+  <load
+    src="src/components/image-details.htm"
+    block="photo-highlight"
+    shutterSpeed="{=$shutterSpeed}"
+    aperture="{=$aperture}"
+    iso="{=$iso}"
+    location="{=$location}"
+  />
+</article>
