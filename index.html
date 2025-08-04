@@ -6,52 +6,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Aperture</title>
-    <script type="module" crossorigin src="/assets/index-C-SXfxIt.js"></script>
+    <script type="module" crossorigin src="/assets/index-CrHj4O0e.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index.css">
   </head>
   <body>
-    <header class="header container" data-header>
-  <a href="/" class="header__logo logo">
-    <svg width="128" height="31">
-      <use href="/assets/sprite.svg#icon-logo"></use>
-    </svg>
-  </a>
+    <header class="header" data-header>
+  <div class="header__container container">
+    <a href="/" class="header__logo logo">
+      <svg width="128" height="31">
+        <use href="/assets/sprite.svg#icon-logo"></use>
+      </svg>
+    </a>
 
-  <button
-    type="button"
-    class="header__burger-btn"
-    data-burger-menu-button
-    aria-expanded="false"
-    aria-controls="header-menu"
-  >
-    <span></span>
-  </button>
+    <button
+      type="button"
+      class="header__burger-btn"
+      data-mobile-menu-toggle
+      aria-expanded="false"
+      aria-controls="header-menu"
+    >
+      <span></span>
+    </button>
 
-  <div id="header-menu" class="header__menu" data-header-menu aria-hidden="true">
-    <nav class="header__nav">
-      <ul class="header__list">
-        <li class="header__item">
-          <a href="#portfolio" class="header__link" data-header-menu-item>What we do</a>
-        </li>
-        <li class="header__item">
-          <a href="#fuji" class="header__link" data-header-menu-item>Featured image</a>
-        </li>
-        <li class="header__item">
-          <a href="#gear-cage" class="header__link" data-header-menu-item>Gear cage</a>
-        </li>
-        <li class="header__item">
-          <a href="#past-clients" class="header__link" data-header-menu-item>Past clients</a>
-        </li>
-      </ul>
-    </nav>
+    <div id="header-menu" class="header__menu menu" data-mobile-menu aria-hidden="true">
+      <nav class="menu__nav">
+        <ul class="menu__list">
+          <li class="menu__item">
+            <a href="#portfolio" class="menu__link" data-mobile-menu-item>What we do</a>
+          </li>
+          <li class="menu__item">
+            <a href="#fuji" class="menu__link" data-mobile-menu-item>Featured image</a>
+          </li>
+          <li class="menu__item">
+            <a href="#gear-cage" class="menu__link" data-mobile-menu-item>Gear cage</a>
+          </li>
+          <li class="menu__item">
+            <a href="#past-clients" class="menu__link" data-mobile-menu-item>Past clients</a>
+          </li>
+        </ul>
+      </nav>
 
-    <button type="button" class="header__button" data-header-menu-item>Get in touch</button>
+      <button type="button" class="menu__button button" data-mobile-menu-item>Get in touch</button>
+    </div>
   </div>
 </header>
 
 
     <main>
       <section class="hero container">
+  <div class="hero__background">
+    <div class="hero__thumb">
+      <video
+        class="hero__video"
+        poster="/assets/iceland-hero-bg@1x.webp"
+        autoplay
+        muted
+        loop
+        playsinline
+      >
+        <source src="/assets/iceland-hero-bg.webm" type="video/webm" />
+        <source src="/assets/iceland-hero-bg.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
   <div data-blur-out-text class="hero__content">
     <h2 class="hero__subtitle">Photographer & Filmmaker</h2>
     <div class="hero__title-wrapper">
@@ -63,20 +80,6 @@
       shadow to the smallest details, every frame is a celebration of creativity. Let us guide you
       on a journey where every frame is a masterpiece.
     </p>
-  </div>
-
-  <div class="hero__thumb">
-    <video
-      class="hero__video"
-      poster="/assets/iceland-hero-bg@1x.webp"
-      autoplay
-      muted
-      loop
-      playsinline
-    >
-      <source src="/assets/iceland-hero-bg.webm" type="video/webm" />
-      <source src="/assets/iceland-hero-bg.mp4" type="video/mp4" />
-    </video>
   </div>
 
   <ul class="hero__details image-details">
@@ -123,30 +126,35 @@
 
   <ul class="portfolio__list">
     <li id="product-photography" class="portfolio__item category-card">
-      <picture class="category-card__thumb">
-        <source
-          srcset="/assets/portfolio-card-img.webp 1x, /assets/portfolio-card-img@2x.webp 2x, /assets/portfolio-card-img@3x.webp 3x"
-          type="image/webp"
-        />
-        <img
-          src="/assets/portfolio-card-img.webp"
-          alt="Tech gadgets on a dark surface."
-          class="category-card__image"
-          loading="lazy"
-        />
-      </picture>
+      <div class="category-card__container">
+        <picture class="category-card__thumb">
+          <source
+            srcset="/assets/portfolio-card-img.webp 1x, /assets/portfolio-card-img@2x.webp 2x, /assets/portfolio-card-img@3x.webp 3x"
+            type="image/webp"
+          />
+          <img
+            src="/assets/portfolio-card-img.webp"
+            alt="Tech gadgets on a dark surface."
+            class="category-card__image"
+            loading="lazy"
+          />
+        </picture>
 
-      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
-        <div class="category-card__content" data-prlx>
-          <h3 class="category-card__title">Product Photography</h3>
-          <p class="category-card__description">
-            Capture every detail of your products with professional photography. We create visual
-            content that boosts sales and showcases your products in the best light.
-          </p>
-        </div>
+        <div class="category-card__body">
+          <div class="category-card__content">
+            <h3 class="category-card__title" data-watch>Product Photography</h3>
+            <p class="category-card__description" data-watch>
+              Capture every detail of your products with professional photography. We create visual
+              content that boosts sales and showcases your products in the best light.
+            </p>
+          </div>
 
-        <a href="#" class="category-card__button">
-          <div class="aperture-icon">
+          <button
+            type="button"
+            class="category-card__button button button--aperture"
+            data-modal-open="product-gallery"
+          >
+            <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
     <div class="aperture-icon__blade"></div>
@@ -157,36 +165,42 @@
   </div>
 </div>
 
-          <span>Read more</span>
-        </a>
+            <span>Read more</span>
+          </button>
+        </div>
       </div>
     </li>
 
     <li id="architecture-photography" class="portfolio__item category-card">
-      <picture class="category-card__thumb">
-        <source
-          srcset="/assets/portfolio-card-img-1.webp 1x, /assets/portfolio-card-img-1@2x.webp 2x, /assets/portfolio-card-img-1@3x.webp 3x"
-          type="image/webp"
-        />
-        <img
-          src="/assets/portfolio-card-img-1.webp"
-          alt="Geometric architectural pattern."
-          class="category-card__image"
-          loading="lazy"
-        />
-      </picture>
+      <div class="category-card__container">
+        <picture class="category-card__thumb">
+          <source
+            srcset="/assets/portfolio-card-img-1.webp 1x, /assets/portfolio-card-img-1@2x.webp 2x, /assets/portfolio-card-img-1@3x.webp 3x"
+            type="image/webp"
+          />
+          <img
+            src="/assets/portfolio-card-img-1.webp"
+            alt="Geometric architectural pattern."
+            class="category-card__image"
+            loading="lazy"
+          />
+        </picture>
 
-      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
-        <div class="category-card__content" data-prlx>
-          <h3 data-watch class="category-card__title">Architecture Photography</h3>
-          <p data-watch class="category-card__description">
-            Unveil the grandeur of architecture through the lens. We deliver stunning shots that
-            highlight the design, structure, and concept of your spaces.
-          </p>
-        </div>
+        <div class="category-card__body">
+          <div class="category-card__content">
+            <h3 data-watch class="category-card__title" data-watch>Architecture Photography</h3>
+            <p data-watch class="category-card__description" data-watch>
+              Unveil the grandeur of architecture through the lens. We deliver stunning shots that
+              highlight the design, structure, and concept of your spaces.
+            </p>
+          </div>
 
-        <a href="" class="category-card__button">
-          <div class="aperture-icon">
+          <button
+            type="button"
+            class="category-card__button button button--aperture"
+            data-modal-open="architecture-gallery"
+          >
+            <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
     <div class="aperture-icon__blade"></div>
@@ -197,36 +211,42 @@
   </div>
 </div>
 
-          <span>Read more</span>
-        </a>
+            <span>Read more</span>
+          </button>
+        </div>
       </div>
     </li>
 
     <li id="drone-photography" class="portfolio__item category-card">
-      <picture class="category-card__thumb">
-        <source
-          srcset="/assets/portfolio-card-img-2.webp 1x, /assets/portfolio-card-img-2@2x.webp 2x, /assets/portfolio-card-img-2@3x.webp 3x"
-          type="image/webp"
-        />
-        <img
-          src="/assets/portfolio-card-img-2.webp"
-          alt="Aerial view of a forest."
-          class="category-card__image"
-          loading="lazy"
-        />
-      </picture>
+      <div class="category-card__container">
+        <picture class="category-card__thumb">
+          <source
+            srcset="/assets/portfolio-card-img-2.webp 1x, /assets/portfolio-card-img-2@2x.webp 2x, /assets/portfolio-card-img-2@3x.webp 3x"
+            type="image/webp"
+          />
+          <img
+            src="/assets/portfolio-card-img-2.webp"
+            alt="Aerial view of a forest."
+            class="category-card__image"
+            loading="lazy"
+          />
+        </picture>
 
-      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
-        <div class="category-card__content" data-prlx>
-          <h3 data-watch class="category-card__title">Drone Photography</h3>
-          <p data-watch class="category-card__description">
-            Breathtaking views from a bird&rsquo;s-eye perspective. Our drones provide a unique
-            angle for landscapes, events, or real estate.
-          </p>
-        </div>
+        <div class="category-card__body">
+          <div class="category-card__content">
+            <h3 data-watch class="category-card__title" data-watch>Drone Photography</h3>
+            <p data-watch class="category-card__description" data-watch>
+              Breathtaking views from a bird&rsquo;s-eye perspective. Our drones provide a unique
+              angle for landscapes, events, or real estate.
+            </p>
+          </div>
 
-        <a href="" class="category-card__button">
-          <div class="aperture-icon">
+          <button
+            type="button"
+            class="category-card__button button button--aperture"
+            data-modal-open="drone-gallery"
+          >
+            <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
     <div class="aperture-icon__blade"></div>
@@ -237,36 +257,42 @@
   </div>
 </div>
 
-          <span>Read more</span>
-        </a>
+            <span>Read more</span>
+          </button>
+        </div>
       </div>
     </li>
 
     <li id="wildlife-photography" class="portfolio__item category-card">
-      <picture class="category-card__thumb">
-        <source
-          srcset="/assets/portfolio-card-img-3.webp 1x, /assets/portfolio-card-img-3@2x.webp 2x, /assets/portfolio-card-img-3@3x.webp 3x"
-          type="image/webp"
-        />
-        <img
-          src="/assets/portfolio-card-img-3.webp"
-          alt="Deer in a forest."
-          class="category-card__image"
-          loading="lazy"
-        />
-      </picture>
+      <div class="category-card__container">
+        <picture class="category-card__thumb">
+          <source
+            srcset="/assets/portfolio-card-img-3.webp 1x, /assets/portfolio-card-img-3@2x.webp 2x, /assets/portfolio-card-img-3@3x.webp 3x"
+            type="image/webp"
+          />
+          <img
+            src="/assets/portfolio-card-img-3.webp"
+            alt="Deer in a forest."
+            class="category-card__image"
+            loading="lazy"
+          />
+        </picture>
 
-      <div class="category-card__body" data-prlx-parent data-prlx-position="bottom">
-        <div class="category-card__content" data-prlx>
-          <h3 data-watch class="category-card__title">Wildlife Photography</h3>
-          <p data-watch class="category-card__description">
-            Dive into the wilderness. We capture rare moments of wildlife, showcasing the raw beauty
-            of the natural world.
-          </p>
-        </div>
+        <div class="category-card__body">
+          <div class="category-card__content">
+            <h3 data-watch class="category-card__title" data-watch>Wildlife Photography</h3>
+            <p data-watch class="category-card__description" data-watch>
+              Dive into the wilderness. We capture rare moments of wildlife, showcasing the raw
+              beauty of the natural world.
+            </p>
+          </div>
 
-        <a href="" class="category-card__button">
-          <div class="aperture-icon">
+          <button
+            type="button"
+            class="category-card__button button button--aperture"
+            data-modal-open="wildlife-gallery"
+          >
+            <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
     <div class="aperture-icon__blade"></div>
@@ -277,26 +303,27 @@
   </div>
 </div>
 
-          <span>Read more</span>
-        </a>
+            <span>Read more</span>
+          </button>
+        </div>
       </div>
     </li>
   </ul>
 </section>
 
-      <section id="fuji" class="fuji photo-highlight container">
+      <section id="fuji">
+  <article class="photo-highlight">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
-  <picture class="photo-highlight__thumb">
-    <source srcset="/assets/fuji.webp 1x, /assets/fuji@2x.webp 2x, /assets/fuji@3x.webp 3x" type="image/webp" />
-    <img src="/assets/fuji.webp" alt="Sunset at Mount Fuji" class="photo-highlight__image" loading="lazy" />
-  </picture>
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/fuji.webp 1x, /assets/fuji@2x.webp 2x, /assets/fuji@3x.webp 3x" type="image/webp" />
+      <img src="/assets/fuji.webp" alt="Sunset at Mount Fuji" class="photo-highlight__image" loading="lazy" />
+    </picture>
 
-  <figcaption class="photo-highlight__caption" data-prlx>
-    <h3 class="photo-highlight__title" data-watch>Sunset at Mount Fuji</h3>
-    <p class="photo-highlight__description" data-watch>As the sun sets behind Mount Fuji, the sky transforms into a palette of deep oranges and purples, reflecting beautifully on the tranquil waters of Lake Kawaguchi.</p>
-  </figcaption>
-</figure>
-
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Sunset at Mount Fuji</h3>
+      <p class="photo-highlight__description" data-watch>As the sun sets behind Mount Fuji, the sky transforms into a palette of deep oranges and purples, reflecting beautifully on the tranquil waters of Lake Kawaguchi.</p>
+    </figcaption>
+  </figure>
 
   <ul class="photo-highlight__details image-details">
   <li class="image-details__item">
@@ -332,6 +359,8 @@
   </li>
 </ul>
 
+</article>
+
 </section>
 
       <section id="gear-cage" class="gear container">
@@ -344,7 +373,7 @@
       &mdash; these are the tools that we actually use everyday to capture the amazing things around
       us.
     </p>
-    <button type="button" class="gear__button">
+    <button type="button" class="gear__button button button--aperture">
       <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
@@ -411,19 +440,19 @@
   </div>
 </section>
 
-      <section id="monstera-leafs" class="monstera-leafs photo-highlight container">
+      <section id="monstera-leafs">
+  <article class="photo-highlight">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
-  <picture class="photo-highlight__thumb">
-    <source srcset="/assets/monstera-leafs.webp 1x, /assets/monstera-leafs@2x.webp 2x, /assets/monstera-leafs@3x.webp 3x" type="image/webp" />
-    <img src="/assets/monstera-leafs.webp" alt="Monstera Leafs" class="photo-highlight__image" loading="lazy" />
-  </picture>
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/monstera-leafs.webp 1x, /assets/monstera-leafs@2x.webp 2x, /assets/monstera-leafs@3x.webp 3x" type="image/webp" />
+      <img src="/assets/monstera-leafs.webp" alt="Monstera Leafs" class="photo-highlight__image" loading="lazy" />
+    </picture>
 
-  <figcaption class="photo-highlight__caption" data-prlx>
-    <h3 class="photo-highlight__title" data-watch>Monstera Leafs</h3>
-    <p class="photo-highlight__description" data-watch>Under the vast Himalayan sky, the falling stars paint a mesmerizing picture of nature's grandeur. The silent peaks stand as timeless witnesses to this celestial dance, offering a moment of reflection and wonder far from the bustle of the world.</p>
-  </figcaption>
-</figure>
-
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Monstera Leafs</h3>
+      <p class="photo-highlight__description" data-watch>Under the vast Himalayan sky, the falling stars paint a mesmerizing picture of nature's grandeur. The silent peaks stand as timeless witnesses to this celestial dance, offering a moment of reflection and wonder far from the bustle of the world.</p>
+    </figcaption>
+  </figure>
 
   <ul class="photo-highlight__details image-details">
   <li class="image-details__item">
@@ -459,6 +488,8 @@
   </li>
 </ul>
 
+</article>
+
 </section>
 
       <section id="past-clients" class="clients container">
@@ -469,13 +500,13 @@
 
   <div
     class="clients__slider slider"
-    data-logos-slider
-    data-logos-slider-autoplay="true"
-    data-logos-slider-list-gap="109"
-    data-logos-slider-slide-min-width="128"
+    data-slider="logos"
+    data-slider-autoplay="true"
+    data-slider-list-gap="109"
+    data-slider-slide-min-width="128"
   >
-    <ul class="clients__logos slider__list" data-logos-slider-list>
-      <li class="clients__logo slider__item">
+    <ul class="clients__logos slider__list" data-slider-list>
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="/assets/hill-and-hayes.svg"
           alt="Hill & Hayes logo"
@@ -485,7 +516,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="/assets/riksgransen.svg"
           alt="Riksgransen logo"
@@ -495,7 +526,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="/assets/studio-cai.svg"
           alt="Studio Cai logo"
@@ -505,7 +536,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="/assets/chill-industries.svg"
           alt="Chill Industries logo"
@@ -515,7 +546,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="data:image/svg+xml,%3csvg%20version='1.1'%20xmlns='http://www.w3.org/2000/svg'%20width='128'%20height='32'%20viewBox='0%200%20128%2032'%3e%3cpath%20fill='%23ffffff'%20d='M9.596%2016.817v3.262h-5.471c-0.134%200-0.224%200.113-0.224%200.248v2.226c0%200.090%200.089%200.203%200.224%200.203h3.901c1.053%200%201.771%200.72%201.771%201.777v5.69c0%201.058-0.718%201.778-1.771%201.778h-8.026v-3.285h5.673c0.157%200%200.246-0.089%200.246-0.202v-2.204c0-0.113-0.089-0.203-0.246-0.203h-3.901c-1.053%200-1.771-0.72-1.771-1.777v-5.736c0-1.057%200.718-1.777%201.771-1.777h7.825zM23.049%2016.817v3.284h-3.431v11.898h-3.901v-11.898h-3.43v-3.284h10.762zM35.357%2016.817c1.053%200%201.771%200.72%201.771%201.777v11.628c0%201.058-0.718%201.778-1.771%201.778h-7.78c-1.054%200-1.771-0.72-1.771-1.778v-11.628c0-1.057%200.717-1.777%201.771-1.777h7.78zM50.491%2016.817c0.965%200%201.772%200.788%201.772%201.71v3.914h-3.901v-2.115c0-0.135-0.113-0.247-0.202-0.247h-2.847c-0.135%200-0.247%200.112-0.247%200.247v8.166c0%200.135%200.112%200.224%200.247%200.224h2.847c0.089%200%200.202-0.090%200.202-0.224v-2.16h3.901v3.936c0%200.99-0.807%201.732-1.772%201.732h-7.6c-0.964%200-1.727-0.742-1.727-1.732v-11.74c0-0.922%200.763-1.71%201.727-1.71h7.6zM55.119%200c0.287%200%200.568%200.029%200.844%200.079v-0.004l0.060%200.014c0.030%200.006%200.060%200.014%200.090%200.020%200.105%200.022%200.208%200.048%200.311%200.078%200.047%200.014%200.093%200.027%200.141%200.042%200.089%200.029%200.176%200.061%200.264%200.095%200.045%200.018%200.091%200.034%200.137%200.053%200.119%200.051%200.236%200.106%200.351%200.167%200.050%200.026%200.097%200.056%200.146%200.084%200.070%200.040%200.141%200.082%200.208%200.126%200.055%200.035%200.108%200.073%200.162%200.11%200.061%200.043%200.12%200.088%200.179%200.135%200.053%200.040%200.105%200.081%200.155%200.123%200.065%200.055%200.126%200.113%200.188%200.172%200.036%200.034%200.074%200.064%200.109%200.1%200.923%200.925%201.385%202.14%201.385%203.356h0.004l0.012%2018.389%203.924-6.32h4.349l-4.372%206.59%204.552%208.592h-4.26l-2.96-5.803-1.233%202.002v3.801h-3.901v-27.251c-0.001-0.216-0.084-0.434-0.248-0.599-0.215-0.216-0.466-0.248-0.596-0.248-0.133%200-0.381%200.031-0.597%200.248l-0.71%200.715-2.751%202.757-3.462-3.472c-0.215-0.216-0.466-0.248-0.596-0.248s-0.38%200.031-0.596%200.248c-0.329%200.33-0.329%200.868%200%201.196l4.654%204.669%203.606-3.615v5.516l-3.606%203.618-7.406-7.428c-1.843-1.852-1.843-4.864%200-6.713%200.895-0.898%202.082-1.392%203.347-1.392%201.263%200%202.453%200.494%203.349%201.392l0.71%200.712%200.71-0.712c0.895-0.898%202.082-1.392%203.348-1.392zM74.795%2016.817v5.803h3.7v-5.803h3.901v15.182h-3.901v-6.028h-3.7v6.028h-3.901v-15.182h3.901zM96.118%2016.817c1.053%200%201.771%200.72%201.771%201.777v11.628c0%201.058-0.718%201.778-1.771%201.778h-7.779c-1.054%200-1.771-0.72-1.771-1.778v-11.628c0-1.057%200.717-1.777%201.771-1.777h7.779zM105.939%2016.817v11.898h4.82v3.284h-8.699v-15.182h3.879zM118.023%2016.817l3.049%207.085%202.803-7.085h4.125v15.182h-3.677v-8.75l-2.556%206.028h-1.525l-2.577-5.87v8.592h-3.588v-15.182h3.946zM32.98%2020.101h-3.071c-0.090%200-0.202%200.113-0.202%200.248v8.165c0%200.113%200.112%200.202%200.202%200.202h3.071c0.134%200%200.247-0.089%200.247-0.202v-8.165c0-0.135-0.113-0.248-0.247-0.248zM93.741%2020.101h-3.071c-0.090%200-0.201%200.113-0.201%200.248v8.165c0%200.113%200.112%200.202%200.201%200.202h3.071c0.134%200%200.247-0.089%200.247-0.202v-8.165c0-0.135-0.113-0.248-0.247-0.248z'%3e%3c/path%3e%3c/svg%3e"
           alt="Stockholm logo"
@@ -525,7 +556,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="/assets/moon-studio.svg"
           alt="Moon Studio logo"
@@ -535,7 +566,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="/assets/iglam-cosmetics.svg"
           alt="Iglam Cosmetics logo"
@@ -545,7 +576,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="/assets/shodwe-streetwear.svg"
           alt="Shodwe Streetwear logo"
@@ -555,7 +586,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="/assets/studio-olivia-wilson.svg"
           alt="Studio Olivia logo"
@@ -565,7 +596,7 @@
         />
       </li>
 
-      <li class="clients__logo slider__item">
+      <li class="clients__logo slider__item" data-slider-item>
         <img
           src="data:image/svg+xml,%3csvg%20width='128'%20height='64'%20viewBox='0%200%20128%2064'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M48.5635%2063.0871C43.6148%2063.0871%2039.8271%2061.5978%2037.2003%2058.6192C34.597%2055.6172%2033.2953%2051.29%2033.2953%2045.6378V16.2273C33.2953%2010.9268%2034.5853%206.90454%2037.1651%204.1605C39.7684%201.41646%2043.5679%200.0444336%2048.5635%200.0444336C53.559%200.0444336%2057.3467%201.41646%2059.9266%204.1605C62.5299%206.90454%2063.8316%2010.9268%2063.8316%2016.2273V45.6378C63.8316%2051.29%2062.5182%2055.6172%2059.8914%2058.6192C57.2881%2061.5978%2053.5121%2063.0871%2048.5635%2063.0871ZM48.669%2051.6887C50.5453%2051.6887%2051.4834%2049.8711%2051.4834%2046.2358V16.0162C51.4834%2012.9672%2050.5687%2011.4428%2048.7394%2011.4428C46.6755%2011.4428%2045.6435%2013.0024%2045.6435%2016.1217V46.3062C45.6435%2048.2294%2045.878%2049.6131%2046.3471%2050.4574C46.8162%2051.2783%2047.5901%2051.6887%2048.669%2051.6887Z'%20fill='white'/%3e%3cpath%20d='M83.1454%2063.0871C77.9857%2063.0871%2074.1863%2061.6447%2071.7471%2058.7599C69.308%2055.8517%2068.0884%2051.5832%2068.0884%2045.9544V0.607314H80.12V45.4619C80.12%2046.4938%2080.1786%2047.4906%2080.2959%2048.4522C80.4131%2049.3903%2080.6828%2050.1643%2081.105%2050.7741C81.5272%2051.3838%2082.2073%2051.6887%2083.1454%2051.6887C84.107%2051.6887%2084.7989%2051.3956%2085.2211%2050.8092C85.6432%2050.1994%2085.9012%2049.4138%2085.995%2048.4522C86.1123%2047.4906%2086.1709%2046.4938%2086.1709%2045.4619V0.607314H98.2025V45.9544C98.2025%2051.5832%2096.9829%2055.8517%2094.5438%2058.7599C92.1046%2061.6447%2088.3052%2063.0871%2083.1454%2063.0871Z'%20fill='white'/%3e%3cpath%20d='M108.264%2062.5242V12.4982H100.911V0.607314H128V12.4982H120.647V62.5242H108.264Z'%20fill='white'/%3e%3cpath%20fill-rule='evenodd'%20clip-rule='evenodd'%20d='M0%200.219757H29.5282V64.0006H0V0.219757ZM4.50305%2058.7778H24.8037V54.8561H4.50305V58.7778ZM4.50305%2053.2413H24.8037V49.2734H14.6534L24.8037%2047.2434V43.2755H4.50305V47.1972H14.2266L4.50305%2049.0658V53.2413ZM23.6041%2040.6687C24.5268%2039.8459%2024.9882%2038.5079%2024.9882%2036.6547C24.9882%2034.9092%2024.4499%2033.6866%2023.3734%2032.9868C22.2892%2032.2794%2020.7935%2031.9256%2018.8865%2031.9256C17.9407%2031.9256%2017.1409%2032.0448%2016.4873%2032.2832C15.826%2032.5216%2015.2493%2032.8368%2014.7572%2033.229C14.2573%2033.6212%2013.7844%2034.0518%2013.3384%2034.5209L11.0892%2036.8624C10.6586%2037.3161%2010.278%2037.6198%209.9473%2037.7736C9.61665%2037.9274%209.30906%2038.0043%209.02455%2038.0043C8.74003%2038.0043%208.50934%2037.9312%208.33248%2037.7851C8.14793%2037.6313%208.05565%2037.393%208.05565%2037.07C8.05565%2036.8009%208.13255%2036.5894%208.28634%2036.4356C8.44013%2036.2741%208.65544%2036.1934%208.93227%2036.1934H10.3279V32.064C8.30557%2032.064%206.7984%2032.4562%205.80644%2033.2406C4.81448%2034.0172%204.31849%2035.336%204.31849%2037.1969C4.31849%2038.7194%204.77218%2039.8844%205.67956%2040.6918C6.58693%2041.4915%207.90571%2041.8914%209.63587%2041.8914C11.2891%2041.8914%2012.7579%2041.2109%2014.042%2039.8498L15.7722%2038.0273C16.2797%2037.4891%2016.7257%2037.07%2017.1102%2036.7701C17.487%2036.4625%2017.8868%2036.2472%2018.3098%2036.1242C18.725%2036.0011%2019.2441%2035.9396%2019.8669%2035.9396C20.3591%2035.9396%2020.7128%2036.0127%2020.9281%2036.1588C21.1434%2036.2972%2021.2511%2036.5509%2021.2511%2036.92C21.2511%2037.2738%2021.1203%2037.5237%2020.8589%2037.6698C20.5897%2037.8082%2020.2206%2037.8774%2019.7516%2037.8774H17.214V41.8914H19.1979C21.2126%2041.8914%2022.6813%2041.4838%2023.6041%2040.6687ZM4.50305%2030.7491H24.8037V26.8274H4.50305V30.7491ZM4.50305%2025.2126H24.8037V19.7683C24.8037%2018.0843%2024.2808%2016.9078%2023.235%2016.2388C22.1892%2015.5621%2020.7051%2015.2238%2018.7827%2015.2238H9.2783C7.71731%2015.2238%206.53311%2015.5929%205.7257%2016.3311C4.9106%2017.0693%204.50305%2018.1689%204.50305%2019.6299V25.2126ZM4.50305%2013.5628H24.8037V5.17726H20.8473V9.43347H16.199V5.60403H12.3811V9.43347H8.42476V5.44255H4.50305V13.5628Z'%20fill='white'/%3e%3cpath%20d='M21.2164%2021.1294V20.4258C21.2164%2019.6799%2020.855%2019.3069%2020.1322%2019.3069H9.65894C8.98225%2019.3069%208.54779%2019.3992%208.35555%2019.5838C8.15562%2019.7606%208.05565%2020.1259%208.05565%2020.6795V21.1294H21.2164Z'%20fill='white'/%3e%3c/svg%3e"
           alt="Inside Out logo"
@@ -586,12 +617,12 @@
       </li>
     </ul>
 
-    <button class="slider__nav slider__nav--prev" data-logos-slider-prev-btn>
+    <button class="slider__nav slider__nav--prev" data-slider-btn="prev">
       <svg width="24" height="24">
         <use href="/assets/sprite.svg#icon-chevron-left"></use>
       </svg>
     </button>
-    <button class="slider__nav slider__nav--next" data-logos-slider-next-btn>
+    <button class="slider__nav slider__nav--next" data-slider-btn="next">
       <svg width="24" height="24">
         <use href="/assets/sprite.svg#icon-chevron-left"></use>
       </svg>
@@ -599,19 +630,19 @@
   </div>
 </section>
 
-      <section id="himalayas-starfall" class="himalayas-starfall photo-highlight container">
+      <section id="himalayas-starfall">
+  <article class="photo-highlight">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
-  <picture class="photo-highlight__thumb">
-    <source srcset="/assets/himalayas-starfall.webp 1x, /assets/himalayas-starfall@2x.webp 2x, /assets/himalayas-starfall@3x.webp 3x" type="image/webp" />
-    <img src="/assets/himalayas-starfall.webp" alt="Star fall in the Himalayas" class="photo-highlight__image" loading="lazy" />
-  </picture>
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/himalayas-starfall.webp 1x, /assets/himalayas-starfall@2x.webp 2x, /assets/himalayas-starfall@3x.webp 3x" type="image/webp" />
+      <img src="/assets/himalayas-starfall.webp" alt="Star fall in the Himalayas" class="photo-highlight__image" loading="lazy" />
+    </picture>
 
-  <figcaption class="photo-highlight__caption" data-prlx>
-    <h3 class="photo-highlight__title" data-watch>Star fall in the Himalayas</h3>
-    <p class="photo-highlight__description" data-watch>As the sun sets behind Mount Fuji, the sky transforms into a palette of deep oranges and purples, reflecting beautifully on the tranquil waters of Lake Kawaguchi.</p>
-  </figcaption>
-</figure>
-
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Star fall in the Himalayas</h3>
+      <p class="photo-highlight__description" data-watch>As the sun sets behind Mount Fuji, the sky transforms into a palette of deep oranges and purples, reflecting beautifully on the tranquil waters of Lake Kawaguchi.</p>
+    </figcaption>
+  </figure>
 
   <ul class="photo-highlight__details image-details">
   <li class="image-details__item">
@@ -647,6 +678,8 @@
   </li>
 </ul>
 
+</article>
+
 </section>
 
       <section id="contact" class="contact container">
@@ -656,7 +689,7 @@
     </h2>
     <p data-blur-out-text class="contact__subtitle">We're here for you!</p>
   </div>
-  <a href="#" class="contact__button">
+  <button type="button" class="contact__button button button--aperture" data-modal-open="contact">
     <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
@@ -669,7 +702,7 @@
 </div>
 
     <span>Get in touch</span>
-  </a>
+  </button>
 </section>
 
     </main>
@@ -750,10 +783,14 @@
       <h3 class="newsletter__title">Subscribe to our newsletter</h3>
       <p class="newsletter__text">Read about all the things we do.</p>
     </div>
-    <form class="newsletter__form">
+
+    <form class="newsletter__form" data-newsletter-form>
+      <label for="newsletter-email" class="newsletter__label">Email</label>
       <input
+        id="newsletter-email"
         type="email"
-        class="newsletter__input"
+        name="email"
+        class="newsletter__input input"
         placeholder="Enter your email"
         autocomplete="email"
         required
@@ -811,7 +848,1287 @@
 </footer>
 
 
-    <div class="backdrop" data-backdrop></div>
+    <div class="modals-container" data-modals-container inert>
+  <div
+  class="modal modal--full"
+  role="dialog"
+  aria-labelledby="modal-product-gallery-title"
+  aria-hidden="true"
+  data-modal-name="product-gallery"
+>
+  <div class="modal__wrapper">
+    <div class="modal__window" data-modal-window>
+      <div class="modal__header">
+        <h2 id="modal-product-gallery-title" class="modal__title">Product Photography</h2>
+
+        <button type="button" class="modal__close-btn" aria-label="Close" data-modal-close></button>
+      </div>
+
+      <div class="modal__body">
+        <div class="slider slider--gallery" data-slider="product-gallery">
+  <ul class="slider__list" data-slider-list>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/laptop.webp 1x, /assets/laptop@2x.webp 2x, /assets/laptop@3x.webp 3x" type="image/webp" />
+      <img src="/assets/laptop.webp" alt="Midnight Glow" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Midnight Glow</h3>
+      <p class="photo-highlight__description" data-watch>A silver laptop emerges from the night's quiet shadows, its soft glow a beacon of digital thought. Stories and ideas unfold in this moment of solitude.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/50s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/2.8</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">1600</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Studio</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/berries.webp 1x, /assets/berries@2x.webp 2x, /assets/berries@3x.webp 3x" type="image/webp" />
+      <img src="/assets/berries.webp" alt="Mixed Berries in Glass" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Mixed Berries in Glass</h3>
+      <p class="photo-highlight__description" data-watch>Under the cloak of night, a handful of berries held whispers of summer. Each one a tiny, sweet secret, waiting for the first light to share its magic.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/60s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/2.8</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">800</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Studio</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/xbox.webp 1x, /assets/xbox@2x.webp 2x, /assets/xbox@3x.webp 3x" type="image/webp" />
+      <img src="/assets/xbox.webp" alt="Gaming Awaits" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Gaming Awaits</h3>
+      <p class="photo-highlight__description" data-watch>Resting on a textured canvas, the controller awaits. Each button, a portal to new adventures and untold stories, ready to shape destiny.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/80s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/3.5</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">800</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Studio</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/knives.webp 1x, /assets/knives@2x.webp 2x, /assets/knives@3x.webp 3x" type="image/webp" />
+      <img src="/assets/knives.webp" alt="Knives and Oranges" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Knives and Oranges</h3>
+      <p class="photo-highlight__description" data-watch>Sharp blades and sun-kissed oranges await on a dark canvas. Each knife, poised for precision, ready to transform simple ingredients into a culinary delight.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/100s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/4.0</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">400</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Studio</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/plate-on-leaves.webp 1x, /assets/plate-on-leaves@2x.webp 2x, /assets/plate-on-leaves@3x.webp 3x" type="image/webp" />
+      <img src="/assets/plate-on-leaves.webp" alt="Solitude on Green" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Solitude on Green</h3>
+      <p class="photo-highlight__description" data-watch>Amid the stillness of layered leaves, a lone plate rested—silent and forgotten. Its worn rim echoed lost gatherings, while the shadows around whispered stories never told.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/125s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/4</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">200</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Studio</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/tart.webp 1x, /assets/tart@2x.webp 2x, /assets/tart@3x.webp 3x" type="image/webp" />
+      <img src="/assets/tart.webp" alt="Golden Zest" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Golden Zest</h3>
+      <p class="photo-highlight__description" data-watch>Against a dramatic dark backdrop, a vibrant tart stands tall, a beacon of golden zest. A dusting of powdered sugar frames its base, hinting at the sweet alchemy within, promising a slice of pure delight.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/60s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/2.8</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">400</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Studio</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+  </ul>
+  <button class="slider__nav slider__nav--prev" data-slider-btn="prev">
+    <svg width="24" height="24">
+      <use href="/assets/sprite.svg#icon-chevron-left"></use>
+    </svg>
+  </button>
+  <button class="slider__nav slider__nav--next" data-slider-btn="next">
+    <svg width="24" height="24">
+      <use href="/assets/sprite.svg#icon-chevron-left"></use>
+    </svg>
+  </button>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div
+  class="modal modal--full"
+  role="dialog"
+  aria-labelledby="modal-architecture-gallery-title"
+  aria-hidden="true"
+  data-modal-name="architecture-gallery"
+>
+  <div class="modal__wrapper">
+    <div class="modal__window" data-modal-window>
+      <div class="modal__header">
+        <h2 id="modal-architecture-gallery-title" class="modal__title">Architecture Photography</h2>
+
+        <button type="button" class="modal__close-btn" aria-label="Close" data-modal-close></button>
+      </div>
+
+      <div class="modal__body">
+        <div class="slider slider--gallery" data-slider="architecture-gallery">
+  <ul class="slider__list" data-slider-list>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/monolith-geometry.webp 1x, /assets/monolith-geometry@2x.webp 2x, /assets/monolith-geometry@3x.webp 3x" type="image/webp" />
+      <img src="/assets/monolith-geometry.webp" alt="Monolith Geometry" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Monolith Geometry</h3>
+      <p class="photo-highlight__description" data-watch>A silent monolith rising from shadows, the building's harsh contrast and sharp lines conveyed power, solitude, and pure design.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">30s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/8</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">100</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Berlin</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/galaxy-soho.webp 1x, /assets/galaxy-soho@2x.webp 2x, /assets/galaxy-soho@3x.webp 3x" type="image/webp" />
+      <img src="/assets/galaxy-soho.webp" alt="Symmetry in Lights" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Symmetry in Lights</h3>
+      <p class="photo-highlight__description" data-watch>Curved steel and glass form a perfect rhythm, broken only by warm amber lights. A modern heartbeat pulsing through silence.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/4s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/5.6</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">320</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Beijing</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/glass-vortex.webp 1x, /assets/glass-vortex@2x.webp 2x, /assets/glass-vortex@3x.webp 3x" type="image/webp" />
+      <img src="/assets/glass-vortex.webp" alt="Glass Vortex" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Glass Vortex</h3>
+      <p class="photo-highlight__description" data-watch>Steel and glass pull the eye upward, converging into a quiet point of focus. A city’s angles, captured in stillness.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/200s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/5.6</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">160</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Warsaw</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/roof.webp 1x, /assets/roof@2x.webp 2x, /assets/roof@3x.webp 3x" type="image/webp" />
+      <img src="/assets/roof.webp" alt="Architectural Embrace" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Architectural Embrace</h3>
+      <p class="photo-highlight__description" data-watch>Soft light illuminates a sweeping steel lattice. Its intricate design forms a powerful, beautiful, modern architectural marvel.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/60s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/4.0</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">800</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">London</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+  </ul>
+  <button class="slider__nav slider__nav--prev" data-slider-btn="prev">
+    <svg width="24" height="24">
+      <use href="/assets/sprite.svg#icon-chevron-left"></use>
+    </svg>
+  </button>
+  <button class="slider__nav slider__nav--next" data-slider-btn="next">
+    <svg width="24" height="24">
+      <use href="/assets/sprite.svg#icon-chevron-left"></use>
+    </svg>
+  </button>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div
+  class="modal modal--full"
+  role="dialog"
+  aria-labelledby="modal-drone-gallery-title"
+  aria-hidden="true"
+  data-modal-name="drone-gallery"
+>
+  <div class="modal__wrapper">
+    <div class="modal__window" data-modal-window>
+      <div class="modal__header">
+        <h2 id="modal-drone-gallery-title" class="modal__title">Drone Photography</h2>
+
+        <button type="button" class="modal__close-btn" aria-label="Close" data-modal-close></button>
+      </div>
+
+      <div class="modal__body">
+        <div class="slider slider--gallery" data-slider="drone-gallery">
+  <ul class="slider__list" data-slider-list>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/winter-peak.webp 1x, /assets/winter-peak@2x.webp 2x, /assets/winter-peak@3x.webp 3x" type="image/webp" />
+      <img src="/assets/winter-peak.webp" alt="Winter Peak" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Winter Peak</h3>
+      <p class="photo-highlight__description" data-watch>The mountain exhales mist into the dawn, wrapped in silence and snow. A frozen world awaits the light.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/15s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/4</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">640</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Ukraine</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/sunset-skyline.webp 1x, /assets/sunset-skyline@2x.webp 2x, /assets/sunset-skyline@3x.webp 3x" type="image/webp" />
+      <img src="/assets/sunset-skyline.webp" alt="Sunset Skyline" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Sunset Skyline</h3>
+      <p class="photo-highlight__description" data-watch>Glass towers catch the last light as the city exhales into dusk. A moment of stillness above the noise.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/160s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/6.3</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">200</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Shanghai</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/foggy-forest.webp 1x, /assets/foggy-forest@2x.webp 2x, /assets/foggy-forest@3x.webp 3x" type="image/webp" />
+      <img src="/assets/foggy-forest.webp" alt="Foggy Forest" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Foggy Forest</h3>
+      <p class="photo-highlight__description" data-watch>Mist weaves through the trees, softening the world to a whisper. Nature pauses, quiet and hidden.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/60s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/4</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">400</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Germany</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/tank.webp 1x, /assets/tank@2x.webp 2x, /assets/tank@3x.webp 3x" type="image/webp" />
+      <img src="/assets/tank.webp" alt="Urban Car Descent" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Urban Car Descent</h3>
+      <p class="photo-highlight__description" data-watch>A lone car slips into the shadows of the city, vanishing beneath layers of steel and silence.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/200s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/5.6</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">160</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Warsaw</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/seoul-tower.webp 1x, /assets/seoul-tower@2x.webp 2x, /assets/seoul-tower@3x.webp 3x" type="image/webp" />
+      <img src="/assets/seoul-tower.webp" alt="Sunset Over Seoul" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Sunset Over Seoul</h3>
+      <p class="photo-highlight__description" data-watch>A quiet tower watches the city exhale beneath twilight, its lights blinking softly like a memory that refuses to fade.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/160s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/8.0</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">200</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Seoul</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+  </ul>
+  <button class="slider__nav slider__nav--prev" data-slider-btn="prev">
+    <svg width="24" height="24">
+      <use href="/assets/sprite.svg#icon-chevron-left"></use>
+    </svg>
+  </button>
+  <button class="slider__nav slider__nav--next" data-slider-btn="next">
+    <svg width="24" height="24">
+      <use href="/assets/sprite.svg#icon-chevron-left"></use>
+    </svg>
+  </button>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div
+  class="modal modal--full"
+  role="dialog"
+  aria-labelledby="modal-wildlife-gallery-title"
+  aria-hidden="true"
+  data-modal-name="wildlife-gallery"
+>
+  <div class="modal__wrapper">
+    <div class="modal__window" data-modal-window>
+      <div class="modal__header">
+        <h2 id="modal-wildlife-gallery-title" class="modal__title">Wildlife Photography</h2>
+
+        <button type="button" class="modal__close-btn" aria-label="Close" data-modal-close></button>
+      </div>
+
+      <div class="modal__body">
+        <div class="slider slider--gallery" data-slider="wildlife-gallery">
+  <ul class="slider__list" data-slider-list>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/lion.webp 1x, /assets/lion@2x.webp 2x, /assets/lion@3x.webp 3x" type="image/webp" />
+      <img src="/assets/lion.webp" alt="King's Contemplation" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>King's Contemplation</h3>
+      <p class="photo-highlight__description" data-watch>The lion's gaze, lost in thought, held the silent wisdom of the wild, reflecting unseen stories.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/125s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/4.0</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">800</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Tanzania</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/gentoo-penguin.webp 1x, /assets/gentoo-penguin@2x.webp 2x, /assets/gentoo-penguin@3x.webp 3x" type="image/webp" />
+      <img src="/assets/gentoo-penguin.webp" alt="The Lone Sentinel" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>The Lone Sentinel</h3>
+      <p class="photo-highlight__description" data-watch>A quiet guardian against ancient stone, surveying its silent, watery kingdom. A patient observer contemplating echoes of icy winds, a quiet witness to the world.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/125s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/5.6</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">400</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">San Diego</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/heron.webp 1x, /assets/heron@2x.webp 2x, /assets/heron@3x.webp 3x" type="image/webp" />
+      <img src="/assets/heron.webp" alt="Grace in Twilight Waters" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Grace in Twilight Waters</h3>
+      <p class="photo-highlight__description" data-watch>A solitary white figure preens amidst tranquil, dark waters. Its reflection dances below, a perfect mirror of grace, as twilight whispers secrets to the still surface.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/250s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/4.0</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">800</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">New Orleans</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/owl.webp 1x, /assets/owl@2x.webp 2x, /assets/owl@3x.webp 3x" type="image/webp" />
+      <img src="/assets/owl.webp" alt="Eyes of the Forest" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Eyes of the Forest</h3>
+      <p class="photo-highlight__description" data-watch>Hidden in ancient bark, a tiny owl's piercing yellow eyes watch. A silent guardian, it holds the twilight forest's whispered secrets.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/100s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/2.8</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">1600</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Finland</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+    <li class="slider__item" data-slider-item>
+      <article class="photo-highlight">
+  <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
+    <picture class="photo-highlight__thumb">
+      <source srcset="/assets/goats.webp 1x, /assets/goats@2x.webp 2x, /assets/goats@3x.webp 3x" type="image/webp" />
+      <img src="/assets/goats.webp" alt="Coastal Guardians" class="photo-highlight__image" loading="lazy" />
+    </picture>
+
+    <figcaption class="photo-highlight__caption" data-prlx>
+      <h3 class="photo-highlight__title" data-watch>Coastal Guardians</h3>
+      <p class="photo-highlight__description" data-watch>On rugged heights, two wild spirits survey sun-kissed waters. Coastal guardians, embracing the vast, salty breeze.</p>
+    </figcaption>
+  </figure>
+
+  <ul class="photo-highlight__details image-details">
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-clock"></use>
+    </svg>
+
+    <span class="image-details__text">1/500s</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-aperture"></use>
+    </svg>
+
+    <span class="image-details__text">f/8.0</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="32" height="16">
+      <use href="/assets/sprite.svg#icon-iso"></use>
+    </svg>
+
+    <span class="image-details__text">200</span>
+  </li>
+
+  <li class="image-details__item">
+    <svg class="image-details__icon" width="16" height="16">
+      <use href="/assets/sprite.svg#icon-point"></use>
+    </svg>
+
+    <span class="image-details__text">Greece</span>
+  </li>
+</ul>
+
+</article>
+
+    </li>
+  </ul>
+  <button class="slider__nav slider__nav--prev" data-slider-btn="prev">
+    <svg width="24" height="24">
+      <use href="/assets/sprite.svg#icon-chevron-left"></use>
+    </svg>
+  </button>
+  <button class="slider__nav slider__nav--next" data-slider-btn="next">
+    <svg width="24" height="24">
+      <use href="/assets/sprite.svg#icon-chevron-left"></use>
+    </svg>
+  </button>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div
+  class="modal "
+  role="dialog"
+  aria-labelledby="modal-contact-title"
+  aria-hidden="true"
+  data-modal-name="contact"
+>
+  <div class="modal__wrapper">
+    <div class="modal__window" data-modal-window>
+      <div class="modal__header">
+        <h2 id="modal-contact-title" class="modal__title">Contact Us</h2>
+
+        <button type="button" class="modal__close-btn" aria-label="Close" data-modal-close></button>
+      </div>
+
+      <div class="modal__body">
+        <form id="contact-form" class="contact-form" data-contact-form>
+  <div class="contact-form__inputs">
+    <div class="contact-form__input-wrapper">
+      <label for="name" class="contact-form__label">Name</label>
+      <input
+        type="text"
+        id="name"
+        class="contact-form__input input"
+        name="name"
+        placeholder="John"
+        required
+      />
+    </div>
+
+    <div class="contact-form__input-wrapper">
+      <label for="email" class="contact-form__label">Email</label>
+      <input
+        type="email"
+        id="email"
+        class="contact-form__input input"
+        name="email"
+        placeholder="example@mail.com"
+        required
+      />
+    </div>
+
+    <div class="contact-form__input-wrapper">
+      <label for="message" class="contact-form__label">Message</label>
+      <textarea
+        id="message"
+        class="contact-form__textarea input"
+        name="message"
+        placeholder="Helo! I'm John"
+        required
+      ></textarea>
+    </div>
+  </div>
+
+  <button type="submit" form="contact-form" class="contact-form__button button button--aperture">
+    <div class="aperture-icon">
+  <div class="aperture-icon__blades">
+    <div class="aperture-icon__blade"></div>
+    <div class="aperture-icon__blade"></div>
+    <div class="aperture-icon__blade"></div>
+    <div class="aperture-icon__blade"></div>
+    <div class="aperture-icon__blade"></div>
+    <div class="aperture-icon__blade"></div>
+  </div>
+</div>
+
+    <span>Send</span>
+  </button>
+</form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div
+  class="modal "
+  role="dialog"
+  aria-labelledby="modal-success-title"
+  aria-hidden="true"
+  data-modal-name="success"
+>
+  <div class="modal__wrapper">
+    <div class="modal__window" data-modal-window>
+      <div class="modal__header">
+        <h2 id="modal-success-title" class="modal__title">Success</h2>
+
+        <button type="button" class="modal__close-btn" aria-label="Close" data-modal-close></button>
+      </div>
+
+      <div class="modal__body">
+        <div class="success">
+  <svg class="success__icon" width="64" height="64">
+    <use href="/assets/sprite.svg#icon-check"></use>
+  </svg>
+
+  <div class="success__content">
+    <h3 class="success__title" data-success-title></h3>
+    <p class="success__text" data-success-text></p>
+  </div>
+
+  <button type="button" class="success__button button" data-modal-close>Close</button>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
 
   </body>
 </html>
