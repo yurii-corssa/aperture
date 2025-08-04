@@ -83,6 +83,7 @@
   // .modal__close-btn
   &__close-btn {
     position: relative;
+    flex-shrink: 0;
     width: toRem(24);
     height: toRem(24);
     color: $text-heading-color;
