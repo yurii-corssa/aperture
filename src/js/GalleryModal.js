@@ -1,5 +1,6 @@
 import { Modal } from "./Modal";
 import { Slider } from "./Slider";
+import { gallerySliderConfig } from "./config.js";
 
 export class GalleryModal extends Modal {
   constructor({ key = "gallery" }) {
@@ -9,10 +10,7 @@ export class GalleryModal extends Modal {
       CLOSE_BUTTON: "[data-modal-close]",
     });
 
-    this.sliderConfig = {
-      key,
-      slidesToShow: 1,
-    };
+    this.sliderConfig = { ...gallerySliderConfig, key };
 
     this.elements.openButton = document.querySelector(this.selectors.OPEN_BUTTON);
 
