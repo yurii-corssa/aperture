@@ -55,46 +55,6 @@
   }
 }
 
-// @mixin hover(
-//   $properties,
-//   $values,
-//   $duration: 250ms,
-//   $timing-function: ease,
-//   $delay: 0s,
-//   $nested-selector: "&"
-// ) {
-//   $property-string: "opacity";
-//   @each $property in $properties {
-//     $property-string: #{$property-string} + ", " + #{$property};
-//   }
-//   #{$nested-selector} {
-//     transition: $duration $timing-function $delay;
-//     transition-property: $property-string;
-//     @content;
-//   }
-//   @media (hover: hover) {
-//     &:hover,
-//     &:focus {
-//       #{$nested-selector} {
-//         @for $i from 1 through list.length($properties) {
-//           #{list.nth($properties, $i)}: list.nth($values, $i);
-//         }
-//       }
-//     }
-//     &:active {
-//       opacity: 0.8;
-//     }
-//   }
-//   @media (hover: none) {
-//     &:active {
-//       #{$nested-selector} {
-//         @for $i from 1 through list.length($properties) {
-//           #{list.nth($properties, $i)}: list.nth($values, $i);
-//         }
-//       }
-//     }
-//   }
-// }
 @mixin mobile {
   @media (width >= toRem($bp-mobile)) {
     @content;
@@ -131,24 +91,9 @@
   }
 }
 
-@mixin backdrop($visible-class: ".is-visible") {
-  // &::before {
-  //   content: "";
-  //   position: fixed;
-  //   inset: 0;
-  //   background-color: $backdrop-color;
-  //   opacity: 0;
-  //   pointer-events: none;
-  //   z-index: 888;
-  //   transition: opacity 200ms ease-out;
-  // }
-  // &#{$visible-class},
-  // &:has(#{$visible-class}) {
-  //   &::before {
-  //     opacity: 1;
-  //   }
-  // }
-  :has(&#{$visible-class}) body::after {
+@mixin backdrop($visibleClass: ".is-visible", $zIndex: 888) {
+  :has(&#{$visibleClass}) body::after {
     opacity: 1;
+    z-index: $zIndex;
   }
 }
