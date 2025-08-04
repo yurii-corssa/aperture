@@ -1,34 +1,35 @@
 @use "utilities" as *;
 
 .image-details {
+  position: absolute;
+  bottom: toRem(24);
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 1rem;
+  padding-block: 1rem;
+  mix-blend-mode: luminosity;
+
   @include adaptiveValue("padding-inline", 40, 15);
 
-  & {
-    position: absolute;
-    bottom: toRem(40);
-    right: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: end;
-    gap: toRem(16);
+  &::before {
+    --backdrop-color: color-mix(in srgb, #{$dark-color}, transparent 60%);
 
-    &::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-      width: 100%;
-      height: 150%;
-      background: $background-page-color;
-      filter: blur(40px);
-      border-radius: 10px;
-      opacity: 0.4;
-    }
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      var(--backdrop-color) 20%,
+      var(--backdrop-color) 80%,
+      transparent
+    );
   }
   // .image-details__item
   &__item {
+    position: relative;
     display: flex;
     align-items: center;
     gap: toRem(6);

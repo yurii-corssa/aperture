@@ -1,25 +1,16 @@
 @use "utilities" as *;
 
 .photo-highlight {
-  & {
-    --shadow-opacity: 0;
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 1440 / 600;
+  min-height: toRem(600);
 
-    position: relative;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    width: 100%;
-    aspect-ratio: 1440 / 600;
-    min-height: toRem(600);
+  @include adaptiveValue("padding-inline", $container-padding-l, 46);
 
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(270deg, #000000bb 0%, #ffffff00 80%);
-      z-index: -1;
-    }
-  }
   // .photo-highlight__thumb
   &__thumb {
     position: absolute;
@@ -33,7 +24,36 @@
   }
   // .photo-highlight__caption
   &__caption {
-    max-width: toRem(300);
+    max-width: toRem(420);
+    padding-block: toRem(15);
+    mix-blend-mode: luminosity;
+
+    @include adaptiveValue("padding-inline", 60, 15, $bp-tablet);
+    @include adaptiveValue("margin-right", -60, -15, $bp-tablet);
+
+    &::before {
+      --backdrop-color: color-mix(in srgb, #{$dark-color}, transparent 20%);
+
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(
+        to right,
+        transparent,
+        var(--backdrop-color) 20%,
+        var(--backdrop-color) 80%,
+        transparent
+      );
+      opacity: 0;
+      filter: blur(4px);
+      transition: 400ms ease-out;
+      transition-property: opacity, filter;
+    }
+
+    &:has(.visible)::before {
+      opacity: 1;
+      filter: blur(0);
+    }
   }
   // .photo-highlight__title
   &__title {
@@ -54,6 +74,12 @@
     &.visible {
       opacity: 1;
       filter: blur(0);
+    }
+  }
+
+  .slider__item & {
+    &__caption {
+      @include adaptiveValue("max-width", 420, 215, $bp-mobile);
     }
   }
 }
