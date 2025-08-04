@@ -1,0 +1,145 @@
+@use "utilities" as *;
+
+.slider {
+  --slider-slides-to-show: 1;
+  --slider-list-gap: 0rem;
+  --slider-total-visible-gaps: calc((var(--slider-slides-to-show) - 1) * var(--slider-list-gap));
+  --slider-available-width: calc(100% - var(--slider-total-visible-gaps));
+  --slider-item-width: calc(var(--slider-available-width) / var(--slider-slides-to-show));
+  --slider-translate-x: 0;
+  --move-duration: 800ms;
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  // .slider__list
+  &__list {
+    display: flex;
+    gap: var(--slider-list-gap);
+    width: 100%;
+    overflow: hidden;
+    translate: var(--slider-translate-x) 0;
+    transition: translate var(--move-duration) cubic-bezier(0.23, 0.55, 0.28, 1);
+  }
+  // .slider__item
+  &__item {
+    flex: 0 0 var(--slider-item-width);
+    margin-left: 0%;
+    transition-duration: var(--move-duration);
+    transition-timing-function: cubic-bezier(0.23, 0.55, 0.28, 1);
+    transition-property: margin-left;
+    will-change: margin-left;
+
+    &.is-leaving {
+      margin-left: calc(-1 * (var(--slider-item-width) + var(--slider-list-gap)));
+    }
+    &.is-leaving--fast {
+      margin-left: calc(-1 * (var(--slider-item-width) + var(--slider-list-gap) + 1px));
+      transition-timing-function: ease;
+      transition-duration: 50ms;
+    }
+    &.is-entering {
+      margin-left: calc(-1 * (var(--slider-item-width) + var(--slider-list-gap)));
+      transition-duration: 0s;
+    }
+  }
+  // .slider__nav
+  &__nav {
+    display: inline-flex;
+    color: $text-primary-color;
+    padding: toRem(8);
+    cursor: pointer;
+    transition: color 250ms;
+
+    svg {
+      stroke: currentColor;
+      width: toRem(30);
+      height: toRem(30);
+    }
+    &--prev {
+      order: -1;
+    }
+    &--next {
+      rotate: 180deg;
+    }
+    &:disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    @include hover() {
+      color: $accent-color;
+    }
+  }
+  // .slider--gallery
+  &--gallery {
+    height: 100%;
+  }
+
+  &--gallery & {
+    // .slider--gallery .slider__list
+    &__list {
+      height: 100%;
+    }
+    // .slider--gallery .slider__item
+    &__item {
+      // position: relative;
+      display: flex;
+      width: 100%;
+    }
+    // .slider--gallery .slider__nav
+    &__nav {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.5;
+      transition:
+        opacity 250ms,
+        color 250ms;
+
+      @include hover() {
+        opacity: 1;
+      }
+
+      &--prev {
+        left: 0;
+      }
+
+      &--next {
+        right: 0;
+      }
+    }
+    &__item.is-leaving {
+      .photo-highlight {
+        &__image {
+          animation: scale-up var(--move-duration);
+        }
+      }
+    }
+    &__item.is-active + .slider__item {
+      .photo-highlight {
+        &__image {
+          transform-origin: left;
+          animation: scale-up var(--move-duration);
+        }
+      }
+    }
+  }
+}
+
+@keyframes scale-up {
+  0% {
+    scale: 1;
+  }
+  99% {
+    scale: 2;
+  }
+  100% {
+    scale: 1;
+  }
+}
