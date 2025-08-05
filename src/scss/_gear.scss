@@ -47,6 +47,7 @@
   }
   // .gear__photo-highlight
   &__photo-highlight {
+    @include noise();
     @include max-tablet {
       display: none;
     }

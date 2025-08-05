@@ -9,6 +9,8 @@
   aspect-ratio: 1440 / 600;
   min-height: toRem(600);
 
+  @include noise();
+
   @include adaptiveValue("padding-inline", $container-padding-l, 46);
 
   // .photo-highlight__thumb
