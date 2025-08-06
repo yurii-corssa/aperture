@@ -11,9 +11,6 @@
     overflow: hidden;
 
     @include adaptiveValue("padding-bottom", 100, 80);
-    @include noise();
-
-    // background-blend-mode: darken;
   }
   &::before {
     content: "";
@@ -47,10 +44,11 @@
     inset: 0;
     translate: 0px 0svh;
     z-index: -1;
-
     animation: heroBackground linear;
     animation-timeline: scroll(root);
     animation-range: 0svh 100svh;
+
+    @include noise();
   }
   // .hero__video
   &__video {
@@ -59,7 +57,6 @@
     object-fit: cover;
   }
 }
-
 @keyframes heroBackground {
   to {
     translate: 0px 100svh;
