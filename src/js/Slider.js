@@ -186,17 +186,6 @@ export class Slider {
     this.startAutoplay();
   };
 
-  #onWheel = (e) => {
-    if (this.state.navigationIsDisabled) return;
-
-    e.preventDefault();
-
-    if (Math.abs(e.deltaY) < 5) return;
-
-    if (e.deltaY > 1) this.moveToRight();
-    if (e.deltaY < -1) this.moveToLeft();
-  };
-
   #enableInteractions = () => {
     const { navBtnsExist, isTouchDevice } = this.state;
     const { prevBtn, nextBtn, slider } = this.elements;
@@ -211,8 +200,6 @@ export class Slider {
       slider.addEventListener("touchmove", this.#onTouchMove, { passive: true });
       slider.addEventListener("touchend", this.#onTouchEnd, { passive: true });
     }
-
-    // slider.addEventListener("wheel", this.#onWheel, { passive: false });
 
     this.resizeObserver.observe(slider);
   };
@@ -231,8 +218,6 @@ export class Slider {
       slider.removeEventListener("touchmove", this.#onTouchMove);
       slider.removeEventListener("touchend", this.#onTouchEnd);
     }
-
-    slider.removeEventListener("wheel", this.#onWheel);
 
     this.stopAutoplay();
     this.resizeObserver.unobserve(slider);
