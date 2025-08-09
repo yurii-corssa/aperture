@@ -6,6 +6,7 @@ import { Header } from "./Header";
 import { Newsletter } from "./Newsletter";
 import { Slider } from "./Slider";
 import { headerConfig, logosSliderConfig } from "./config.js";
+import { GearModal } from "./GearModal";
 
 effects.parallax();
 effects.watcher({ rootMargin: "-10% 0%" });
@@ -19,6 +20,7 @@ const productPhotographyModal = new GalleryModal({ key: "product-gallery" });
 const architecturePhotographyModal = new GalleryModal({ key: "architecture-gallery" });
 const dronePhotographyModal = new GalleryModal({ key: "drone-gallery" });
 const wildlifePhotographyModal = new GalleryModal({ key: "wildlife-gallery" });
+const gearModal = new GearModal();
 
 document.addEventListener("DOMContentLoaded", () => {
   header.init();
@@ -29,4 +31,5 @@ document.addEventListener("DOMContentLoaded", () => {
   architecturePhotographyModal.init();
   dronePhotographyModal.init();
   wildlifePhotographyModal.init();
+  gearModal.init();
 });
