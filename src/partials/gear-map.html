@@ -1,0 +1,31 @@
+<div class="gear-map" data-gear-map>
+  <div class="gear-map__container">
+    <picture class="gear-map__thumb">
+      <source
+        srcset="
+          ./src/img/gear/equipment.webp    1x,
+          ./src/img/gear/equipment@2x.webp 2x,
+          ./src/img/gear/equipment@3x.webp 3x
+        "
+        type="image/webp"
+      />
+      <img
+        class="gear-map__image"
+        src="./src/img/gear/equipment.webp"
+        alt="Photography and videography gear: camera, drone, flash, lens, tripod"
+        loading="lazy"
+      />
+    </picture>
+
+    <ul class="gear-map__hotspots" aria-label="Gear hotspots">
+      <li class="gear-map__hotspot" style="--x: 62%; --y: 32%" aria-label="Camera: Sony A7R IV">
+        <button type="button" class="hotspot">
+          <div class="hotspot__tooltip" role="tooltip">
+            <span class="hotspot__title">Camera</span>
+            <span class="hotspot__text">Sony A7R IV</span>
+          </div>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
