@@ -1,0 +1,136 @@
+@use "utilities" as *;
+
+.gear-map {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+
+  // .gear-map__container
+  &__container {
+    position: relative;
+    width: max-content;
+    height: 100%;
+  }
+  // .gear-map__thumb
+  &__thumb {
+    position: relative;
+    width: max-content;
+    height: 100%;
+    @include noise();
+  }
+  // .gear-map__image
+  &__image {
+    width: max-content;
+    max-inline-size: max-content;
+    height: 100%;
+  }
+  // .gear-map__hotspots
+  &__hotspots {
+    position: absolute;
+    inset: 0;
+    // pointer-events: none;
+  }
+  // .gear-map__hotspot
+  &__hotspot {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    translate: -50% -50%;
+  }
+}
+.hotspot {
+  --hotspot-size: #{toRem(14)};
+  --hotspot-color: #{$light-color};
+
+  //   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--hotspot-size);
+  height: var(--hotspot-size);
+  scale: 1;
+  border-radius: 50%;
+  background-color: rgba($dark-color, 0.4);
+  border: 2px solid var(--hotspot-color);
+  cursor: pointer;
+  transition: 200ms ease;
+  transition-property: scale, border-color;
+
+  @include mobile {
+    --hotspot-size: #{toRem(16)};
+  }
+  @include hover() {
+    border-color: $accent-color;
+    scale: 1.05;
+  }
+  // .hotspot__dot
+  &::before {
+    content: "";
+    display: block;
+    width: calc(var(--hotspot-size) / 2 - 1px);
+    height: calc(var(--hotspot-size) / 2 - 1px);
+    border-radius: 50%;
+    background-color: var(--hotspot-color);
+    box-shadow: 0 0 0 0 rgba($accent-color, 0.6);
+    animation: hotspot-pulse 2s ease-out infinite;
+  }
+  // .hotspot__tooltip
+  &__tooltip {
+    --tooltip-color-bg: #{rgba($black-color, 0.8)};
+
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.8rem);
+    translate: -50% 0;
+    display: flex;
+    flex-direction: column;
+    gap: toRem(4);
+    padding: toRem(8) toRem(10);
+    background: var(--tooltip-color-bg);
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    opacity: 0;
+    filter: blur(2px);
+    transform: translate3d(0, 6px, 0);
+    transition: 200ms ease-out;
+    transition-property: opacity, filter, transform;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      translate: -50% 0;
+      border: 6px solid transparent;
+      border-top-color: var(--tooltip-color-bg);
+    }
+  }
+  // .hotspot__title
+  &__title {
+    @extend %title-label;
+    color: $white-color;
+  }
+  // .hotspot__text
+  //   &__text {
+  //   }
+  &:is(:hover, :focus-visible) {
+    .hotspot__tooltip {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+@keyframes hotspot-pulse {
+  0% {
+    background-color: $accent-color;
+    box-shadow: 0 0 0 0 rgba($accent-color, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba($accent-color, 0);
+  }
+  100% {
+    background-color: var(--hotspot-color);
+    box-shadow: 0 0 0 0 rgba($accent-color, 0);
+  }
+}
