@@ -34,7 +34,7 @@
     @include adaptiveValue("margin-right", -60, -15, $bp-tablet);
 
     &::before {
-      --backdrop-color: color-mix(in srgb, #{$dark-color}, transparent 20%);
+      --backdrop-color: #{rgba($dark-color, 0.8)};
 
       content: "";
       position: absolute;

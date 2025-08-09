@@ -20,7 +20,7 @@ body {
     content: "";
     position: fixed;
     inset: 0;
-    background-color: color-mix(in srgb, $dark-color, transparent 40%);
+    background-color: rgba($dark-color, 0.6);
     opacity: 0;
     backdrop-filter: blur(6px);
     pointer-events: none;
