@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Aperture</title>
-    <script type="module" crossorigin src="/assets/index-B_MiYaWZ.js"></script>
+    <script type="module" crossorigin src="/assets/index-9QmqJbyi.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index.css">
   </head>
   <body>
@@ -373,7 +373,7 @@
       &mdash; these are the tools that we actually use everyday to capture the amazing things around
       us.
     </p>
-    <button type="button" class="gear__button button button--aperture">
+    <button type="button" class="gear__button button button--aperture" data-modal-open="gear">
       <div class="aperture-icon">
   <div class="aperture-icon__blades">
     <div class="aperture-icon__blade"></div>
@@ -2008,6 +2008,56 @@
       <use href="/assets/sprite.svg#icon-chevron-left"></use>
     </svg>
   </button>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div
+  class="modal modal--full"
+  role="dialog"
+  aria-labelledby="modal-gear-title"
+  aria-hidden="true"
+  data-modal-name="gear"
+>
+  <div class="modal__wrapper">
+    <div class="modal__window" data-modal-window>
+      <div class="modal__header">
+        <h2 id="modal-gear-title" class="modal__title">The Gear Cage</h2>
+
+        <button type="button" class="modal__close-btn" aria-label="Close" data-modal-close></button>
+      </div>
+
+      <div class="modal__body">
+        <div class="gear-map" data-gear-map>
+  <div class="gear-map__container">
+    <picture class="gear-map__thumb">
+      <source
+        srcset="/assets/equipment.webp 1x, /assets/equipment@2x.webp 2x, /assets/equipment@3x.webp 3x"
+        type="image/webp"
+      />
+      <img
+        class="gear-map__image"
+        src="/assets/equipment.webp"
+        alt="Photography and videography gear: camera, drone, flash, lens, tripod"
+        loading="lazy"
+      />
+    </picture>
+
+    <ul class="gear-map__hotspots" aria-label="Gear hotspots">
+      <li class="gear-map__hotspot" style="--x: 62%; --y: 32%" aria-label="Camera: Sony A7R IV">
+        <button type="button" class="hotspot">
+          <div class="hotspot__tooltip" role="tooltip">
+            <span class="hotspot__title">Camera</span>
+            <span class="hotspot__text">Sony A7R IV</span>
+          </div>
+        </button>
+      </li>
+    </ul>
+  </div>
 </div>
 
       </div>
