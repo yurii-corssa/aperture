@@ -82,6 +82,10 @@
     // .slider--gallery .slider__list
     &__list {
       height: 100%;
+
+      .photo-highlight {
+        min-height: auto;
+      }
     }
     // .slider--gallery .slider__item
     &__item {
@@ -114,32 +118,5 @@
         right: 0;
       }
     }
-    &__item.is-leaving {
-      .photo-highlight {
-        &__image {
-          animation: scale-up var(--move-duration);
-        }
-      }
-    }
-    &__item.is-active + .slider__item {
-      .photo-highlight {
-        &__image {
-          transform-origin: left;
-          animation: scale-up var(--move-duration);
-        }
-      }
-    }
-  }
-}
-
-@keyframes scale-up {
-  0% {
-    scale: 1;
-  }
-  99% {
-    scale: 2;
-  }
-  100% {
-    scale: 1;
   }
 }
