@@ -27,11 +27,11 @@
     $propertyValue: #{"clamp(" #{toRem($maxSize)} "," $flyValue "," #{toRem($minSize)} ")"};
   }
 
-  @media (width >= #{$widthFrom}px) {
+  @media (width >= #{toRem($widthFrom)}) {
     #{$property}: toRem($maxSize);
   }
 
-  @media (width >= #{$widthTo}px) and (width < #{$widthFrom}px) {
+  @media (width >= #{toRem($widthTo)}) and (width < #{toRem($widthFrom)}) {
     #{$property}: $propertyValue;
   }
 }
@@ -107,8 +107,8 @@
   }
 }
 
-@mixin backdrop($visibleClass: ".is-visible", $zIndex: 888) {
-  :has(&#{$visibleClass}) body::after {
+@mixin backdrop($selector: [open], $zIndex: 888) {
+  :has(&#{$selector}) body::after {
     opacity: 1;
     z-index: $zIndex;
   }
