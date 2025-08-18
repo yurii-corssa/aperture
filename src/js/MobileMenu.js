@@ -1,4 +1,4 @@
-import { removeAllInert, removeInert, setInert, setInertOutside, toRem } from "./utils";
+import { toRem } from "./utils";
 
 export class MobileMenu {
   types = {
@@ -15,8 +15,6 @@ export class MobileMenu {
     MENU_TOGGLE: "[data-mobile-menu-toggle]",
   };
   classes = {
-    IS_VISIBLE: "is-visible",
-    IS_HIDDEN: "is-hidden",
     NO_SCROLL: "no-scroll",
   };
   defaultConfig = {
@@ -31,8 +29,6 @@ export class MobileMenu {
     this.elements = {};
     this.elements.menu = document.querySelector(this.selectors.MENU);
     this.elements.menuToggle = document.querySelector(this.selectors.MENU_TOGGLE);
-    this.elements.trigger = null;
-    this.elements.menu.classList.add(this.classes.IS_HIDDEN);
 
     this.menuIsActive = false;
     this.menuIsOpen = false;
@@ -64,8 +60,6 @@ export class MobileMenu {
   enableMenu = () => {
     this.menuIsActive = true;
 
-    setInert(this.elements.menu);
-
     this.elements.menuToggle.addEventListener("click", this.handleClick);
     this.elements.menu.dataset.menuType = this.config.type;
 
@@ -81,7 +75,6 @@ export class MobileMenu {
       this.closeMenu();
       document.removeEventListener("click", this.handleClick);
     } else {
-      removeInert(this.elements.menu);
       this.elements.menuToggle.removeEventListener("click", this.handleClick);
     }
   };
@@ -99,13 +92,9 @@ export class MobileMenu {
   openMenu() {
     this.menuIsOpen = true;
 
-    removeInert(this.elements.menu);
-    setInertOutside(this.elements.menu);
-
     document.body.classList.add(this.classes.NO_SCROLL);
-    this.elements.menu.classList.replace(this.classes.IS_HIDDEN, this.classes.IS_VISIBLE);
-    this.elements.menuToggle.setAttribute("aria-expanded", "true");
-    this.elements.menu.setAttribute("aria-hidden", "false");
+
+    this.elements.menu.show();
 
     this.elements.menuToggle.removeEventListener("click", this.handleClick);
     document.addEventListener("click", this.handleClick);
@@ -115,18 +104,9 @@ export class MobileMenu {
   closeMenu() {
     this.menuIsOpen = false;
 
-    removeAllInert();
-    if (this.menuIsActive) {
-      setInert(this.elements.menu);
-      this.elements.menuToggle.focus();
-    } else {
-      //   document.body.focus();
-    }
-
     document.body.classList.remove(this.classes.NO_SCROLL);
-    this.elements.menu.classList.replace(this.classes.IS_VISIBLE, this.classes.IS_HIDDEN);
-    this.elements.menuToggle.setAttribute("aria-expanded", "false");
-    this.elements.menu.setAttribute("aria-hidden", "true");
+
+    this.elements.menu.close();
 
     document.removeEventListener("click", this.handleClick);
     window.removeEventListener("keydown", this.handleKeyDown);
