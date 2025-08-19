@@ -13,7 +13,7 @@ export class Newsletter {
 
   submitForm = (formEntries) => {
     const successMessage = {
-      title: `Thank you for subscribing!`,
+      title: "Thank you for subscribing!",
       text: `You have successfully subscribed with the email: ${formEntries.email}.`,
     };
 

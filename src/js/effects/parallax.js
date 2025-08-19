@@ -14,14 +14,18 @@ const calculateOffset = (element, config) => {
   const heightWindow = window.innerHeight;
 
   switch (config.position) {
-    case "top":
+    case "top": {
       return -1 * topToWindow;
-    case "center":
+    }
+    case "center": {
       return heightWindow / 2 - (topToWindow + heightElement / 2);
-    case "bottom":
+    }
+    case "bottom": {
       return heightWindow - (topToWindow + heightElement);
-    default:
+    }
+    default: {
       return 0;
+    }
   }
 };
 
