@@ -13,7 +13,10 @@
     "watch": "npx vite build --watch"
   },
   "browserslist": [
-    "cover 99.5%"
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
   ],
   "devDependencies": {
     "@eslint/js": "^9.14.0",
@@ -21,6 +24,7 @@
     "eslint": "^9.14.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "cssnano": "^7.1.0",
     "eslint-plugin-html": "^7.1.0",
     "fast-glob": "^3.3.1",
     "globals": "^15.12.0",

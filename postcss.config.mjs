@@ -1,11 +1,13 @@
 import postcssSortMediaQueries from "postcss-sort-media-queries";
-import postcssPresetEnv from "postcss-preset-env";
 import autoprefixer from "autoprefixer";
+import postcssPresetEnv from "postcss-preset-env";
+import cssnano from "cssnano";
 
 export default {
   plugins: [
     postcssSortMediaQueries({ sort: "mobile-first" }),
-    postcssPresetEnv({ stage: 0 }),
     autoprefixer(),
+    postcssPresetEnv({ stage: 2 }),
+    cssnano(),
   ],
 };
