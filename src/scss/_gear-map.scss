@@ -10,8 +10,8 @@
   height: 100%;
   overflow-x: auto;
 
-  &:has(&__button:hover, &__button:focus) &__button {
-    &:not(:hover, :focus) {
+  &:has(&__button:hover, &__button:focus, &__button:active) &__button {
+    &:not(:hover, :focus, :active) {
       opacity: 0;
     }
   }
@@ -53,7 +53,7 @@
       border-color 200ms,
       opacity 250ms ease-out calc(var(--i, 1) * 30ms);
 
-    @include hover() {
+    @include hover("true") {
       border-color: $accent-color;
       scale: 1.1;
 
