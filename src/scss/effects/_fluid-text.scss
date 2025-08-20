@@ -36,7 +36,7 @@
   &__words &__char {
     --duration: 2.2s;
     --delay: calc(
-      (sin((var(--char-index) / var(--char-total)) * 90deg) * (var(--duration) * 0.25)) -
+      (#{sin((var(--char-index) / var(--char-total)) * 90deg)} * (var(--duration) * 0.25)) -
         (var(--idx) * -0.25s)
     );
     display: inline-block;
