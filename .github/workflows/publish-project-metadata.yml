@@ -1,0 +1,48 @@
+name: Publish project metadata to registry
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - project.json
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v4
+
+      - name: Checkout registry repo
+        uses: actions/checkout@v4
+        with:
+          repository: yurii-corssa/project-registry
+          token: ${{ secrets.REGISTRY_TOKEN }}
+          path: registry
+
+      - name: Prepare projects folder
+        run: |
+          mkdir -p registry/projects
+
+      - name: Derive project slug
+        id: slug
+        run: |
+          if [ -f project.json ]; then
+            SLUG=$(node -e "console.log(require('./project.json').slug || 'aperture')")
+          else
+            SLUG=aperture
+          fi
+          echo "slug=$SLUG" >> $GITHUB_OUTPUT
+
+      - name: Copy metadata to registry
+        run: |
+          cp project.json registry/projects/${{ steps.slug.outputs.slug }}.json
+
+      - name: Commit and push
+        working-directory: registry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add projects/${{ steps.slug.outputs.slug }}.json
+          git commit -m "chore: update metadata for ${{ steps.slug.outputs.slug }} from ${GITHUB_REPOSITORY}@${GITHUB_SHA}" || echo "No changes to commit"
+          git push
