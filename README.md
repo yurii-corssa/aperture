@@ -1,48 +1,69 @@
-# Vite Vanilla Template
+# Aperture Studio
 
-## Overview
+> Welcome to Aperture Studio! This project is a fully responsive website for a creative photography studio, showcasing portfolio work, client collaborations, and providing an engaging user experience.
 
-This template is designed for those who want to start a project with Vite and Vanilla JS. It's a minimal setup that allows you to hit the ground running with the latest front-end technologies.
+![Aperture Studio Page Cover](./assets/aperture-studio-cover.webp)
 
-## Features
+## Description
 
-- **Vite:** Enjoy the lightning-fast HMR (Hot Module Replacement) and optimized build that Vite provides.
-- **Vanilla JS:** Start with a clean slate with plain JavaScript, giving you the freedom to structure your project as you see fit.
-- **SCSS Support:** Write your styles with SCSS, a powerful CSS pre-processor that helps keep your stylesheets organized.
-- **Pre-configured Build Tools:** Comes with pre-configured settings for PostCSS, to help with autoprefixing and optimizations for your final build.
+**Aperture Studio** is a modern photography portfolio website, created entirely from scratch without any third-party libraries or frameworks. It features fully custom and reusable components for all key UI effects: a hand-built slider, a modular modal system with class inheritance, semantic, fluid and accessible markup, responsive hero video, lazy and adaptive image loading, Intersection Observer for element tracking, smooth text animations and parallax effects. The project's purpose was to dive deep into developing each detail by hand to practice and refine implementation while optimizing performance and user experience.
+
+<video src="./assets/aperture-studio-live-demo.mp4" autoplay muted loop playsinline  > </video>
+
+## Key Features
+
+- **Custom Slider System** - Reusable slider component powering client logos carousel and other image galleries, built entirely from scratch
+- **Modal System Architecture** - Modal windows implemented using class inheritance patterns, with reusable base Modal class and specialized implementations
+- **Parallax Effects** - Custom parallax implementation with configurable coefficients, smooth animations, and performance optimization
+- **Performance Optimization** - Lazy loading, adaptive image and video delivery for different screen densities, Intersection Observer for efficient effect triggering, and debounced event handlers for smooth performance.
+- **Custom Scroll Animations** - Beautiful text animations that trigger when scrolling, including blur-out effects and split-text animations with configurable timing
+- **Interactive Header** - Smart header that hides and shows based on scroll direction, with smooth transitions and mobile menu integration
+- **Contact Forms** - Interactive feedback forms with custom validation, AJAX submission handling, and user experience enhancements
+- **Mobile-First Design** - Responsive design approach starting from mobile devices, with adaptive layouts for all screen sizes
+- **Semantic HTML5 Markup** - Proper document structure using semantic elements with logical heading hierarchy
+- **BEM Methodology** - Consistent CSS architecture following Block Element Modifier principles for maintainable and scalable styling
+- **Accessibility Features** - Accessible for all users: keyboard navigation, screen reader support, and basic ARIA attributes.
+
+## Technology Stack
+
+### **Frontend Technologies**
+
+- **HTML5** - Semantic markup with custom components
+- **SCSS & CSS3** - Advanced CSS preprocessing with custom mixins, modern CSS features, and animations
+- **JavaScript (ES6+)** - Pure JS implementation, no frameworks
+
+### **Build Tools**
+
+- **Vite** - Lightning-fast build tool and dev server
+- **PostCSS** - CSS processing and optimization
+- **ESLint** - Code quality and consistency
 
 ## Getting Started
 
-This project is structured as a template for ease of use. To create a new repository using this template, follow these steps:
+To run this project locally, you need to have `node` and `npm` installed.
 
-1. Navigate to the [vite-vanilla-template](https://github.com/yurii-corssa/vite-vanilla-template) on GitHub.
-2. Click the "Use this template" button, located near the top of the repository.
-3. Follow the prompts to create a new repository based on this template.
+1. Clone the repository:
 
-Once you've created your repository, you can clone it locally and begin development:
+   ```bash
+   git clone https://github.com/yurii-corssa/aperture.git
+   ```
 
-```bash
-git clone <your-repository-url>
-cd <your-repository-name>
-npm install
-```
+2. Install the dependencies:
 
-Start the development server with:
+   ```bash
+   npm install
+   ```
 
-```
-npm run dev
-```
+3. Run the project:
 
-## Building for Production
+   ```bash
+   npm run dev
+   ```
 
-To build your project for production, run:
+## Contributing
 
-```
-npm run build
-```
-
-This command will generate a dist folder that you can deploy to any static file server.
+Contributions are welcome! Feel free to create a pull request to suggest improvements or new features.
 
 ## License
 
-This template is open source and available under the [MIT License](./LICENSE).
+This project is open source and available under the [MIT License](LICENSE).
