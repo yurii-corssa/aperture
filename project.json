@@ -17,16 +17,16 @@
       "2x": "https://raw.githubusercontent.com/yurii-corssa/aperture/main/assets/aperture-studio-cover@2x.webp",
       "3x": "https://raw.githubusercontent.com/yurii-corssa/aperture/main/assets/aperture-studio-cover@3x.webp"
     },
-    "demoGif": null
+    "liveDemo": "https://raw.githubusercontent.com/yurii-corssa/aperture/main/assets/aperture-studio-live-demo.mp4"
   },
   "descriptions": {
     "ua": {
-      "short": "Сайт-портфоліо для фотостудії Aperture Studio, створений з нуля без бібліотек для практики та відпрацювання фронтенд-рішень. Містить кастомний перевикористовуваний слайдер, модульну систему модальних вікон, семантичну адаптивну верстку, оптимізацію продуктивності та плавні анімації з паралакс-ефектами.",
+      "short": "Сайт-портфоліо для фотостудії, створений з нуля без бібліотек для практики та відпрацювання фронтенд-рішень. Містить кастомний перевикористовуваний слайдер, модульну систему модальних вікон, семантичну адаптивну верстку, оптимізацію продуктивності та плавні анімації з паралакс-ефектами.",
       "full": "Aperture Studios — сучасний сайт-портфоліо фотостудії, створений повністю без сторонніх бібліотек та фреймворків. У межах цього проєкту я розробив з нуля перевикористовувані та модульні рішення для всіх ключових елементів: кастомний слайдер, систему модальних вікон на класовому наслідуванні, семантичну, гумову та доступну верстку. Реалізовано адаптивне відео на головному екрані, ліниве й адаптивне завантаження зображень, Intersection Observer для відстеження появи елементів, акуратні анімації тексту та паралакс-ефекти. Основна мета — глибоко пропрацювати кожну деталь і відпрацювати практичні рішення з нуля, оптимізуючи продуктивність та UX.",
       "resume": "Індивідуальний проєкт для практики та вдосконалення фронтенд-технік. Створив сайт-портфоліо з нуля без сторонніх бібліотек, впровадивши перевикористовуваний кастомний слайдер, модульну систему модальних вікон, семантичну та доступну верстку, плавні анімації й паралакс-ефекти, з акцентом на продуктивність та UX."
     },
     "en": {
-      "short": "A photography portfolio website for Aperture Studio, built from scratch without libraries to practice and refine front-end solutions. It includes a custom reusable slider, a modular modal system, semantic responsive layout, performance optimization and smooth animations with parallax effects.",
+      "short": "A photography portfolio website, built from scratch without libraries to practice and refine front-end solutions. It includes a custom reusable slider, a modular modal system, semantic responsive layout, performance optimization and smooth animations with parallax effects.",
       "full": "Aperture Studios is a modern photography portfolio website for Aperture Studio, created entirely from scratch without any third-party libraries or frameworks. It features fully custom and reusable components for all key UI effects: a hand-built slider, a modular modal system with class inheritance, semantic, fluid and accessible markup, responsive hero video, lazy and adaptive image loading, Intersection Observer for element tracking, smooth text animations and parallax effects. The project’s purpose was to dive deep into developing each detail by hand to practice and refine implementation while optimizing performance and user experience.",
       "resume": "Individual project focused on practicing and refining core front-end techniques. Developed a portfolio website from scratch without third-party libraries, implementing a reusable custom slider, a modular modal system, semantic responsive markup, and optimized animations and parallax for a high-performance user experience."
     }
