@@ -8,8 +8,6 @@
 
 **Aperture Studio** is a modern photography portfolio website, created entirely from scratch without any third-party libraries or frameworks. It features fully custom and reusable components for all key UI effects: a hand-built slider, a modular modal system with class inheritance, semantic, fluid and accessible markup, responsive hero video, lazy and adaptive image loading, Intersection Observer for element tracking, smooth text animations and parallax effects. The project's purpose was to dive deep into developing each detail by hand to practice and refine implementation while optimizing performance and user experience.
 
-<video src="./assets/aperture-studio-live-demo.mp4" autoplay muted loop playsinline  > </video>
-
 ## Key Features
 
 - **Custom Slider System** - Reusable slider component powering client logos carousel and other image galleries, built entirely from scratch
