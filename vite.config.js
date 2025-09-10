@@ -2,20 +2,11 @@ import path from "path";
 import { defineConfig } from "vite";
 import glob from "fast-glob";
 import { fileURLToPath } from "url";
-import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import tsconfigPaths from "vite-tsconfig-paths";
 import injectHTML from "vite-plugin-html-inject";
 
 export default defineConfig({
-  plugins: [
-    tsconfigPaths(),
-    injectHTML(),
-    ViteImageOptimizer({
-      svg: {
-        plugins: [{ name: "removeViewBox", active: false }, { name: "sortAttrs" }],
-      },
-    }),
-  ],
+  plugins: [tsconfigPaths(), injectHTML()],
   base: "/",
   build: {
     minify: true,
