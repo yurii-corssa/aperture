@@ -1,15 +1,13 @@
 {
-  "schemaVersion": 1,
   "slug": "aperture",
   "name": "Aperture Studios",
   "type": "landing",
-  "repo": "https://github.com/yurii-corssa/aperture",
-  "releasedAt": null,
+  "releasedAt": "2025-09-09",
   "links": {
     "live": "https://aperture-studio.netlify.app",
     "frontend": "https://github.com/yurii-corssa/aperture",
     "backend": null,
-    "design": null
+    "design": "https://www.figma.com/design/lbknbhoo8dGrHY3LMcJdQp/Aperture----Copy-?node-id=2-2&t=QsgHzMd8JsyO0LkZ-0"
   },
   "media": {
     "cover": {
