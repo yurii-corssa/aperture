@@ -2,7 +2,14 @@
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
     <picture class="photo-highlight__thumb">
       <source srcset="{=$imageSrc} 1x, {=$imageSrc2x} 2x, {=$imageSrc3x} 3x" type="{=$imageType}" />
-      <img src="{=$imageSrc}" alt="{=$title}" class="photo-highlight__image" loading="lazy" />
+      <img
+        src="{=$imageSrc}"
+        alt="{=$title}"
+        width="{=$width}"
+        height="{=$height}"
+        class="photo-highlight__image"
+        loading="lazy"
+      />
     </picture>
 
     <figcaption class="photo-highlight__caption" data-prlx>
