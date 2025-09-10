@@ -1,21 +1,5 @@
 @use "utilities" as *;
 
-.portfolio__list:has(.category-card:hover) .category-card {
-  &:not(:hover) {
-    scale: 0.99;
-
-    .category-card__container {
-      filter: blur(2.5px) contrast(0.8) brightness(0.5) saturate(0.5);
-    }
-  }
-
-  &:hover {
-    .category-card__container {
-      filter: blur(0) contrast(1) brightness(1.1) saturate(1.2);
-    }
-  }
-}
-
 .category-card {
   position: relative;
   overflow: hidden;
@@ -83,6 +67,24 @@
     &.visible {
       opacity: 1;
       filter: blur(0);
+    }
+  }
+}
+
+@include desktop {
+  .portfolio__list:has(.category-card:hover) .category-card {
+    &:not(:hover) {
+      scale: 0.99;
+
+      .category-card__container {
+        filter: blur(2.5px) contrast(0.8) brightness(0.5) saturate(0.5);
+      }
+    }
+
+    &:hover {
+      .category-card__container {
+        filter: blur(0) contrast(1) brightness(1.1) saturate(1.2);
+      }
     }
   }
 }
