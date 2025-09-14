@@ -31,8 +31,11 @@ export default defineConfig({
           if (/mp4|webm|avi|mov|mkv|flv|wmv/i.test(ext)) {
             return `assets/video/[name]-[hash][extname]`;
           }
+          if (/woff2?|eot|ttf|otf/i.test(ext)) {
+            return `assets/fonts/[name]-[hash][extname]`;
+          }
           if (/css/i.test(ext)) {
-            return `assets/css/[name]-[hash][extname]`;
+            return `[name][extname]`;
           }
           if (/js/i.test(ext)) {
             return `assets/js/[name]-[hash][extname]`;
@@ -40,7 +43,7 @@ export default defineConfig({
           return `assets/[name]-[hash][extname]`;
         },
         chunkFileNames: "assets/js/[name]-[hash].js",
-        entryFileNames: "assets/js/[name]-[hash].js",
+        entryFileNames: "[name].js",
       },
     },
   },

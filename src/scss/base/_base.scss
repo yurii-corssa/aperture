@@ -1,6 +1,14 @@
 @use "../utilities" as *;
 
-@import url("https://fonts.googleapis.com/css?family=Poppins:regular&display=swap");
+@font-face {
+  font-family: "Poppins-Regular";
+  src:
+    url("../fonts/Poppins-Regular.woff2") format("woff2"),
+    url("../fonts/Poppins-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 body {
   font-family: $main-font;
