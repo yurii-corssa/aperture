@@ -1,9 +1,44 @@
 <article class="photo-highlight">
   <figure data-prlx-parent data-prlx-coefficient="5" data-prlx-smooth="10">
     <picture class="photo-highlight__thumb">
-      <source srcset="{=$imageSrc} 1x, {=$imageSrc2x} 2x, {=$imageSrc3x} 3x" type="{=$imageType}" />
+      <source
+        media="(width <= 30rem)"
+        srcset="
+          {=$imageBase}-mobile.{=$imageType}    1x,
+          {=$imageBase}-mobile@2x.{=$imageType} 2x,
+          {=$imageBase}-mobile@3x.{=$imageType} 3x
+        "
+        type="image/{=$imageType}"
+      />
+      <source
+        media="(width <= 48rem)"
+        srcset="
+          {=$imageBase}-tablet.{=$imageType}    1x,
+          {=$imageBase}-tablet@2x.{=$imageType} 2x,
+          {=$imageBase}-tablet@3x.{=$imageType} 3x
+        "
+        type="image/{=$imageType}"
+      />
+      <source
+        media="(width <= 64rem)"
+        srcset="
+          {=$imageBase}-desktop.{=$imageType}    1x,
+          {=$imageBase}-desktop@2x.{=$imageType} 2x,
+          {=$imageBase}-desktop@3x.{=$imageType} 3x
+        "
+        type="image/{=$imageType}"
+      />
+      <source
+        media="(width > 64rem)"
+        srcset="
+          {=$imageBase}.{=$imageType}    1x,
+          {=$imageBase}@2x.{=$imageType} 2x,
+          {=$imageBase}@3x.{=$imageType} 3x
+        "
+        type="image/{=$imageType}"
+      />
       <img
-        src="{=$imageSrc}"
+        src="{=$imageBase}.{=$imageType}"
         alt="{=$title}"
         width="{=$width}"
         height="{=$height}"
