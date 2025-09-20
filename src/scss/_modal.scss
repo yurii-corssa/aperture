@@ -125,24 +125,26 @@
     &__wrapper {
       height: 100%;
     }
+    // .modal--full .modal__header
+    &__header {
+      position: absolute;
+      top: 0;
+      inset-inline: 0;
+      padding-block: toRem(32);
+      z-index: 1;
+
+      @include adaptiveValue("padding-inline", 32, 15, $bp-mobile);
+    }
     // .modal--full .modal__window
     &__window {
+      position: relative;
+      width: auto;
       height: 100%;
       max-width: 100%;
-    }
-    // .modal--full .modal__title
-    &__title {
-      position: relative;
-      z-index: 1;
-    }
-    // .modal--full .modal__close-btn
-    &__close-btn {
-      z-index: 1;
+      padding: 0;
     }
     // .modal--full .modal__body
     &__body {
-      position: absolute;
-      inset: 0;
       height: 100%;
     }
   }
