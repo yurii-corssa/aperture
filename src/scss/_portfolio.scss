@@ -1,10 +1,6 @@
 @use "utilities" as *;
 
 .portfolio {
-  $portfolio-list-gap: 1rem;
-  $card-min-width: toRem(404);
-  $card-max-width: toRem(576);
-
   & {
     display: flex;
     flex-direction: column;
@@ -36,14 +32,20 @@
   &__list {
     display: flex;
     flex-wrap: wrap;
-    gap: $portfolio-list-gap;
-    max-width: calc($card-max-width * 2 + $portfolio-list-gap);
+    gap: 1rem;
     justify-content: center;
   }
   // .portfolio__item
   &__item {
-    flex: 1 1 $card-min-width;
-    max-width: $card-max-width;
-    @include adaptiveValue("height", 600, 450, $bp-tablet);
+    width: 100%;
+    aspect-ratio: 576 / 600;
+
+    @include tablet {
+      width: calc(100% / 2 - 1rem);
+
+      @include max-desktop {
+        aspect-ratio: 464 / 600;
+      }
+    }
   }
 }
