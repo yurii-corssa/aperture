@@ -1,17 +1,9 @@
 @use "utilities" as *;
 
 .portfolio {
-  & {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  @include max-mobile {
-    &.container {
-      padding-inline: 0;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   // .portfolio__header
   &__header {
@@ -34,6 +26,7 @@
     flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
+    max-width: calc(#{toRem(576)} * 2 + 1rem);
   }
   // .portfolio__item
   &__item {
@@ -41,11 +34,17 @@
     aspect-ratio: 576 / 600;
 
     @include tablet {
-      width: calc(100% / 2 - 1rem);
+      width: calc(100% / 2 - 0.5rem);
 
       @include max-desktop {
         aspect-ratio: 464 / 600;
       }
+    }
+  }
+
+  @include max-mobile {
+    &.container {
+      padding-inline: 0;
     }
   }
 }
