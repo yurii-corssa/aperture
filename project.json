@@ -34,5 +34,5 @@
     "tools": ["PostCSS", "Autoprefixer", "injectHTML", "ESLint", "Netlify", "npm", "cssnano"]
   },
   "tags": ["frontend", "vanilla-js", "landing-page"],
-  "status": "in-progress"
+  "status": "completed"
 }
